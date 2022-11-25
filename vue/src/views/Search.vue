@@ -9,5 +9,4 @@ console.log(route)
 
 <template>
     为您展示“{{ route.query.content }}”的相关资源
-    (其实搜索页不会出现在NavBar栏)
 </template>

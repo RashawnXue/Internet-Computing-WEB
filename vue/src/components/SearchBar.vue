@@ -12,7 +12,7 @@ function goToSearch() {
         router.push({ path: '/search', query: { content: content.value } })
     } else {
         ElNotification({
-            title: 'Success',
+            title: '注意',
             message: '请输入内容',
             type: 'warning',
             showClose: false,
@@ -22,12 +22,22 @@ function goToSearch() {
 </script>
 
 <template>
-    
+
     <div style="display: flex; flex-direction: row;">
-        <el-input v-model="content" style="--el-input-border-radius: 20px; --el-input-focus-border-color: teal" maxlength="20" placeholder="请输入内容"
-            size="large">
+        <el-input class="search-input" v-model="content" maxlength="20" placeholder="请输入内容" size="large">
         </el-input>
-        <el-button :icon="Search" style="margin-left: 5px;" type="primary" color="teal" size="large" @click="goToSearch" circle></el-button>
+        <el-button :icon="Search" style="margin: 0 1rem;" type="primary" color="teal" size="large" @click="goToSearch"
+            circle></el-button>
     </div>
 
 </template>
+
+<style>
+.search-input {
+    --el-input-border-radius: 50px;
+    --el-input-border-color: var(--color-border);
+    --el-input-hover-border-color: var(--color-border-hover);
+    --el-input-focus-border-color: teal;
+    --el-input-bg-color: var(--color-background-soft);
+}
+</style>
