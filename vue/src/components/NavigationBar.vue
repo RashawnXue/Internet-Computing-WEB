@@ -1,5 +1,4 @@
 <script setup>
-
 import { ref } from 'vue';
 import { House, Reading, Medal, User, CirclePlus } from '@element-plus/icons-vue';
 import SearchBar from './SearchBar.vue';
@@ -61,7 +60,7 @@ function clickAvatar() {
             </el-menu-item>
         </el-menu>
         <div style="align-self: center; display: flex; flex-direction: row;">
-            <SearchBar style="align-self: center; width: 26rem;" />
+            <SearchBar style="align-self: center; width: 18rem;" />
             <el-button :icon="CirclePlus" style="align-self: center;" type="primary" color="teal" size="large" round>上传
             </el-button>
         </div>
@@ -71,22 +70,17 @@ function clickAvatar() {
             <el-avatar style="align-self: center;" @click="clickAvatar"></el-avatar>
         </div>
     </div>
-
 </template>
 
-<style>
+<style scoped>
 .navigation-menu {
-    --el-menu-active-color: teal;
-    --el-menu-hover-text-color: teal;
-    --el-menu-hover-bg-color: var(--color-background);
-    --el-menu-bg-color: var(--color-background);
-    --el-menu-text-color: var(--color-text);
     border-bottom-width: 0;
     align-self: center;
     width: 40rem;
 }
 
 .navigation-container {
+    z-index: 1;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -95,6 +89,8 @@ function clickAvatar() {
     border-bottom-color: var(--color-border);
     padding: 0 2rem;
     justify-content: space-between;
+    box-shadow: var(--el-box-shadow-light);
+    height: 60px;
 }
 
 .user-profile {
@@ -103,5 +99,15 @@ function clickAvatar() {
     flex-direction: row;
     justify-content: flex-end;
     width: 10rem
+}
+</style>
+
+<style>
+:root {
+    --el-menu-active-color: teal;
+    --el-menu-hover-text-color: teal;
+    --el-menu-hover-bg-color: var(--color-background);
+    --el-menu-bg-color: var(--color-background);
+    --el-menu-text-color: var(--color-text);
 }
 </style>
