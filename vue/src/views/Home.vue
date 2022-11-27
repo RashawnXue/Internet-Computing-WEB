@@ -25,11 +25,11 @@ function goToCourse(item) {
 
 <template>
     <div class="content-container">
-        <el-card v-for="item in briefIntros" class="content-item" @click="goToCourse(item)">
+        <el-card v-for="item in briefIntros" class="content-item">
             <template #header>
                 <div class="content-item-header">
                     <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
-                    {{ item.courseName }}
+                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.courseName }}</div>
                     <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
                 </div>
             </template>
@@ -66,5 +66,14 @@ function goToCourse(item) {
     font-size: large;
     font-weight: bolder;
     padding-top: 0;
+}
+
+.content-item-header-name{
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.content-item-header-name:hover{
+    color: teal;
 }
 </style>

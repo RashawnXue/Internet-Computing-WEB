@@ -67,7 +67,7 @@ function clickAvatar() {
         <div class="user-profile">
             <div style="align-self: center; margin-right: 2rem;">{{ userID }}</div>
             <!-- 这里应该放一个头像，然后点击会出现一些选项 -->
-            <el-avatar style="align-self: center;" @click="clickAvatar"></el-avatar>
+            <el-avatar style="align-self: center; cursor: pointer;" @click="clickAvatar"></el-avatar>
         </div>
     </div>
 </template>

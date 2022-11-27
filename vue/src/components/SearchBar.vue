@@ -24,7 +24,7 @@ function goToSearch() {
 <template>
 
     <div style="display: flex; flex-direction: row;">
-        <el-input class="search-input" v-model="content" maxlength="20" placeholder="请输入内容" size="large">
+        <el-input class="search-input" v-model="content" maxlength="15" placeholder="请输入内容" size="large">
         </el-input>
         <el-button :icon="Search" style="margin: 0 1rem;" type="primary" color="teal" size="large" @click="goToSearch"
             circle></el-button>

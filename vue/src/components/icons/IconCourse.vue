@@ -1,7 +1,7 @@
 <template>
-        <div class="course-tag">
-            课程
-        </div>
+    <div class="course-tag">
+        课程
+    </div>
 </template>
 
 <style scoped>
@@ -12,7 +12,7 @@
     height: 18px;
     font-size: 10px;
     background-color: var(--color-background-mute);
-    color: teal;
+    color: rgb(95, 38, 136);
     font-weight: bolder;
     text-align: center;
     vertical-align: middle;
