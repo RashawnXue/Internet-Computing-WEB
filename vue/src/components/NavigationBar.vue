@@ -34,7 +34,7 @@ function clickAvatar() {
                     <span style="margin-right: 5px;">首页</span>
                 </template>
             </el-menu-item>
-            <el-menu-item>
+            <el-menu-item >
                 <template #title>
                     <el-icon>
                         <Reading />

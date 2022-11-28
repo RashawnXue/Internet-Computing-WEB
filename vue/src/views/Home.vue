@@ -1,8 +1,11 @@
 <script setup>
 
 import { ref, onMounted, reactive } from 'vue'
+import { useRouter } from 'vue-router';
 import IconCourse from '../components/icons/IconCourse.vue'
 import IconNew from '../components/icons/IconNew.vue'
+
+const router = useRouter()
 
 // 这个数组目前是静态的，最终是要从数据库中获取
 const briefIntros = ref([
@@ -13,6 +16,7 @@ const briefIntros = ref([
     { courseName: "软件工程与计算Ⅱ", courseIntro: "这是大二下的课" }]);
 
 function goToCourse(item) {
+    router.push({ path: '/detail/'+ item.courseName})
     ElNotification({
         title: '跳转到' + item.courseName + "的详情页",
         message: 'nothing',
@@ -68,12 +72,12 @@ function goToCourse(item) {
     padding-top: 0;
 }
 
-.content-item-header-name{
+.content-item-header-name {
     font-weight: bolder;
     cursor: pointer;
 }
 
-.content-item-header-name:hover{
+.content-item-header-name:hover {
     color: teal;
 }
 </style>
