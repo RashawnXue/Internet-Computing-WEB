@@ -27,17 +27,36 @@ function goToCourse(item) {
 
 </script>
 
+<script>
+import axios from "axios";
+
+export default {
+  data(){
+    return {
+      courses:[]
+    }
+  },
+  created() {
+    const _this = this
+    axios.get('http://localhost:9090/courses/findAll').then(function (resp){
+      _this.courses = resp.data
+      console.log(_this.courses)
+    })
+  }
+}
+</script>
+
 <template>
     <div class="content-container">
-        <el-card v-for="item in briefIntros" class="content-item">
+        <el-card v-for="item in courses" class="content-item">
             <template #header>
                 <div class="content-item-header">
                     <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
-                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.courseName }}</div>
+                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
                     <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
                 </div>
             </template>
-            {{ "简介：" + item.courseIntro }}
+            {{ "简介：" + item.introduction }}
         </el-card>
     </div>
 </template>
