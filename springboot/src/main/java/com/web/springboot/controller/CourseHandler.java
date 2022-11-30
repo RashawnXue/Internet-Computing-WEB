@@ -15,6 +15,13 @@ public class CourseHandler {
     @Autowired
     private CourseRepository courseRepository;
 
+    /**
+     * 访问所有课程信息
+     * 并返回一个列表
+     * 将此接口映射为url
+     *
+     * @return 装有所有课程信息的列表
+     */
     @GetMapping("/findAll")
     public List<Courses> findAll() {
         return courseRepository.findAll();
