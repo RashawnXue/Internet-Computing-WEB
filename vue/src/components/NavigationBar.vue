@@ -109,5 +109,7 @@ function clickAvatar() {
     --el-menu-hover-bg-color: var(--color-background);
     --el-menu-bg-color: var(--color-background);
     --el-menu-text-color: var(--color-text);
+    --el-bg-color-overlay: var(--color-background);
+    --el-border-color: var(--color-border)
 }
 </style>

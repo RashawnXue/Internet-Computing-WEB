@@ -16,7 +16,7 @@ const briefIntros = ref([
     { courseName: "软件工程与计算Ⅱ", courseIntro: "这是大二下的课" }]);
 
 function goToCourse(item) {
-    router.push({ path: '/detail/'+ item.courseName})
+    router.push({ path: '/detail/' + item.courseName })
     ElNotification({
         title: '跳转到' + item.courseName + "的详情页",
         message: 'nothing',
@@ -25,10 +25,30 @@ function goToCourse(item) {
     })
 }
 
+function selectCourses(index, indexPath, item) {
+    console.log(index)
+    console.log(indexPath)
+    console.log(item)
+    // 然后更新briefIntros数组
+}
+
+const activeIndex = ref('1')
+
 </script>
 
 <template>
     <div class="content-container">
+        <div class="home-side-bar">
+            <el-menu mode="vertical" :default-active="activeIndex"
+                style="background-color: var(--color-background-soft); border-width: 0;" @select="selectCourses">
+                <el-menu-item index="1">
+                    <span>111</span>
+                </el-menu-item>
+                <el-menu-item index="2">
+                    <span>222</span>
+                </el-menu-item>
+            </el-menu>
+        </div>
         <el-card v-for="item in briefIntros" class="content-item">
             <template #header>
                 <div class="content-item-header">
@@ -48,6 +68,13 @@ function goToCourse(item) {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.home-side-bar{
+    position: fixed;
+    width: 20rem;
+    left: 2rem;
+    display: var(--show-side-bar);
 }
 
 .content-item {
