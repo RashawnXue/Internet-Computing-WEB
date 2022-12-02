@@ -9,7 +9,7 @@ console.log(route)
 
 <template>
     <div class="content-container">
-        <el-divider content-position="center" style="--el-bg-color:var(--color-background-soft); --el-text-color-primary: var(--color-text); --el-border-color: var(--color-border)">
+        <el-divider content-position="center">
             为您展示“{{ route.query.content }}”的相关内容
         </el-divider>
     </div>

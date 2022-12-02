@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import IconCourse from '../components/icons/IconCourse.vue'
 import IconNew from '../components/icons/IconNew.vue'
 import axios from "axios";
+import { Reading } from '@element-plus/icons-vue';
 
 const router = useRouter()
 
@@ -26,20 +27,60 @@ axios.get('http://localhost:9090/courses/findAll').then(function (resp) {
     console.log(courses.value)
 })
 
+const collapse = ref(false)
+
+let rem = window.getComputedStyle(document.documentElement)["fontSize"]
+window.onresize = function () {
+    rem = window.getComputedStyle(document.documentElement)["fontSize"]
+    let windowWidth = window.innerWidth
+    console.log(rem)
+    console.log(windowWidth)
+    if (windowWidth < 72 * Number(rem.substring(0, rem.length-2))) {
+        collapse.value=true
+    } else {
+        collapse.value=false
+    }
+}
+
+// 筛选相应课程
+function filterCourses(index, indexPath, item) {
+    console.log(index)
+}
+
 </script>
 
 <template>
+    <div class="home-side-bar">
+        <el-menu
+            style="border-right-width: 0; background-color: var(--el-bg-color-page); --el-menu-hover-bg-color: var(--el-bg-color-page); --el-menu-bg-color: var(--el-bg-color-page)" 
+            :collapse="collapse" @select="filterCourses">
+            <el-sub-menu>
+                <template #title>
+                    <el-icon>
+                        <Reading />
+                    </el-icon>
+                    <span>课程分类</span>
+                </template>
+                <el-menu-item index="软件学院">
+                    软件学院
+                </el-menu-item>
+                <el-menu-item index="其他">
+                    其他
+                </el-menu-item>
+            </el-sub-menu>
+        </el-menu>
+    </div>
     <div class="content-container">
-        <el-card v-for="item in courses" class="content-item">
-            <template #header>
-                <div class="content-item-header">
-                    <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
-                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
-                    <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
-                </div>
-            </template>
-            {{ "简介：" + item.introduction }}
-        </el-card>
+            <el-card v-for="item in courses" class="content-item">
+                <template #header>
+                    <div class="content-item-header">
+                        <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
+                        <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
+                        <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
+                    </div>
+                </template>
+                {{ "简介：" + item.introduction }}
+            </el-card>
     </div>
 </template>
 
@@ -48,14 +89,16 @@ axios.get('http://localhost:9090/courses/findAll').then(function (resp) {
     z-index: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding-left: var(--content-padding-left);
+    align-items: var(--content-align-items);
 }
 
 .home-side-bar {
+    z-index: 1;
     position: fixed;
-    width: 20rem;
-    left: 2rem;
-    display: var(--show-side-bar);
+    width: 16rem;
+    left: 0;
+    display: var(--side-bar-display);
 }
 
 .content-item {
@@ -63,11 +106,8 @@ axios.get('http://localhost:9090/courses/findAll').then(function (resp) {
     box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
     border-radius: 4px;
     margin-bottom: 1rem;
-    background-color: var(--color-background);
     box-sizing: border-box;
     padding: 1rem;
-    --el-card-border-color: var(--color-border);
-    color: var(--color-text);
     --el-card-padding: 1rem;
 }
 
@@ -89,3 +129,4 @@ axios.get('http://localhost:9090/courses/findAll').then(function (resp) {
     color: teal;
 }
 </style>
+

@@ -1,11 +1,33 @@
 @import './base.css';
 
 :root{
-  --show-side-bar: block;
+  --side-bar-display: block;
+  --content-padding-left: 20rem;
+  --content-align-items: flex-start;
+  --userID-display: block;
+}
+
+@media screen and (min-width: 90rem) {
+  :root {
+    --side-bar-display: block;
+    --content-padding-left: 0;
+    --content-align-items: center;
+    --userID-display: block;
+  }
+}
+
+@media screen and (max-width: 72rem) {
+  :root {
+    --content-padding-left: 0;
+    --content-align-items: center;
+    --userID-display: none;
+  }
 }
 
 @media screen and (max-width: 60rem) {
   :root {
-    --show-side-bar: none;
+    --side-bar-display: none;
+    --content-padding-left: 0;
+    --content-align-items: center;
   }
 }
