@@ -18,8 +18,9 @@ import NavigationBar from './components/NavigationBar.vue';
       <!-- 路由匹配到的组件将渲染在这里 -->
       <router-view></router-view>
     </el-main>
-    <el-footer style="position: relative; top: 60px; width: 100%; bottom: 0px; text-align: center;">
-      <el-divider content-position="center">
+    <el-footer
+      style="position: relative; top: 60px; width: 100%; bottom: 0px; text-align: center; background-color: var(--el-bg-color-page);">
+      <el-divider content-position="center" style="background-color: var(--el-bg-color-page);">
         2022-2023第一学期南京大学软件学院互联网计算课程大作业
       </el-divider>
     </el-footer>

@@ -2,9 +2,10 @@
 
 :root{
   --side-bar-display: block;
-  --content-padding-left: 20rem;
+  --content-padding-left: 16rem;
   --content-align-items: flex-start;
   --userID-display: block;
+  --LOGO-display: block;
 }
 
 @media screen and (min-width: 90rem) {
@@ -16,7 +17,7 @@
   }
 }
 
-@media screen and (max-width: 72rem) {
+@media screen and (max-width: 68rem) {
   :root {
     --content-padding-left: 0;
     --content-align-items: center;
@@ -29,5 +30,6 @@
     --side-bar-display: none;
     --content-padding-left: 0;
     --content-align-items: center;
+    --LOGO-display: none;
   }
 }

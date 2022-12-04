@@ -25,7 +25,7 @@ function clickAvatar() {
 <template>
     <div class="navigation-container">
         <el-menu mode="horizontal" class="navigation-menu" :default-active="activeIndex" router :ellipsis="false">
-            <el-menu-item>
+            <el-menu-item style="display: var(--LOGO-display);">
                 LOGO
             </el-menu-item>
             <!-- index属性放路径-ysh -->

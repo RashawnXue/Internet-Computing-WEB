@@ -35,10 +35,10 @@ window.onresize = function () {
     let windowWidth = window.innerWidth
     console.log(rem)
     console.log(windowWidth)
-    if (windowWidth < 72 * Number(rem.substring(0, rem.length-2))) {
-        collapse.value=true
+    if (windowWidth < 68 * Number(rem.substring(0, rem.length - 2))) {
+        collapse.value = true
     } else {
-        collapse.value=false
+        collapse.value = false
     }
 }
 
@@ -52,7 +52,7 @@ function filterCourses(index, indexPath, item) {
 <template>
     <div class="home-side-bar">
         <el-menu
-            style="border-right-width: 0; background-color: var(--el-bg-color-page); --el-menu-hover-bg-color: var(--el-bg-color-page); --el-menu-bg-color: var(--el-bg-color-page)" 
+            style="border-right-width: 0; background-color: var(--el-bg-color-page); --el-menu-hover-bg-color: var(--el-bg-color-page); --el-menu-bg-color: var(--el-bg-color-page)"
             :collapse="collapse" @select="filterCourses">
             <el-sub-menu>
                 <template #title>
@@ -71,16 +71,16 @@ function filterCourses(index, indexPath, item) {
         </el-menu>
     </div>
     <div class="content-container">
-            <el-card v-for="item in courses" class="content-item">
-                <template #header>
-                    <div class="content-item-header">
-                        <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
-                        <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
-                        <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
-                    </div>
-                </template>
-                {{ "简介：" + item.introduction }}
-            </el-card>
+        <el-card v-for="item in courses" class="content-item">
+            <template #header>
+                <div class="content-item-header">
+                    <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
+                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
+                    <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
+                </div>
+            </template>
+            {{ "简介：" + item.introduction }}
+        </el-card>
     </div>
 </template>
 
@@ -96,7 +96,7 @@ function filterCourses(index, indexPath, item) {
 .home-side-bar {
     z-index: 1;
     position: fixed;
-    width: 16rem;
+    width: 12rem;
     left: 0;
     display: var(--side-bar-display);
 }
