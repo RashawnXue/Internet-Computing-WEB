@@ -21,5 +21,6 @@ console.log(route)
     display: flex;
     flex-direction: column;
     align-items: center;
+    --el-bg-color:var(--el-bg-color-page);
 }
 </style>

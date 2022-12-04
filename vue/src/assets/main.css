@@ -2,18 +2,22 @@
 
 :root {
   --side-bar-display: block;
-  --content-padding-left: 16rem;
-  --content-align-items: flex-start;
+  --content-padding-left: 0;
+  --content-align-items: center;
   --userID-display: block;
   --LOGO-display: block;
 }
 
-@media screen and (min-width: 90rem) {
+@media screen and (max-width: 84rem) {
   :root {
-    --side-bar-display: block;
-    --content-padding-left: 0;
-    --content-align-items: center;
-    --userID-display: block;
+    --content-padding-left: 14rem;
+    --content-align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 74rem) {
+  :root{
+    --LOGO-display: none;
   }
 }
 
@@ -25,11 +29,17 @@
   }
 }
 
-@media screen and (max-width: 60rem) {
+@media screen and (max-width: 62rem) {
   :root {
-    --side-bar-display: none;
-    --content-padding-left: 0;
+    --content-padding-left: 4rem;
+    --content-align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 56rem) {
+  :root {
     --content-align-items: center;
-    --LOGO-display: none;
+    --content-padding-left: 0;
+    --side-bar-display: none;
   }
 }

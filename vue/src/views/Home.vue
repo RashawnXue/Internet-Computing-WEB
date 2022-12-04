@@ -10,7 +10,7 @@ import { Reading } from '@element-plus/icons-vue';
 const router = useRouter()
 
 function goToCourse(item) {
-    router.push({ path: '/detail/'+ item.courseName})
+    router.push({ path: '/detail/' + item.courseName })
     ElNotification({
         title: '跳转到' + item.courseName + "的详情页",
         message: 'nothing',
@@ -33,8 +33,6 @@ let rem = window.getComputedStyle(document.documentElement)["fontSize"]
 window.onresize = function () {
     rem = window.getComputedStyle(document.documentElement)["fontSize"]
     let windowWidth = window.innerWidth
-    console.log(rem)
-    console.log(windowWidth)
     if (windowWidth < 68 * Number(rem.substring(0, rem.length - 2))) {
         collapse.value = true
     } else {
@@ -52,7 +50,7 @@ function filterCourses(index, indexPath, item) {
 <template>
     <div class="home-side-bar">
         <el-menu
-            style="border-right-width: 0; background-color: var(--el-bg-color-page); --el-menu-hover-bg-color: var(--el-bg-color-page); --el-menu-bg-color: var(--el-bg-color-page)"
+            style="border-right-width: 0; background-color: transparent; --el-menu-hover-bg-color: transparent; --el-menu-bg-color: transparent"
             :collapse="collapse" @select="filterCourses">
             <el-sub-menu>
                 <template #title>
@@ -89,7 +87,8 @@ function filterCourses(index, indexPath, item) {
     z-index: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: var(--content-align-items);
+    padding-left: var(--content-padding-left);
 }
 
 .content-item {
@@ -100,6 +99,14 @@ function filterCourses(index, indexPath, item) {
     box-sizing: border-box;
     padding: 1rem;
     --el-card-padding: 1rem;
+}
+
+.home-side-bar {
+    z-index: 1;
+    position: fixed;
+    width: 12rem;
+    left: 0;
+    display: var(--side-bar-display);
 }
 
 .content-item-header {
