@@ -5,10 +5,7 @@ import { useRouter } from 'vue-router';
 import IconCourse from '../components/icons/IconCourse.vue'
 import IconNew from '../components/icons/IconNew.vue'
 import axios from "axios";
-<<<<<<< HEAD
 import { Reading } from '@element-plus/icons-vue';
-=======
->>>>>>> a77a3b6388c2aa92ba8d78770ea4151ec6a73f70
 
 const router = useRouter()
 
