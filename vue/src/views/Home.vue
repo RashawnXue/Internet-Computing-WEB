@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import IconCourse from '../components/icons/IconCourse.vue'
 import IconNew from '../components/icons/IconNew.vue'
 import axios from "axios";
+import { Reading } from '@element-plus/icons-vue';
 
 const router = useRouter()
 
@@ -21,10 +22,30 @@ function goToCourse(item) {
 // 后端课程信息数据获取
 const courses = ref([])
 // url为对应接口的映射
-axios.get('http://localhost:9090/courses/findAll').then(function (resp){
-  courses.value = resp.data
-  console.log(courses.value)
+axios.get('http://localhost:9090/courses/findAll').then(function (resp) {
+    courses.value = resp.data
+    console.log(courses.value)
 })
+
+const collapse = ref(false)
+
+let rem = window.getComputedStyle(document.documentElement)["fontSize"]
+window.onresize = function () {
+    rem = window.getComputedStyle(document.documentElement)["fontSize"]
+    let windowWidth = window.innerWidth
+    console.log(rem)
+    console.log(windowWidth)
+    if (windowWidth < 68 * Number(rem.substring(0, rem.length - 2))) {
+        collapse.value = true
+    } else {
+        collapse.value = false
+    }
+}
+
+// 筛选相应课程
+function filterCourses(index, indexPath, item) {
+    console.log(index)
+}
 
 </script>
 
