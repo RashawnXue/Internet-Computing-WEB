@@ -10,7 +10,7 @@ import { Reading } from '@element-plus/icons-vue';
 const router = useRouter()
 
 function goToCourse(item) {
-    router.push({ path: '/detail/' + item.courseName })
+    router.push({ path: '/detail/'+ item.courseName})
     ElNotification({
         title: '跳转到' + item.courseName + "的详情页",
         message: 'nothing',
@@ -50,26 +50,6 @@ function filterCourses(index, indexPath, item) {
 </script>
 
 <template>
-    <div class="home-side-bar">
-        <el-menu
-            style="border-right-width: 0; background-color: var(--el-bg-color-page); --el-menu-hover-bg-color: var(--el-bg-color-page); --el-menu-bg-color: var(--el-bg-color-page)"
-            :collapse="collapse" @select="filterCourses">
-            <el-sub-menu>
-                <template #title>
-                    <el-icon>
-                        <Reading />
-                    </el-icon>
-                    <span>课程分类</span>
-                </template>
-                <el-menu-item index="软件学院">
-                    软件学院
-                </el-menu-item>
-                <el-menu-item index="其他">
-                    其他
-                </el-menu-item>
-            </el-sub-menu>
-        </el-menu>
-    </div>
     <div class="content-container">
         <el-card v-for="item in courses" class="content-item">
             <template #header>
@@ -89,16 +69,7 @@ function filterCourses(index, indexPath, item) {
     z-index: 0;
     display: flex;
     flex-direction: column;
-    padding-left: var(--content-padding-left);
-    align-items: var(--content-align-items);
-}
-
-.home-side-bar {
-    z-index: 1;
-    position: fixed;
-    width: 12rem;
-    left: 0;
-    display: var(--side-bar-display);
+    align-items: center;
 }
 
 .content-item {
@@ -106,8 +77,11 @@ function filterCourses(index, indexPath, item) {
     box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
     border-radius: 4px;
     margin-bottom: 1rem;
+    background-color: var(--color-background);
     box-sizing: border-box;
     padding: 1rem;
+    --el-card-border-color: var(--color-border);
+    color: var(--color-text);
     --el-card-padding: 1rem;
 }
 
@@ -129,4 +103,3 @@ function filterCourses(index, indexPath, item) {
     color: teal;
 }
 </style>
-
