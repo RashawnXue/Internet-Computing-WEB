@@ -35,9 +35,6 @@ function goToSearch() {
 <style>
 .search-input {
     --el-input-border-radius: 50px;
-    --el-input-border-color: var(--color-border);
-    --el-input-hover-border-color: var(--color-border-hover);
     --el-input-focus-border-color: teal;
-    --el-input-bg-color: var(--color-background-soft);
 }
 </style>
