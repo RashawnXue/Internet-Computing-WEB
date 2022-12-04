@@ -4,16 +4,9 @@ import { ref, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router';
 import IconCourse from '../components/icons/IconCourse.vue'
 import IconNew from '../components/icons/IconNew.vue'
+import axios from "axios";
 
 const router = useRouter()
-
-// 这个数组目前是静态的，最终是要从数据库中获取
-const briefIntros = ref([
-    { courseName: "C++高级程序设计", courseIntro: "有一说一，以往教授的内容很难被称为高级，基本还是java语法的对应版。——jfygg" },
-    { courseName: "数据结构与算法", courseIntro: "没有简介" },
-    { courseName: "计算机组织结构", courseIntro: "也没有简介" },
-    { courseName: "互联网计算", courseIntro: "还是没有简介" },
-    { courseName: "软件工程与计算Ⅱ", courseIntro: "这是大二下的课" }]);
 
 function goToCourse(item) {
     router.push({ path: '/detail/'+ item.courseName})
@@ -25,19 +18,27 @@ function goToCourse(item) {
     })
 }
 
+// 后端课程信息数据获取
+const courses = ref([])
+// url为对应接口的映射
+axios.get('http://localhost:9090/courses/findAll').then(function (resp){
+  courses.value = resp.data
+  console.log(courses.value)
+})
+
 </script>
 
 <template>
     <div class="content-container">
-        <el-card v-for="item in briefIntros" class="content-item">
+        <el-card v-for="item in courses" class="content-item">
             <template #header>
                 <div class="content-item-header">
                     <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
-                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.courseName }}</div>
+                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
                     <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
                 </div>
             </template>
-            {{ "简介：" + item.courseIntro }}
+            {{ "简介：" + item.introduction }}
         </el-card>
     </div>
 </template>
