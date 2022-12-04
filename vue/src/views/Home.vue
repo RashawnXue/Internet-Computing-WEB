@@ -77,11 +77,8 @@ function filterCourses(index, indexPath, item) {
     box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
     border-radius: 4px;
     margin-bottom: 1rem;
-    background-color: var(--color-background);
     box-sizing: border-box;
     padding: 1rem;
-    --el-card-border-color: var(--color-border);
-    color: var(--color-text);
     --el-card-padding: 1rem;
 }
 
