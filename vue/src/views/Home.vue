@@ -50,6 +50,26 @@ function filterCourses(index, indexPath, item) {
 </script>
 
 <template>
+    <div class="home-side-bar">
+        <el-menu
+            style="border-right-width: 0; background-color: var(--el-bg-color-page); --el-menu-hover-bg-color: var(--el-bg-color-page); --el-menu-bg-color: var(--el-bg-color-page)"
+            :collapse="collapse" @select="filterCourses">
+            <el-sub-menu>
+                <template #title>
+                    <el-icon>
+                        <Reading />
+                    </el-icon>
+                    <span>课程分类</span>
+                </template>
+                <el-menu-item index="软件学院">
+                    软件学院
+                </el-menu-item>
+                <el-menu-item index="其他">
+                    其他
+                </el-menu-item>
+            </el-sub-menu>
+        </el-menu>
+    </div>
     <div class="content-container">
         <el-card v-for="item in courses" class="content-item">
             <template #header>
