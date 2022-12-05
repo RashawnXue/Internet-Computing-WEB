@@ -10,7 +10,7 @@ import { Reading } from '@element-plus/icons-vue';
 const router = useRouter()
 
 function goToCourse(item) {
-    router.push({ path: '/detail/'+ item.courseName})
+    router.push({ path: '/detail/' + item.courseName })
     ElNotification({
         title: '跳转到' + item.courseName + "的详情页",
         message: 'nothing',
@@ -33,8 +33,6 @@ let rem = window.getComputedStyle(document.documentElement)["fontSize"]
 window.onresize = function () {
     rem = window.getComputedStyle(document.documentElement)["fontSize"]
     let windowWidth = window.innerWidth
-    console.log(rem)
-    console.log(windowWidth)
     if (windowWidth < 68 * Number(rem.substring(0, rem.length - 2))) {
         collapse.value = true
     } else {
@@ -50,6 +48,26 @@ function filterCourses(index, indexPath, item) {
 </script>
 
 <template>
+    <div class="home-side-bar">
+        <el-menu
+            style="border-right-width: 0; background-color: transparent; --el-menu-hover-bg-color: transparent; --el-menu-bg-color: transparent"
+            :collapse="collapse" @select="filterCourses">
+            <el-sub-menu>
+                <template #title>
+                    <el-icon>
+                        <Reading />
+                    </el-icon>
+                    <span>课程分类</span>
+                </template>
+                <el-menu-item index="软件学院">
+                    软件学院
+                </el-menu-item>
+                <el-menu-item index="其他">
+                    其他
+                </el-menu-item>
+            </el-sub-menu>
+        </el-menu>
+    </div>
     <div class="content-container">
         <el-card v-for="item in courses" class="content-item">
             <template #header>
@@ -69,7 +87,8 @@ function filterCourses(index, indexPath, item) {
     z-index: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: var(--content-align-items);
+    padding-left: var(--content-padding-left);
 }
 
 .content-item {
@@ -77,12 +96,17 @@ function filterCourses(index, indexPath, item) {
     box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
     border-radius: 4px;
     margin-bottom: 1rem;
-    background-color: var(--color-background);
     box-sizing: border-box;
     padding: 1rem;
-    --el-card-border-color: var(--color-border);
-    color: var(--color-text);
     --el-card-padding: 1rem;
+}
+
+.home-side-bar {
+    z-index: 1;
+    position: fixed;
+    width: 12rem;
+    left: 0;
+    display: var(--side-bar-display);
 }
 
 .content-item-header {
