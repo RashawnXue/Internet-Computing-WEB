@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 class SpringbootApplicationTests {
 
@@ -33,6 +35,7 @@ class SpringbootApplicationTests {
         String res = userHandler.Login(user);
         System.out.println(res);
     }
+
     @Test
     void Login_test_fail() {
         User user = new User();
@@ -41,6 +44,7 @@ class SpringbootApplicationTests {
         String res = userHandler.Login(user);
         System.out.println(res);
     }
+
     @Test
     void Login_test_notexist() {
         User user = new User();
@@ -48,5 +52,14 @@ class SpringbootApplicationTests {
         user.setPassword("lds5555");
         String res = userHandler.Login(user);
         System.out.println(res);
+    }
+
+    @Test
+    void Sort() {
+        List<User> users = userRepository.findByUsernameLikeOrderByContributionDesc("%");
+        for (User u :
+                users) {
+            System.out.println(u.getUsername());
+        }
     }
 }

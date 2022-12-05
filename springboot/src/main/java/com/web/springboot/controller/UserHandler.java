@@ -3,10 +3,10 @@ package com.web.springboot.controller;
 import com.web.springboot.entity.User;
 import com.web.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -14,8 +14,17 @@ public class UserHandler {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/register")
 
+    /**
+     * 用户注册
+     * url:"/user/register"
+     *
+     * @param user_data1 : 内为username 和 password两个字段
+     * @return 字符串String
+     * 用户已存在 返回 “exist”
+     * 注册成功 返回 "success"
+     */
+    @PostMapping("/register")
     public String Register(@RequestBody User user_data1) {
         User user_data = userRepository.findByusername(user_data1.getUsername());
         if (user_data != null) {
@@ -25,6 +34,16 @@ public class UserHandler {
         return "success";
     }
 
+    /**
+     * 用户登录
+     * url:"/user/login"
+     *
+     * @param user_data_receive : 内为username 和 password两个字段
+     * @return 字符串String
+     * 用户不存在 返回 “not exist”
+     * 登录成功 返回 “success”
+     * 密码不对 返回 “fail”
+     */
     @PostMapping("/login")
     public String Login(@RequestBody User user_data_receive) {
         User user_data = userRepository.findByusername(user_data_receive.getUsername());
@@ -38,5 +57,10 @@ public class UserHandler {
                 return "fail";
             }
         }
+    }
+
+    @GetMapping("/rank")
+    public List<User> Rank() {
+        return userRepository.findByUsernameLikeOrderByContributionDesc("%");
     }
 }
