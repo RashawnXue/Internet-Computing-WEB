@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 import { House, Medal, User, CirclePlus, Sunny, Moon } from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
 import SearchBar from './SearchBar.vue';
 import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+const router = useRouter()
 
 const activeIndex = ref('/')
 
@@ -18,6 +20,9 @@ function clickAvatar() {
         type: 'error',
         showClose: false,
     })
+}
+function clickUpload(){
+    router.push({ path: '/upload' }); 
 }
 
 </script>
@@ -38,7 +43,7 @@ function clickAvatar() {
                     <span style="margin-right: 5px;">首页</span>
                 </template>
             </el-menu-item>
-            <el-menu-item>
+            <el-menu-item index = "/rank">
                 <template #title>
                     <el-icon>
                         <Medal />
@@ -57,7 +62,7 @@ function clickAvatar() {
         </el-menu>
         <div style="align-self: center; display: flex; flex-direction: row;">
             <SearchBar style="align-self: center; width: 18rem;" />
-            <el-button :icon="CirclePlus" style="align-self: center;" type="primary" color="teal" size="large" round>上传
+            <el-button :icon="CirclePlus" style="align-self: center;" type="primary" color="teal" size="large" round @click="clickUpload">上传
             </el-button>
             <el-switch size="large" v-model="isDark" style="align-self:center; --el-switch-on-color: teal; margin: 0 1rem;" inline-prompt
                 :active-icon="Moon" :inactive-icon="Sunny" />

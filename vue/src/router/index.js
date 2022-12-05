@@ -6,6 +6,9 @@ import Search from '../views/Search.vue'
 import Detail from '../views/Detail.vue'
 import Login from '../views/Login.vue'
 import Account from '../views/Account.vue'
+import rank from '../views/rank.vue'
+import upload from '../views/upload.vue'
+
 
 // 2. 定义一些路由
 // 每个路由都需要映射到一个组件。
@@ -15,7 +18,10 @@ const routes = [
     { path: '/search', component: Search },
     { path: '/detail/:name', component: Detail },
     { path: '/login',component:Login},
-    {path:'/account/:name',component:Account}
+    {path:'/account/:name',component:Account},
+    { path: '/rank', component: rank},
+    { path: '/upload', component: upload},
+    
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置
