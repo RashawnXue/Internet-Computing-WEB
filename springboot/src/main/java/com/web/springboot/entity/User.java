@@ -7,16 +7,16 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 /**
- * 课程实体类
+ * 用户实体类
  */
 @Entity
 @Data
-public class Courses {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String course_name;
-    private String teacher_name;
-    private String study_time;
-    private String introduction;
+    private String username;
+    private String password;
+    private String picture;
+    private Integer contribution;
 }

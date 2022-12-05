@@ -11,14 +11,14 @@ import lombok.Data;
  */
 @Entity
 @Data
-public class Resource_table {
+public class Resource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String type;
-    private String data_path;
-    private Integer uploader_id;
+    private String datapath;
     private Integer size;
-    private Integer course_id;
+    private Integer uploaderid;
+    private Integer courseid;
 }
