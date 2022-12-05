@@ -1,20 +1,45 @@
 @import './base.css';
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+:root {
+  --side-bar-display: block;
+  --content-padding-left: 0;
+  --content-align-items: center;
+  --userID-display: block;
+  --LOGO-display: block;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+@media screen and (max-width: 84rem) {
+  :root {
+    --content-padding-left: 14rem;
+    --content-align-items: flex-start;
   }
 }
 
-@media (min-width: 1024px) {
-  body {
+@media screen and (max-width: 74rem) {
+  :root{
+    --LOGO-display: none;
+  }
+}
 
+@media screen and (max-width: 68rem) {
+  :root {
+    --content-padding-left: 0;
+    --content-align-items: center;
+    --userID-display: none;
+  }
+}
+
+@media screen and (max-width: 62rem) {
+  :root {
+    --content-padding-left: 4rem;
+    --content-align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 56rem) {
+  :root {
+    --content-align-items: center;
+    --content-padding-left: 0;
+    --side-bar-display: none;
   }
 }
