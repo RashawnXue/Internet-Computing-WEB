@@ -22,7 +22,7 @@ function goToCourse(item) {
 // 后端课程信息数据获取
 const courses = ref([])
 // url为对应接口的映射
-axios.get('http://localhost:9090/courses/findAll').then(function (resp) {
+axios.get('http://localhost:9090/course/findAll').then(function (resp) {
     courses.value = resp.data
     console.log(courses.value)
 })
@@ -73,7 +73,7 @@ function filterCourses(index, indexPath, item) {
             <template #header>
                 <div class="content-item-header">
                     <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
-                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
+                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
                     <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
                 </div>
             </template>
