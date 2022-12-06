@@ -34,6 +34,7 @@ public class CourseHandler {
      * 对课程进行弱模糊搜索
      * 并返回一个列表
      * 搜索模式：匹配关键字{name}，关键字必须完整
+     * url:/findByName/{name}
      *
      * @return 匹配到的课程列表
      */
