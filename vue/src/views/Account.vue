@@ -1,12 +1,13 @@
 <script setup>
     import {ref} from 'vue'
-
+    
 
 </script>
 
 <template>
     <div class="accountBox">
-        <image src="../assets/img/me.png"></image>
+        <image src="@/assets/img/me.png" width="100%"></image>
+        
     </div>
 </template>
 <style>

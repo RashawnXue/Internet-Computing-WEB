@@ -37,9 +37,14 @@
 </template>
 
 <script lang="ts" setup>
-
+import axios from "axios";
 import {reactive,ref} from 'vue';
 import type {FormInstance} from 'element-plus';
+import storage from "../utils/LocalStorage";
+
+const dbUrl="http://localhost:9090"
+const loginUrl="/user_data/login"
+const registerUrl="/user_data/register"
 
 const pageRef=ref({
     typeIsLogin:true,
@@ -59,7 +64,6 @@ const loginForm = reactive({
 function changeLoginType(value:any){
     pageRef.value.typeIsLogin=value;
 };
-
 
 const validateUsrname =(rule:any,value:any,callback:any)=>{
     if(value===''){
@@ -97,8 +101,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-        //这里将来要与后端对接
       console.log(loginForm)
+
     } else {
       console.log('error submit!')
       return false

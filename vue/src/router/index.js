@@ -15,7 +15,7 @@ const routes = [
     { path: '/search', component: Search },
     { path: '/detail/:name', component: Detail },
     { path: '/login',component:Login},
-    {path:'/account/:name',component:Account}
+    {path:'/account',component:Account}
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置
