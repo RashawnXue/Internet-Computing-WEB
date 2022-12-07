@@ -5,6 +5,7 @@ import com.web.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -62,7 +63,6 @@ public class UserHandler {
     /**
      * 用户贡献度排行榜获取
      * URL="/user/rank"
-     *
      * @return  返回一个列表 ，按照贡献度降序，存贮每个用户的信息，可自行取出username和contribution字段
      */
     @GetMapping("/rank")
