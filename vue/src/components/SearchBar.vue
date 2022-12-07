@@ -24,7 +24,7 @@ function goToSearch() {
 <template>
 
     <div style="display: flex; flex-direction: row;">
-        <el-input class="search-input" v-model="content" maxlength="15" placeholder="请输入内容" size="large">
+        <el-input class="search-input" v-model="content" maxlength="15" placeholder="搜索课程" size="large">
         </el-input>
         <el-button :icon="Search" style="margin: 0 1rem;" type="primary" color="teal" size="large" @click="goToSearch"
             circle></el-button>
@@ -35,9 +35,6 @@ function goToSearch() {
 <style>
 .search-input {
     --el-input-border-radius: 50px;
-    --el-input-border-color: var(--color-border);
-    --el-input-hover-border-color: var(--color-border-hover);
     --el-input-focus-border-color: teal;
-    --el-input-bg-color: var(--color-background-soft);
 }
 </style>

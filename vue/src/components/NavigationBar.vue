@@ -1,13 +1,26 @@
 <script setup>
 import { ref } from 'vue';
-import { House, Reading, Medal, User, CirclePlus } from '@element-plus/icons-vue';
+import { House, Medal, User, CirclePlus, Sunny, Moon } from '@element-plus/icons-vue';
 import SearchBar from './SearchBar.vue';
+import { useDark, useToggle } from '@vueuse/core'
+import {useRouter} from 'vue-router'
+import storage from '../utils/LocalStorage';
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+const router=useRouter()
 
 const activeIndex = ref('/')
 
 const userID = ref('未登录')
 
 function clickAvatar() {
+    console.log(storage.get("userID"))
+    if(!storage.get("userID")){
+        router.push('/login')
+    }else{
+        router.push('/account')
+    }
     ElNotification({
         title: '未登录时点击头像得提示登录，登陆了之后跳转到个人信息',
         message: '可是指针移到头像上方时为什么没有变成手型呢',
@@ -20,8 +33,8 @@ function clickAvatar() {
 
 <template>
     <div class="navigation-container">
-        <el-menu mode="horizontal" class="navigation-menu" :default-active="activeIndex" router>
-            <el-menu-item>
+        <el-menu mode="horizontal" class="navigation-menu" :default-active="activeIndex" router :ellipsis="false">
+            <el-menu-item style="display: var(--LOGO-display);">
                 LOGO
             </el-menu-item>
             <!-- index属性放路径-ysh -->
@@ -32,14 +45,6 @@ function clickAvatar() {
                         <House />
                     </el-icon>
                     <span style="margin-right: 5px;">首页</span>
-                </template>
-            </el-menu-item>
-            <el-menu-item >
-                <template #title>
-                    <el-icon>
-                        <Reading />
-                    </el-icon>
-                    <span style="margin-right: 5px;">课程</span>
                 </template>
             </el-menu-item>
             <el-menu-item>
@@ -63,9 +68,11 @@ function clickAvatar() {
             <SearchBar style="align-self: center; width: 18rem;" />
             <el-button :icon="CirclePlus" style="align-self: center;" type="primary" color="teal" size="large" round>上传
             </el-button>
+            <el-switch size="large" v-model="isDark" style="align-self:center; --el-switch-on-color: teal; margin: 0 1rem;" inline-prompt
+                :active-icon="Moon" :inactive-icon="Sunny" />
         </div>
         <div class="user-profile">
-            <div style="align-self: center; margin-right: 2rem;">{{ userID }}</div>
+            <div style="align-self: center; margin-right: 2rem; display: var(--userID-display);">{{ userID }}</div>
             <!-- 这里应该放一个头像，然后点击会出现一些选项 -->
             <el-avatar style="align-self: center; cursor: pointer;" @click="clickAvatar"></el-avatar>
         </div>
@@ -84,9 +91,6 @@ function clickAvatar() {
     display: flex;
     flex-direction: row;
     width: 100%;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: var(--color-border);
     padding: 0 2rem;
     justify-content: space-between;
     box-shadow: var(--el-box-shadow-light);
@@ -106,8 +110,7 @@ function clickAvatar() {
 :root {
     --el-menu-active-color: teal;
     --el-menu-hover-text-color: teal;
-    --el-menu-hover-bg-color: var(--color-background);
-    --el-menu-bg-color: var(--color-background);
-    --el-menu-text-color: var(--color-text);
+    --el-menu-hover-bg-color: var(--el-bg-color);
+    --el-menu-bg-color: var(--el-bg-color);
 }
 </style>
