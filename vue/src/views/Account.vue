@@ -9,7 +9,7 @@
     const username=window.location.href.substring(window.location.href.lastIndexOf('/')+1,window.location.href.length)
     let userInfo=({
         posts:[],
-        headImage:'@/assets/img/login_pic.png',
+        headImage:'',
     })
     function isValid(){
         return username===storage.get("userID")  
@@ -22,7 +22,7 @@
 <template>
     <div class="accountBox">     
         <div style="display: flex;flex-direction: row;">
-            <image src={{this.userInfo.headImage}} style="width: 100%;"></image>
+            <image style="width: 100%;"></image>
         </div>
     </div>
 </template>

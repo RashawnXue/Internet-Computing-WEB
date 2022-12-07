@@ -117,15 +117,6 @@ const validatePassCheck=(rule:any,value:any,callback:any)=>{
     }
 }
 
-/*const test=(formEl: FormInstance | undefined) => {
-    storage.set("userID",loginForm.username,600000)
-            router.push({ path: pageRef.value.lastUrl })
-            ElMessage({
-                message:'登录成功！',
-                type:'success'
-            })
-}*/
-
 const submitForm = (formEl: FormInstance | undefined) => {
     tryRedirectToAccount()
   if (!formEl) return
