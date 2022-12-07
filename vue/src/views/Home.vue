@@ -2,6 +2,7 @@
 
 import { ref, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router';
+import CourseCard from '../components/CourseCard.vue';
 import IconCourse from '../components/icons/IconCourse.vue'
 import IconNew from '../components/icons/IconNew.vue'
 import axios from "axios";
@@ -69,16 +70,7 @@ function filterCourses(index, indexPath, item) {
         </el-menu>
     </div>
     <div class="content-container">
-        <el-card v-for="item in courses" class="content-item">
-            <template #header>
-                <div class="content-item-header">
-                    <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
-                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
-                    <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
-                </div>
-            </template>
-            {{ "简介：" + item.introduction }}
-        </el-card>
+        <CourseCard :courses="courses"></CourseCard>
     </div>
 </template>
 
@@ -91,16 +83,6 @@ function filterCourses(index, indexPath, item) {
     padding-left: var(--content-padding-left);
 }
 
-.content-item {
-    width: 50rem;
-    box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-    padding: 1rem;
-    --el-card-padding: 1rem;
-}
-
 .home-side-bar {
     z-index: 1;
     position: fixed;
@@ -109,21 +91,4 @@ function filterCourses(index, indexPath, item) {
     display: var(--side-bar-display);
 }
 
-.content-item-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: large;
-    font-weight: bolder;
-    padding-top: 0;
-}
-
-.content-item-header-name {
-    font-weight: bolder;
-    cursor: pointer;
-}
-
-.content-item-header-name:hover {
-    color: teal;
-}
 </style>
