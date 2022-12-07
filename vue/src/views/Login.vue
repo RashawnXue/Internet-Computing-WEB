@@ -1,4 +1,5 @@
 <template>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <div>
         <div class="loginBox">
 
@@ -10,8 +11,8 @@
             <div>
 
                 <div class="loginButtons" style="display:flex;flex-direction: row;">
-                    <el-button class="loginButton" @click="changeLoginType(true)">用户登录</el-button>
-                    <el-button class="loginButton" @click="changeLoginType(false)">账号注册</el-button>
+                    <el-button class="loginButton" @click="(changeLoginType(true),resetForm(formRef))">用户登录</el-button>
+                    <el-button class="loginButton" @click="(changeLoginType(false),resetForm(formRef))">账号注册</el-button>
                 </div>
                 
                 <div class="customLoginForm">
@@ -39,19 +40,19 @@
 <script lang="ts" setup>
 import axios from "axios";
 import {reactive,ref} from 'vue';
-import type {FormInstance} from 'element-plus';
+import {ElNotification, FormInstance} from 'element-plus';
+import { useRouter } from 'vue-router';
 import storage from "../utils/LocalStorage";
 
 const dbUrl="http://localhost:9090"
-const loginUrl="/user_data/login"
-const registerUrl="/user_data/register"
+const loginUrl="/user/login"
+const registerUrl="/user/register"
+const router=useRouter()
 
 const pageRef=ref({
     typeIsLogin:true,
     lastUrl:'',
-
 })
-
 
 const formRef=ref<FormInstance>()
 
@@ -60,7 +61,16 @@ const loginForm = reactive({
     password:'',
     passwordCheck:''
 });
+let formSender=({
+    username:'',
+    password:''
+})
 
+
+function resetForm (formEl:FormInstance|undefined){
+    if(!formEl)return
+    formEl.resetFields()
+}
 function changeLoginType(value:any){
     pageRef.value.typeIsLogin=value;
 };
@@ -68,8 +78,6 @@ function changeLoginType(value:any){
 const validateUsrname =(rule:any,value:any,callback:any)=>{
     if(value===''){
         callback(new Error('请输入用户名.'))
-    }else if(value==='114514'){
-        callback(new Error('哼 哼 哈啊啊啊啊啊啊啊啊啊啊啊啊啊啊'))
     }else{
         callback()
     }
@@ -89,11 +97,11 @@ const validatePass = (rule:any, value:any,callback:any)=>{
 
 const validatePassCheck=(rule:any,value:any,callback:any)=>{
     if (value === '') {
-    callback(new Error('请再次输入密码.'))
-  } else if (value !== loginForm.password) {
-    callback(new Error("两次密码输入不一致!"))
-  } else {
-    callback()
+        callback(new Error('请再次输入密码.'))
+    } else if (value !== loginForm.password) {
+        callback(new Error("两次密码输入不一致!"))
+    } else {
+        callback()
 }
 }
 
@@ -102,8 +110,77 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       console.log(loginForm)
+      formSender=({username:loginForm.username,password:loginForm.password})
+      
+      if(pageRef.value.typeIsLogin){//登录代码
+        axios.post(dbUrl+loginUrl,{
+            params:{
+                user_data_receive:formSender
+            }
+        }).then(function(res){
+            console.log(res)
+            if(res.data=="not exist"){
+                ElNotification({
+                    title: '该用户名不存在！',
+                    message: '请尝试检查用户名是否输入正确，或选择账户注册。',
+                    type: 'error',
+                    showClose: false,
+                })
+            }else{
+                if(res.data=="fail"){
+                    ElNotification({
+                        title: '密码输入错误！',
+                        message: '请检查密码输入及大小写是否开启。',
+                        type: 'warning',
+                        showClose: false,
+                    })
+                }else if(res.data=="success"){
+                    storage.set("userID",formSender.username,60000)//默认过期时间：10分钟
+                    router.push({ path: pageRef.value.lastUrl })
+                    ElNotification({
+                        title: '登录成功！',
+                        message: '',
+                        type: 'warning',
+                        showClose: false,
+                    })
+                }
+            }
+            
+        })
+      }else{//注册代码
+        axios.post(dbUrl+registerUrl,{
+            params:{
+                user_data1:formSender
+            }
+        }).then(function (res){
+            if(res.data=="exist"){
+                ElNotification({
+                    title: '该用户名已存在！',
+                    message: '请尝试直接登录',
+                    type: 'warning',
+                    showClose: false,
+                })
+                pageRef.value.typeIsLogin=true;
+            }else if(res.data=="success"){
+                storage.set("userID",formSender.username,60000)//默认过期时间：10分钟
+                router.push({ path: pageRef.value.lastUrl })
+                ElNotification({
+                    title: '注册成功！',
+                    message: '已自动为您登录。',
+                    type: 'warning',
+                    showClose: false,
+                })
 
+            }
+        })
+      }
     } else {
+        ElNotification({
+        title: '出现未知错误',
+        message: '请尝试重新加载页面或检查网络连接。',
+        type: 'error',
+        showClose: false,
+        })
       console.log('error submit!')
       return false
     }
@@ -113,8 +190,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 const rules=reactive({
     username:[{validator:validateUsrname,trigger:'blur'}],
     password: [{validator:validatePass,trigger:'blur'}],
-    passwordCheck:[{validator:validatePassCheck,trigger:'blur'}]
-    
+    passwordCheck:[{validator:validatePassCheck,trigger:'blur'}] 
 })
 
 
