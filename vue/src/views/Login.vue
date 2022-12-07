@@ -1,6 +1,6 @@
 <template>
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
-    <div>
+    <div onload="load();">
         <div class="loginBox">
 
          <div style="flex:1" padding="20px">
@@ -27,10 +27,11 @@
                             <el-input v-model="loginForm.passwordCheck" type="password" clearable autocomplete="off" />
                         </el-form-item>
                         <el-form-item>
-                        <el-button type="primary" @click="submitForm(formRef)">{{pageRef.typeIsLogin?"立即登录":"立即注册"}}</el-button>
+                        <el-button style="margin-top: 10%;margin-left: 12%;height: 70%;width: 30%;min-width: fit-content" type="primary" @click="submitForm(formRef)">{{pageRef.typeIsLogin?"立即登录":"立即注册"}}</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
+
             </div>
          </div>
         </div>
@@ -40,7 +41,7 @@
 <script lang="ts" setup>
 import axios from "axios";
 import {reactive,ref} from 'vue';
-import {ElNotification, FormInstance} from 'element-plus';
+import {ElMessage, ElMessageBox,FormInstance} from 'element-plus';
 import { useRouter } from 'vue-router';
 import storage from "../utils/LocalStorage";
 
@@ -51,7 +52,7 @@ const router=useRouter()
 
 const pageRef=ref({
     typeIsLogin:true,
-    lastUrl:'',
+    lastUrl:'/home',//最好能支持传入上一个url，使登录后能够返回上一个页面
 })
 
 const formRef=ref<FormInstance>()
@@ -66,12 +67,22 @@ let formSender=({
     password:''
 })
 
+function tryRedirectToAccount(){
+    if(storage.get("userID")){
+        ElMessage({
+                message:'您已登录过，请勿重复登录！',
+            })
+        router.push('/account/'+storage.get("userID"))
+    }
+}
+window.onload=tryRedirectToAccount
 
 function resetForm (formEl:FormInstance|undefined){
     if(!formEl)return
     formEl.resetFields()
 }
 function changeLoginType(value:any){
+    tryRedirectToAccount()
     pageRef.value.typeIsLogin=value;
 };
 
@@ -89,7 +100,7 @@ const validatePass = (rule:any, value:any,callback:any)=>{
     }else{
         if(loginForm.passwordCheck!== ''){
             if(!formRef.value) return
-            formRef.value.validateField('checkPass',()=>null)
+            formRef.value.validateField('passwordCheck',()=>null)
         }
         callback()
     }
@@ -98,19 +109,32 @@ const validatePass = (rule:any, value:any,callback:any)=>{
 const validatePassCheck=(rule:any,value:any,callback:any)=>{
     if (value === '') {
         callback(new Error('请再次输入密码.'))
-    } else if (value !== loginForm.password) {
+    } else if (value !== loginForm.password){
         callback(new Error("两次密码输入不一致!"))
     } else {
         callback()
-}
+    }
 }
 
+/*const testSubmit=(formEl: FormInstance | undefined) => {
+    storage.set("userID",loginForm.username,600000)//默认过期时间：10分钟
+            router.push({ path: pageRef.value.lastUrl })
+            ElMessage({
+                message:'登录成功！',
+                type:'success'
+            })
+}*/
+
 const submitForm = (formEl: FormInstance | undefined) => {
+    tryRedirectToAccount()
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
       console.log(loginForm)
-      formSender=({username:loginForm.username,password:loginForm.password})
+      formSender=({
+        username:loginForm.username,
+        password:loginForm.password
+      })
       
       if(pageRef.value.typeIsLogin){//登录代码
         axios.post(dbUrl+loginUrl,{
@@ -120,29 +144,24 @@ const submitForm = (formEl: FormInstance | undefined) => {
         }).then(function(res){
             console.log(res)
             if(res.data=="not exist"){
-                ElNotification({
-                    title: '该用户名不存在！',
-                    message: '请尝试检查用户名是否输入正确，或选择账户注册。',
-                    type: 'error',
-                    showClose: false,
+                
+                ElMessageBox.alert('请尝试检查用户名是否输入正确，或选择账户注册。','该用户名不存在！',{
+                    confirmButtonText:'确定'
                 })
+                
             }else{
                 if(res.data=="fail"){
-                    ElNotification({
-                        title: '密码输入错误！',
-                        message: '请检查密码输入及大小写是否开启。',
-                        type: 'warning',
-                        showClose: false,
+                        ElMessageBox.alert('请输入正确的密码。','密码输入错误！',{
+                        confirmButtonText:'确定'
                     })
                 }else if(res.data=="success"){
-                    storage.set("userID",formSender.username,60000)//默认过期时间：10分钟
+                    storage.set("userID",formSender.username,600000)//默认过期时间：10分钟
                     router.push({ path: pageRef.value.lastUrl })
-                    ElNotification({
-                        title: '登录成功！',
-                        message: '',
-                        type: 'warning',
-                        showClose: false,
+                    ElMessage({
+                        message:'登录成功！',
+                        type:'success'
                     })
+                    
                 }
             }
             
@@ -153,34 +172,24 @@ const submitForm = (formEl: FormInstance | undefined) => {
                 user_data1:formSender
             }
         }).then(function (res){
+            console.log(res)
             if(res.data=="exist"){
-                ElNotification({
-                    title: '该用户名已存在！',
-                    message: '请尝试直接登录',
-                    type: 'warning',
-                    showClose: false,
+                
+                ElMessageBox.alert('请尝试使用该用户名登录。','该用户名已存在！',{
+                    confirmButtonText:'确定'
                 })
                 pageRef.value.typeIsLogin=true;
             }else if(res.data=="success"){
-                storage.set("userID",formSender.username,60000)//默认过期时间：10分钟
+                storage.set("userID",formSender.username,600000)//默认过期时间：10分钟
                 router.push({ path: pageRef.value.lastUrl })
-                ElNotification({
-                    title: '注册成功！',
-                    message: '已自动为您登录。',
-                    type: 'warning',
-                    showClose: false,
+                ElMessage({
+                    message:'注册成功！已自动登录。',
+                    type:'success'
                 })
-
             }
         })
       }
     } else {
-        ElNotification({
-        title: '出现未知错误',
-        message: '请尝试重新加载页面或检查网络连接。',
-        type: 'error',
-        showClose: false,
-        })
       console.log('error submit!')
       return false
     }

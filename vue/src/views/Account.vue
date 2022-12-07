@@ -6,8 +6,8 @@
 
 <template>
     <div class="accountBox">
-        <image src="@/assets/img/me.png" width="100%"></image>
-        
+        <image src="../assets/img/me.png" width="100%"></image>
+        Account detail Goes Here.
     </div>
 </template>
 <style>
@@ -23,5 +23,6 @@ body{
     box-shadow: 0 0 10px 10px rgba(25, 128, 139, 0.82);
     display:flex;
     flex-direction:row; 
+    height: 60rem;
 }
 </style>

@@ -3,15 +3,24 @@ import { ref } from 'vue';
 import { House, Medal, User, CirclePlus, Sunny, Moon } from '@element-plus/icons-vue';
 import SearchBar from './SearchBar.vue';
 import { useDark, useToggle } from '@vueuse/core'
+import {useRouter} from 'vue-router'
+import storage from '../utils/LocalStorage';
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+const router=useRouter()
 
 const activeIndex = ref('/')
 
 const userID = ref('未登录')
 
 function clickAvatar() {
+    console.log(storage.get("userID"))
+    if(!storage.get("userID")){
+        router.push('/login')
+    }else{
+        router.push('/account')
+    }
     ElNotification({
         title: '未登录时点击头像得提示登录，登陆了之后跳转到个人信息',
         message: '可是指针移到头像上方时为什么没有变成手型呢',
