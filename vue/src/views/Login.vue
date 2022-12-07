@@ -4,7 +4,7 @@
         <div class="loginBox">
 
          <div style="flex:1" padding="20px">
-            <img class="loginPic" src="@/assets/img/login_pic.png" style="width:100%">
+            <img class="loginPic" src="../assets/img/login_pic.png" style="width:100%">
          </div>
 
          <div style="flex:1" class="inputSection">
@@ -31,7 +31,7 @@
                         </el-form-item>
                     </el-form>
                 </div>
-
+                <!--<button @click="test()">testbutton</button>-->
             </div>
          </div>
         </div>
@@ -52,7 +52,7 @@ const router=useRouter()
 
 const pageRef=ref({
     typeIsLogin:true,
-    lastUrl:'/home',//最好能支持传入上一个url，使登录后能够返回上一个页面
+    homeUrl:'/',
 })
 
 const formRef=ref<FormInstance>()
@@ -68,6 +68,7 @@ let formSender=({
 })
 
 function tryRedirectToAccount(){
+    
     if(storage.get("userID")){
         ElMessage({
                 message:'您已登录过，请勿重复登录！',
@@ -116,8 +117,8 @@ const validatePassCheck=(rule:any,value:any,callback:any)=>{
     }
 }
 
-/*const testSubmit=(formEl: FormInstance | undefined) => {
-    storage.set("userID",loginForm.username,600000)//默认过期时间：10分钟
+/*const test=(formEl: FormInstance | undefined) => {
+    storage.set("userID",loginForm.username,600000)
             router.push({ path: pageRef.value.lastUrl })
             ElMessage({
                 message:'登录成功！',
@@ -156,7 +157,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
                     })
                 }else if(res.data=="success"){
                     storage.set("userID",formSender.username,600000)//默认过期时间：10分钟
-                    router.push({ path: pageRef.value.lastUrl })
+                    router.push({ path: pageRef.value.homeUrl })
                     ElMessage({
                         message:'登录成功！',
                         type:'success'
@@ -181,7 +182,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
                 pageRef.value.typeIsLogin=true;
             }else if(res.data=="success"){
                 storage.set("userID",formSender.username,600000)//默认过期时间：10分钟
-                router.push({ path: pageRef.value.lastUrl })
+                router.push({ path: pageRef.value.homeUrl })
                 ElMessage({
                     message:'注册成功！已自动登录。',
                     type:'success'
