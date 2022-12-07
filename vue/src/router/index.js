@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // 也可以从其他文件导入
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
-import Detail from '../views/Detail.vue'
+import detail from '../views/detail.vue'
 import Login from '../views/Login.vue'
 import Account from '../views/Account.vue'
 import rank from '../views/rank.vue'
@@ -16,7 +16,7 @@ import upload from '../views/upload.vue'
 const routes = [
     { path: '/', component: Home },
     { path: '/search', component: Search },
-    { path: '/detail/:name', component: Detail },
+    { path: '/detail', component: detail },
     { path: '/login',component:Login},
     {path:'/account/:name',component:Account},
     { path: '/rank', component: rank},

@@ -6,21 +6,28 @@ import IconCourse from '../components/icons/IconCourse.vue'
 import IconNew from '../components/icons/IconNew.vue'
 import axios from "axios";
 import { Reading } from '@element-plus/icons-vue';
-
+const content = ref('')
 const router = useRouter()
 
 function goToCourse(item) {
-    router.push({ path: '/detail/' + item.courseName })
+    router.push({ path: '/detail', query: { courses: item.course_name } })
     ElNotification({
-        title: '跳转到' + item.courseName + "的详情页",
+        title: '跳转到' + item.course_name + "的详情页",
         message: 'nothing',
         type: 'warning',
         showClose: false,
     })
+    
 }
 
+
 // 后端课程信息数据获取
-const courses = ref([])
+const courses = ref([
+    {
+        course_name: "互联网计算",
+        introduction: "这是个大作业"
+    }
+])
 // url为对应接口的映射
 axios.get('http://localhost:9090/courses/findAll').then(function (resp) {
     courses.value = resp.data
