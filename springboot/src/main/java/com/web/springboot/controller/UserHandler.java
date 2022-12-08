@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,10 +30,21 @@ public class UserHandler {
      */
     @PostMapping("/register")
     public String Register(@RequestBody User user_data1) {
+//        try{
+//            BufferedWriter out = new BufferedWriter(new FileWriter("1.txt"));
+//            out.write();
+//            out.close();
+//        }catch(IOException e){
+//
+//        }
+        System.out.println(user_data1.getUsername() + user_data1.getPassword());
         User user_data = userRepository.findByusername(user_data1.getUsername());
         if (user_data != null) {
             return "exist";
         }
+
+
+
         User receive1 = userRepository.save(user_data1);
         return "success";
     }
