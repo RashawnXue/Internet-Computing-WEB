@@ -4,16 +4,11 @@ import { House, Medal, User, CirclePlus, Sunny, Moon } from '@element-plus/icons
 import { useRouter } from 'vue-router';
 import SearchBar from './SearchBar.vue';
 import { useDark, useToggle } from '@vueuse/core'
-import {useRouter} from 'vue-router'
 import storage from '../utils/LocalStorage';
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
-<<<<<<< HEAD
-const router=useRouter()
-=======
 const router = useRouter()
->>>>>>> rand_upload_detail
 
 const activeIndex = ref('/')
 

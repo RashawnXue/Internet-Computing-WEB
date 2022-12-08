@@ -2,23 +2,13 @@
 
 import { ref, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router';
+import CourseCard from '../components/CourseCard.vue';
 import IconCourse from '../components/icons/IconCourse.vue'
 import IconNew from '../components/icons/IconNew.vue'
 import axios from "axios";
 import { Reading } from '@element-plus/icons-vue';
 const content = ref('')
 const router = useRouter()
-
-function goToCourse(item) {
-    router.push({ path: '/detail', query: { courses: item.course_name } })
-    ElNotification({
-        title: '跳转到' + item.course_name + "的详情页",
-        message: 'nothing',
-        type: 'warning',
-        showClose: false,
-    })
-    
-}
 
 
 // 后端课程信息数据获取
@@ -29,7 +19,7 @@ const courses = ref([
     }
 ])
 // url为对应接口的映射
-axios.get('http://localhost:9090/courses/findAll').then(function (resp) {
+axios.get('http://localhost:9090/course/findAll').then(function (resp) {
     courses.value = resp.data
     console.log(courses.value)
 })
@@ -76,16 +66,7 @@ function filterCourses(index, indexPath, item) {
         </el-menu>
     </div>
     <div class="content-container">
-        <el-card v-for="item in courses" class="content-item">
-            <template #header>
-                <div class="content-item-header">
-                    <IconCourse style="margin-right: 0.5rem; margin-top: 2px;" />
-                    <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
-                    <IconNew style="margin-left: 0.5rem; margin-top: 2px;" />
-                </div>
-            </template>
-            {{ "简介：" + item.introduction }}
-        </el-card>
+        <CourseCard :courses="courses"></CourseCard>
     </div>
 </template>
 
@@ -98,16 +79,6 @@ function filterCourses(index, indexPath, item) {
     padding-left: var(--content-padding-left);
 }
 
-.content-item {
-    width: 50rem;
-    box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-    padding: 1rem;
-    --el-card-padding: 1rem;
-}
-
 .home-side-bar {
     z-index: 1;
     position: fixed;
@@ -116,21 +87,4 @@ function filterCourses(index, indexPath, item) {
     display: var(--side-bar-display);
 }
 
-.content-item-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: large;
-    font-weight: bolder;
-    padding-top: 0;
-}
-
-.content-item-header-name {
-    font-weight: bolder;
-    cursor: pointer;
-}
-
-.content-item-header-name:hover {
-    color: teal;
-}
 </style>

@@ -1,6 +1,10 @@
+<script setup>
+const props = defineProps(['tag'])
+</script>
+
 <template>
     <div class="course-tag">
-        课程
+        {{tag}}
     </div>
 </template>
 
@@ -11,7 +15,7 @@
     padding: 0 4px;
     height: 18px;
     font-size: 10px;
-    color: rgb(126, 125, 187);
+    color: rgb(119, 127, 79);
     font-weight: bolder;
     text-align: center;
     vertical-align: middle;

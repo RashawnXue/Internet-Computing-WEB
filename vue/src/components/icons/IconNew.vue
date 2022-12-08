@@ -11,7 +11,7 @@
     padding: 0 4px;
     height: 18px;
     font-size: 10px;
-    color: rgb(79, 156, 207);
+    color: rgb(63, 107, 142);
     font-weight: bolder;
     text-align: center;
     vertical-align: middle;
