@@ -1,10 +1,56 @@
+<script lang="ts" setup>
+import { ref } from "vue";
+import IconCourse from '../components/icons/IconCourse.vue'
+import IconNew from '../components/icons/IconNew.vue'
+import axios from "axios";
+const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900']) // same as { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }
+
+// url为对应接口的映射
+axios.get('http://localhost:8081/user/rank').then(function (resp) {
+    this.tableData = resp.data
+    console.log(resp.data)
+})
+
+const tableData = [
+  
+  {
+    name: 'wms',
+    contribution: 99,
+    rank: 2,
+  },
+  {
+    name: 'xrc',
+    contribution: 100,
+    rank: 1,
+  },
+  {
+    name: 'wqw',
+    contribution: 96,
+    rank: 5,
+  },
+  {
+    name: 'ysh',
+    contribution: 98,
+    rank: 3,
+  }, {
+    name: 'lds',
+    contribution: 97,
+    rank: 4,
+  }, 
+]
+
+</script>
 
 <template>
   <div class="layout-container-demo" style="height: 500px">
     <el-container class="content-container">
       <el-main class="content-item">
-        <el-table :data="tableData" :header-cell-style="{ color: 'rgba(255,255,255,1)', textAlign: 'center' }"
-          :cell-style="{ textAlign: 'center' }">
+        <el-table 
+          :data="tableData"  border height = 400px stripe 
+          :default-sort="{ prop: 'contribution', order: 'descending' }"
+          :header-cell-style = "{ color: 'rgba(128, 162, 167, 0.82)', textAlign: 'center' }"
+          :cell-style="{ textAlign: 'center'}"
+          >
           <el-table-column prop="name" label="Name" width="250" />
           <el-table-column prop="contribution" label="Contribution" width="250" />
           <el-table-column prop="rank" label="rank" />
@@ -16,42 +62,7 @@
 </template>
   
   
-<script lang="ts" setup>
-import { ref } from "vue";
 
-const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900']) // same as { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }
-const tableData = [
-
-  {
-    name: '姓名',
-    contribution: '贡献度',
-    rank: '排行',
-  },
-  {
-    name: 'xrc',
-    contribution: 100,
-    rank: 1,
-  },
-  {
-    name: 'wms',
-    contribution: 99,
-    rank: 2,
-  },
-  {
-    name: 'ysh',
-    contribution: 98,
-    rank: 3,
-  }, {
-    name: 'lds',
-    contribution: 97,
-    rank: 4,
-  }, {
-    name: 'wqw',
-    contribution: 96,
-    rank: 5,
-  },
-]
-</script>
 <style scoped>
 .content-container {
   z-index: 0;
@@ -62,14 +73,14 @@ const tableData = [
 
 .content-item {
   width: 50rem;
-  box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
   border-radius: 4px;
   margin-bottom: 1rem;
   background-color: var(--color-background);
   box-sizing: border-box;
+  box-shadow: 0 0 10px 10px rgba(128, 162, 167, 0.82);
   padding: 1rem;
-  color: var(--color-text);
 
 }
+
 </style>
   

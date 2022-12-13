@@ -26,7 +26,7 @@ function goToCourse(item) {
         <template #header>
             <div class="content-item-header">
                 <IconCourse style="margin: 2px 0.5rem 0 0;" />
-                <div class="content-item-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
+                <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
                 <IconSchool style="margin: 2px 0.5rem 0 0.5rem;" tag="软件学院" />
                 <IconNew style="margin: 2px 0.5rem 0 0;" />
             </div>
