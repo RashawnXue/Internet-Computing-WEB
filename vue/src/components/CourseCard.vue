@@ -1,10 +1,17 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import IconNew from './icons/IconNew.vue';
-import IconCourse from './icons/IconCourse.vue';
-import IconSchool from './icons/IconSchool.vue';
+import CourseTag from './CourseTag.vue';
 
-const props = defineProps(['courses'])
+const props = defineProps({
+    courses: {
+        type: Array,
+        default: [],
+    },
+    new: {
+        type: Boolean,
+        default: false,
+    }
+})
 
 const router = useRouter()
 
@@ -26,7 +33,7 @@ function goToCourse(item) {
         <template #header>
             <div class="content-item-header">
                 <IconCourse style="margin: 2px 0.5rem 0 0;" />
-                <div class="content-item-header-name" @click="goToCourse(item)">{{ item.course_name }}</div>
+                <div class="content-item-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
                 <IconSchool style="margin: 2px 0.5rem 0 0.5rem;" tag="软件学院" />
                 <IconNew style="margin: 2px 0.5rem 0 0;" />
             </div>

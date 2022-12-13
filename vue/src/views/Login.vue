@@ -135,11 +135,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
             })
 
             if (pageRef.value.typeIsLogin) {//登录代码
-                axios.post(dbUrl + loginUrl, {
-                    params: {
-                        user_data_receive: formSender
-                    }
-                }).then(function (res) {
+                axios.post(dbUrl + loginUrl, formSender).then(function (res) {
                     console.log(res)
                     if (res.data == "not exist") {
 
@@ -165,11 +161,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
                 })
             } else {//注册代码
-                axios.post(dbUrl + registerUrl, {
-                    params: {
-                        user_data1: formSender
-                    }
-                }).then(function (res) {
+                axios.post(dbUrl + registerUrl, formSender).then(function (res) {
                     console.log(res)
                     if (res.data == "exist") {
 
