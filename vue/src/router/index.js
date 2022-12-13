@@ -8,6 +8,7 @@ import Login from '../views/Login.vue'
 import Account from '../views/Account.vue'
 import rank from '../views/rank.vue'
 import upload from '../views/upload.vue'
+import Class from '../views/Class.vue'
 
 
 // 2. 定义一些路由
@@ -17,11 +18,11 @@ const routes = [
     { path: '/', component: Home },
     { path: '/search', component: Search },
     { path: '/detail', component: detail },
-    { path: '/login',component:Login},
-    {path:'/account/:name',component:Account},
-    { path: '/rank', component: rank},
-    { path: '/upload', component: upload},
-    
+    { path: '/login', component: Login },
+    { path: '/account/:name', component: Account },
+    { path: '/rank', component: rank },
+    { path: '/upload', component: upload },
+    { path: '/class', component: Class },
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置

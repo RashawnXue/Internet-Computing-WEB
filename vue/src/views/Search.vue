@@ -5,7 +5,6 @@ import { ref, watch } from "vue";
 import axios from "axios";
 
 const route = useRoute()
-console.log(route)
 
 // 后端课程信息数据获取
 const courses = ref([])

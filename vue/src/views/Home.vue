@@ -1,23 +1,12 @@
 <script setup>
 
 import { ref, onMounted, reactive } from 'vue'
-import { useRouter } from 'vue-router';
 import CourseCard from '../components/CourseCard.vue';
-import IconCourse from '../components/icons/IconCourse.vue'
-import IconNew from '../components/icons/IconNew.vue'
 import axios from "axios";
-import { Reading } from '@element-plus/icons-vue';
-const content = ref('')
-const router = useRouter()
-
 
 // 后端课程信息数据获取
-const courses = ref([
-    {
-        course_name: "互联网计算",
-        introduction: "这是个大作业"
-    }
-])
+const courses = ref([])
+
 // url为对应接口的映射
 axios.get('http://localhost:9090/course/findAll').then(function (resp) {
     courses.value = resp.data
@@ -37,36 +26,11 @@ window.onresize = function () {
     }
 }
 
-// 筛选相应课程
-function filterCourses(index, indexPath, item) {
-    console.log(index)
-}
-
 </script>
 
 <template>
-    <div class="home-side-bar">
-        <el-menu
-            style="border-right-width: 0; background-color: transparent; --el-menu-hover-bg-color: transparent; --el-menu-bg-color: transparent"
-            :collapse="collapse" @select="filterCourses">
-            <el-sub-menu>
-                <template #title>
-                    <el-icon>
-                        <Reading />
-                    </el-icon>
-                    <span>课程分类</span>
-                </template>
-                <el-menu-item index="软件学院">
-                    软件学院
-                </el-menu-item>
-                <el-menu-item index="其他">
-                    其他
-                </el-menu-item>
-            </el-sub-menu>
-        </el-menu>
-    </div>
     <div class="content-container">
-        <CourseCard :courses="courses"></CourseCard>
+        <CourseCard :courses="courses" new></CourseCard>
     </div>
 </template>
 
@@ -75,16 +39,7 @@ function filterCourses(index, indexPath, item) {
     z-index: 0;
     display: flex;
     flex-direction: column;
-    align-items: var(--content-align-items);
-    padding-left: var(--content-padding-left);
-}
-
-.home-side-bar {
-    z-index: 1;
-    position: fixed;
-    width: 12rem;
-    left: 0;
-    display: var(--side-bar-display);
+    align-items: center;
 }
 
 </style>
