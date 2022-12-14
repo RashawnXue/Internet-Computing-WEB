@@ -63,7 +63,7 @@ public class UserHandler {
      * 用户贡献度排行榜获取
      * URL="/user/rank"
      *
-     * @return 返回一个列表 ，按照贡献度降序，存贮每个用户的信息，可自行取出username和contribution字段
+     * @return 返回一个列表 ，按照贡献度降序，存贮每个用户的信息，可自行取出username和contribution字段 以及排名rank字段
      */
     @GetMapping("/rank")
     public List<rank_user> Rank() {
@@ -72,6 +72,9 @@ public class UserHandler {
         return rankUsers.getRank_userList();
     }
 
+    /**
+     *  将 List<user> 加上排名的方法类
+     */
     private class RankUsers {
         List<rank_user> rank_userList = new LinkedList<>();
 
@@ -90,6 +93,9 @@ public class UserHandler {
         }
     }
 
+    /**
+     * 带有排名的user类
+     */
     public class rank_user extends User {
         private int rank;
 
