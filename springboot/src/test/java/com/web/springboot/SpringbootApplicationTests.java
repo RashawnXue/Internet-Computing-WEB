@@ -56,10 +56,10 @@ class SpringbootApplicationTests {
 
     @Test
     void Sort() {
-        List<User> users = userRepository.findByUsernameLikeOrderByContributionDesc("%");
-        for (User u :
+        List<UserHandler.rank_user> users = userHandler.Rank();
+        for (UserHandler.rank_user u :
                 users) {
-            System.out.println(u.getUsername());
+            System.out.println(u.getUsername()+" "+u.getRank());
         }
     }
 }
