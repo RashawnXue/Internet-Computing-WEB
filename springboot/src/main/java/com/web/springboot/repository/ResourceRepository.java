@@ -9,4 +9,5 @@ import java.util.List;
 public interface ResourceRepository extends JpaRepository<Resource,Integer> {
     @Nullable
     List<Resource> findByCourseid(Integer courseid);
+    Resource findByName(String name);
 }

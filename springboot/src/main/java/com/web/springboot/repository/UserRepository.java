@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Nullable
-    User findByusername(String userName);
+    User findByUsername(String userName);
 
     List<User> findByUsernameLikeOrderByContributionDesc(String name);
+
 
 }
