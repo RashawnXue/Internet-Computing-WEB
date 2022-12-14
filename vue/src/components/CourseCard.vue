@@ -16,9 +16,9 @@ const props = defineProps({
 const router = useRouter()
 
 function goToCourse(item) {
-    router.push({ path: '/detail', query: { courses: item.course_name } })
+    router.push({ path: '/detail', query: { courses: item.coursename , itro: item.introduction, teacher: item.teachername, during:item.studytime} })
     ElNotification({
-        title: '跳转到' + item.course_name + "的详情页",
+        title: '跳转到' + item.coursename + "的详情页",
         message: 'nothing',
         type: 'warning',
         showClose: false,
