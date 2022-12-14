@@ -25,7 +25,7 @@ axios.get('http://localhost:9090/user/rank').then(function (resp) {
           >
           <el-table-column prop="username" label="Name" width="250" />
           <el-table-column prop="contribution" label="Contribution" width="250" />
-          <el-table-column prop="rank" label="Rank" />
+          <el-table-column type="index"   label="Rank" width="250"/>
         </el-table>
       </el-main>
 
