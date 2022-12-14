@@ -1,6 +1,8 @@
 package com.web.springboot.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
@@ -9,10 +11,11 @@ import lombok.Data;
  */
 @Entity
 @Data
-public class User_data {
+public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String user_name;
+    private String username;
     private String password;
     private String picture;
     private Integer contribution;

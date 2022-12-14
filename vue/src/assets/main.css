@@ -15,17 +15,12 @@
   }
 }
 
-@media screen and (max-width: 74rem) {
-  :root{
-    --LOGO-display: none;
-  }
-}
-
 @media screen and (max-width: 68rem) {
   :root {
     --content-padding-left: 0;
     --content-align-items: center;
     --userID-display: none;
+    --LOGO-display: none;
   }
 }
 
