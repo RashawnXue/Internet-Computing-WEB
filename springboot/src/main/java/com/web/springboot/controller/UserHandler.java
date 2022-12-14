@@ -26,7 +26,7 @@ public class UserHandler {
      */
     @PostMapping("/register")
     public String Register(@RequestBody User user_data1) {
-        User user_data = userRepository.findByusername(user_data1.getUsername());
+        User user_data = userRepository.findByUsername(user_data1.getUsername());
         if (user_data != null) {
             return "exist";
         }
@@ -46,7 +46,7 @@ public class UserHandler {
      */
     @PostMapping("/login")
     public String Login(@RequestBody User user_data_receive) {
-        User user_data = userRepository.findByusername(user_data_receive.getUsername());
+        User user_data = userRepository.findByUsername(user_data_receive.getUsername());
         if (user_data == null) {
             return "not exist";
         } else {

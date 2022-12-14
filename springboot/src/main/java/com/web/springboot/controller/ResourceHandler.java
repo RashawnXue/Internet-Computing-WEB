@@ -1,17 +1,21 @@
 package com.web.springboot.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.web.springboot.entity.Resource;
+import com.web.springboot.entity.ResourceData;
 import com.web.springboot.repository.CourseRepository;
 import com.web.springboot.repository.ResourceRepository;
+import com.web.springboot.repository.UserRepository;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 
 @RestController
@@ -27,8 +30,19 @@ import java.util.logging.Logger;
 public class ResourceHandler {
     @Autowired
     private CourseRepository courseRepository;
-
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private ResourceRepository resourceRepository;
+
+    ObjectMapper objM = new ObjectMapper();
+
+
+    /**
+     * //TODO 在本地跑后端，这里要改成自己文件夹
+     */
+    private String path_file = "/home/floveram/WEB/data/resource_data/";
+    private final Logger logger =  LoggerFactory.getLogger(ResourceHandler.class);
 
     /**
      * 根据课程id搜索该课程的资源
@@ -43,19 +57,51 @@ public class ResourceHandler {
     }
 
     @PostMapping("/uploadfile")
-    public String uploadFile(@RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
-        Logger logger = (Logger) LoggerFactory.getLogger(ResourceHandler.class);
-        if (file.isEmpty()){
+    public String uploadFile(@RequestBody ResourceData resourceData) {
+        logger.info("进入上传方法");
+        logger.info("传入数据："+resourceData.toString());
+
+        MultipartFile file = resourceData.getFile();
+        if (file.isEmpty()) {
             logger.info("\n !!! : 文件为空\n");
             return "empty_file";
         }
+        if (resourceRepository.findByName(resourceData.getName()) != null){
+            logger.info("重复添加了文件" + resourceData.getName());
+            return "exists";
+        }
+        String fileName = file.getOriginalFilename();
+        String typeName = fileName.substring(fileName.lastIndexOf("."));
 
-        if (!file.isEmpty()) {
-            String fileName = file.getOriginalFilename();
-            String typeName = fileName.substring(fileName.lastIndexOf("."));
-            String filePath = "/home/web/file";
-            File dest = new File(filePath + fileName);
+        String filePath = path_file;
+        File dest = null;
+        try {
+            dest = new File(filePath + fileName);
+        } catch (NullPointerException e) {
+            logger.warn("创建本地文件失败，文件路径错误，请到ResourceHandler中修改到自己的路径");
+        }
+        Resource resource2save = new Resource();
+        int courseID = courseRepository.findByCoursename(resourceData.getCoursename()).getId();
+        int uploaderID = userRepository.findByUsername(resourceData.getUsername()).getId();
+        {
+            resource2save.setCourseid(courseID);
+            resource2save.setType(typeName);
+            resource2save.setSize((int) file.getSize());
+            resource2save.setDatapath(filePath + fileName);
+            resource2save.setUploaderid(uploaderID);
+            resource2save.setName(resourceData.getName());
+            resource2save.setIntro(resourceData.getIntro());
+            logger.info("上传文件 " + resource2save.getName() + " 到 " + resource2save.getDatapath());
+        }
+
+        Resource res = resourceRepository.save(resource2save);
+        if (res == null) {
+            logger.warn("数据库添加文件信息失败（可能）");
+        }
+        try {
             file.transferTo(dest);
+        } catch (IOException e) {
+            logger.warn("文件写入失败");
         }
         return "success";
     }

@@ -14,7 +14,7 @@ class UserRepositoryTest {
     @Test
     void findbyusername() {
 
-        User user = userRepository.findByusername("李东升");
+        User user = userRepository.findByUsername("李东升");
         System.out.printf(user.getPassword());
     }
 }
