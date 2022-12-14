@@ -90,8 +90,12 @@ public class UserHandler {
         }
     }
 
-    private class rank_user extends User {
+    public class rank_user extends User {
         private int rank;
+
+        public int getRank() {
+            return rank;
+        }
 
         public rank_user(User user, int rank_in) {
             rank = rank_in;
