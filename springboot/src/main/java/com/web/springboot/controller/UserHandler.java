@@ -3,10 +3,9 @@ package com.web.springboot.controller;
 import com.web.springboot.entity.User;
 import com.web.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -63,10 +62,51 @@ public class UserHandler {
     /**
      * 用户贡献度排行榜获取
      * URL="/user/rank"
-     * @return  返回一个列表 ，按照贡献度降序，存贮每个用户的信息，可自行取出username和contribution字段
+     *
+     * @return 返回一个列表 ，按照贡献度降序，存贮每个用户的信息，可自行取出username和contribution字段 以及排名rank字段
      */
     @GetMapping("/rank")
-    public List<User> Rank() {
-        return userRepository.findByUsernameLikeOrderByContributionDesc("%");
+    public List<rank_user> Rank() {
+        List<User> users = userRepository.findByUsernameLikeOrderByContributionDesc("%");
+        RankUsers rankUsers = new RankUsers(users);
+        return rankUsers.getRank_userList();
+    }
+
+    /**
+     *  将 List<user> 加上排名的方法类
+     */
+    private class RankUsers {
+        List<rank_user> rank_userList = new LinkedList<>();
+
+        public RankUsers(List<User> userList) {
+            int rank = 1;
+            for (User u :
+                    userList) {
+                rank_user one = new rank_user(u, rank++);
+
+                rank_userList.add(one);
+            }
+        }
+
+        public List<rank_user> getRank_userList() {
+            return rank_userList;
+        }
+    }
+
+    /**
+     * 带有排名的user类
+     */
+    public class rank_user extends User {
+        private int rank;
+
+        public int getRank() {
+            return rank;
+        }
+
+        public rank_user(User user, int rank_in) {
+            rank = rank_in;
+            this.setUsername(user.getUsername());
+            this.setContribution(user.getContribution());
+        }
     }
 }
