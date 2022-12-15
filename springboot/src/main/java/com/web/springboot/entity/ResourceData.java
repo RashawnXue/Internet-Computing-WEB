@@ -3,7 +3,9 @@ package com.web.springboot.entity;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-
+/**
+ * 后端接受 文件 的类型（继承 resource类 ）
+ */
 @Data
 public class ResourceData extends Resource{
     private MultipartFile file;

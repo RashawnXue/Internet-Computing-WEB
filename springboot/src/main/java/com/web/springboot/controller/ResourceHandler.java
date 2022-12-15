@@ -1,8 +1,5 @@
 package com.web.springboot.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.web.springboot.entity.Resource;
 import com.web.springboot.entity.ResourceData;
 import com.web.springboot.repository.CourseRepository;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,7 +31,6 @@ public class ResourceHandler {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    ObjectMapper objM = new ObjectMapper();
 
 
     /**
@@ -56,18 +51,33 @@ public class ResourceHandler {
         return resourceRepository.findByCourseid(courseId);
     }
 
+    /**
+     *
+     * @param resourceData 传入参数：json对象 (包含
+     *                     file:文件
+     *                     coursename: 对应的课程名
+     *                     username: 上传者的用户名
+     *                     name: 资源的名称
+     *                     intro: 资源的简介
+     *                     )
+     * @return 返回状态："empty_file":文件为空文件（可能传文件出了问题）
+     *                 "exists":文件已存在（根据文件 的上传名字判断）*注意区分文件名和文件上传的名字*
+     *                 "fail": 后端问题，上传失败（可以看看后端log，联系lds）
+     *                 "success": 上传成功
+     */
     @PostMapping("/uploadfile")
     public String uploadFile(@RequestBody ResourceData resourceData) {
         logger.info("进入上传方法");
+        logger.warn("请 先到 springboot/controller/ResourceHandler.java  中 TODO位置更换到自己要存文件的路径（绝对路径）");
         logger.info("传入数据："+resourceData.toString());
 
         MultipartFile file = resourceData.getFile();
         if (file.isEmpty()) {
-            logger.info("\n !!! : 文件为空\n");
+            logger.warn("\n !!! : 文件为空\n");
             return "empty_file";
         }
         if (resourceRepository.findByName(resourceData.getName()) != null){
-            logger.info("重复添加了文件" + resourceData.getName());
+            logger.warn("重复添加了文件  " + resourceData.getName());
             return "exists";
         }
         String fileName = file.getOriginalFilename();
@@ -79,6 +89,7 @@ public class ResourceHandler {
             dest = new File(filePath + fileName);
         } catch (NullPointerException e) {
             logger.warn("创建本地文件失败，文件路径错误，请到ResourceHandler中修改到自己的路径");
+            return "fail";
         }
         Resource resource2save = new Resource();
         int courseID = courseRepository.findByCoursename(resourceData.getCoursename()).getId();
@@ -95,13 +106,15 @@ public class ResourceHandler {
         }
 
         Resource res = resourceRepository.save(resource2save);
-        if (res == null) {
+        if (res.getDatapath() == null) {
             logger.warn("数据库添加文件信息失败（可能）");
+            return "fail";
         }
         try {
             file.transferTo(dest);
         } catch (IOException e) {
             logger.warn("文件写入失败");
+            return "fail";
         }
         return "success";
     }
