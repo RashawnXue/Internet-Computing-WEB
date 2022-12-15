@@ -50,6 +50,17 @@ public class ResourceHandler {
     public List<Resource> findByCourseId(@PathVariable("courseId") Integer courseId) {
         return resourceRepository.findByCourseid(courseId);
     }
+    /**
+     * 根据课程名字搜索该课程的资源
+     * url:"/resource/{coursename}"
+     *
+     * @param coursename 该资源所属课程id
+     * @return 该课程的所有资源列表
+     */
+    @GetMapping("/{coursename}")
+    public List<Resource> findByCourseName(@PathVariable("coursename") String coursename) {
+        return resourceRepository.findByCourseid(courseRepository.findByCoursenameLike(coursename).get(0).getId());
+    }
 
     /**
      *
