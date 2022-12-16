@@ -32,10 +32,10 @@ function goToCourse(item) {
     <el-card v-for="item in courses" class="content-item">
         <template #header>
             <div class="content-item-header">
-                <IconCourse style="margin: 2px 0.5rem 0 0;" />
+                <CourseTag style="margin: 2px 0.5rem 0 0;" tag="课程" color="rgb(126, 125, 187)"/>
                 <div class="content-item-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
-                <IconSchool style="margin: 2px 0.5rem 0 0.5rem;" tag="软件学院" />
-                <IconNew style="margin: 2px 0.5rem 0 0;" />
+                <CourseTag style="margin: 2px 0.5rem 0 0.5rem;" tag="软件学院" color="rgb(119, 127, 79)"/>
+                <CourseTag style="margin: 2px 0.5rem 0 0;" tag="最近更新" color="rgb(63, 107, 142)" v-if="new"/>
             </div>
         </template>
         {{ "简介：" + item.introduction }}

@@ -11,12 +11,7 @@ function goToSearch() {
     if (content.value.length > 0) {
         router.push({ path: '/search', query: { content: content.value } })
     } else {
-        ElNotification({
-            title: '注意',
-            message: '请输入内容',
-            type: 'warning',
-            showClose: false,
-        })
+        router.push({path: '/'})
     }
 }
 </script>

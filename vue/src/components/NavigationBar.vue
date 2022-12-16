@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { House, Medal, CirclePlus, Sunny, Moon, Reading } from '@element-plus/icons-vue';
+import { House, Medal, CirclePlus, Sunny, Moon, Reading, UserFilled } from '@element-plus/icons-vue';
 import { useRouter, useRoute } from 'vue-router';
 import SearchBar from './SearchBar.vue';
 import { useDark } from '@vueuse/core'
@@ -12,21 +12,21 @@ const router = useRouter()
 
 const activeIndex = ref('/')
 
-const userID = ref('未登录')
+let avatarIcon = UserFilled
+
+let userID = storage.get("userID")
+if (userID === null) {
+    userID = '未登录'
+}
 
 function clickAvatar() {
     console.log(storage.get("userID"))
     if(!storage.get("userID")){
         router.push('/login')
-    }else{
+    } else {
+        userID = storage.get("userID")
         router.push('/account')
     }
-    ElNotification({
-        title: '未登录时点击头像得提示登录，登陆了之后跳转到个人信息',
-        message: '可是指针移到头像上方时为什么没有变成手型呢',
-        type: 'error',
-        showClose: false,
-    })
 }
 
 function clickUpload(){
@@ -34,13 +34,6 @@ function clickUpload(){
 }
 
 const route = useRoute()
-
-watch(route, (val, oldval) => {
-    // console.log(elMenu.activeIndex)
-    // if (oldval.path == "/" && val.path != "/") {
-    //     elMenu.activeIndex = null
-    // }
-})
 
 </script>
 
@@ -85,9 +78,9 @@ watch(route, (val, oldval) => {
                 :active-icon="Moon" :inactive-icon="Sunny" />
         </div>
         <div class="user-profile">
-            <div style="align-self: center; margin-right: 2rem; display: var(--userID-display);">{{ userID }}</div>
+            <div style="align-self: center; margin-right: 1rem; display: var(--userID-display);">{{ userID }}</div>
             <!-- 这里应该放一个头像，然后点击会出现一些选项 -->
-            <el-avatar style="align-self: center; cursor: pointer;" @click="clickAvatar"></el-avatar>
+            <el-avatar style="align-self: center; cursor: pointer;" @click="clickAvatar" :icon="avatarIcon"></el-avatar>
         </div>
     </div>
 </template>
