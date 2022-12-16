@@ -3,9 +3,13 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // 也可以从其他文件导入
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
-import Detail from '../views/Detail.vue'
+import detail from '../views/detail.vue'
 import Login from '../views/Login.vue'
 import Account from '../views/Account.vue'
+import rank from '../views/rank.vue'
+import upload from '../views/upload.vue'
+import Class from '../views/Class.vue'
+
 
 // 2. 定义一些路由
 // 每个路由都需要映射到一个组件。
@@ -13,9 +17,12 @@ import Account from '../views/Account.vue'
 const routes = [
     { path: '/', component: Home },
     { path: '/search', component: Search },
-    { path: '/detail/:name', component: Detail },
-    { path: '/login',component:Login},
-    {path:'/account/:name',component:Account}
+    { path: '/detail', component: detail },
+    { path: '/login', component: Login },
+    { path: '/account/:name', component: Account },
+    { path: '/rank', component: rank },
+    { path: '/upload', component: upload },
+    { path: '/class', component: Class },
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置

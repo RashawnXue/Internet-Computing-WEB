@@ -1,5 +1,7 @@
 package com.web.springboot.entity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,4 +22,16 @@ public class Course {
     private String studytime;
     private Integer viewtimes;
     private String introduction;
+
+    /**
+     * @return 将对象所有信息以String方式返回
+     */
+    public String toString(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
