@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { House, Medal, CirclePlus, Sunny, Moon, Reading, UserFilled } from '@element-plus/icons-vue';
+import { House, Medal, CirclePlus, Sunny, Reading, UserFilled, MostlyCloudy, Plus } from '@element-plus/icons-vue';
 import { useRouter, useRoute } from 'vue-router';
 import SearchBar from './SearchBar.vue';
 import { useDark } from '@vueuse/core'
@@ -72,10 +72,10 @@ const route = useRoute()
         </el-menu>
         <div style="align-self: center; display: flex; flex-direction: row;">
             <SearchBar style="align-self: center; width: 18rem;" />
-            <el-button :icon="CirclePlus" style="align-self: center;" type="primary" color="teal" size="large" round @click="clickUpload">上传
+            <el-button :icon="Plus" style="align-self: center;" type="primary" color="teal" size="large" round @click="clickUpload">上传
             </el-button>
             <el-switch size="large" v-model="isDark" style="align-self:center; --el-switch-on-color: teal; margin: 0 1rem;" inline-prompt
-                :active-icon="Moon" :inactive-icon="Sunny" />
+                :active-icon="MostlyCloudy" :inactive-icon="Sunny" />
         </div>
         <div class="user-profile">
             <div style="align-self: center; margin-right: 1rem; display: var(--userID-display);">{{ userID }}</div>
