@@ -5,7 +5,7 @@ import { useRouter, useRoute } from 'vue-router';
 import SearchBar from './SearchBar.vue';
 import { useDark } from '@vueuse/core'
 import storage from '../utils/LocalStorage';
-import axios from axios
+import axios from "axios"
 
 const isDark = useDark()
 
