@@ -5,6 +5,7 @@ import com.web.springboot.entity.ResourceData;
 import com.web.springboot.repository.CourseRepository;
 import com.web.springboot.repository.ResourceRepository;
 import com.web.springboot.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import java.util.List;
 
@@ -30,8 +30,6 @@ public class ResourceHandler {
     private UserRepository userRepository;
     @Autowired
     private ResourceRepository resourceRepository;
-
-
 
     /**
      * //TODO 在本地跑后端，这里要改成自己文件夹
@@ -130,4 +128,48 @@ public class ResourceHandler {
         return "success";
     }
 
+    /**
+     * 实现文件下载
+     * url:"/downloadfile/{resourceId}
+     *
+     * @param response
+     * @param resourceId 资源对应的id
+     * @return path error: 数据库中datapath为null
+     *         not exist：文件不存在
+     *         fail：文件下载失败
+     *         success：下载成功
+     */
+    @RequestMapping("/downloadfile/{resourceId}")
+    public String downloadFile(HttpServletResponse response, @PathVariable("resourceId") int resourceId){
+        Resource target = resourceRepository.findById(resourceId);
+        String url = target.getDatapath();
+        if (url == null) {
+            logger.error("无法读取文件路径");
+            return "path error";
+        }
+        File file = new File(url);
+        if (!file.exists()){
+            logger.warn("文件不存在");
+            return "not exist";
+        }
+        response.reset();
+        response.setContentType("application/octet-stream");
+        response.setCharacterEncoding("utf-8");
+        response.setContentLength((int) file.length());
+        response.setHeader("Content-Disposition", "attachment;filename=" + resourceId );
+
+        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
+            byte[] buff = new byte[1024];
+            OutputStream os  = response.getOutputStream();
+            int i = 0;
+            while ((i = bis.read(buff)) != -1) {
+                os.write(buff, 0, i);
+                os.flush();
+            }
+        } catch (IOException e) {
+            logger.error("下载失败");
+            return "fail";
+        }
+        return "success";
+    }
 }
