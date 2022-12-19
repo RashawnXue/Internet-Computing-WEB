@@ -25,8 +25,8 @@ const userContrib=0*/
 
 function clickAvatar() {
     console.log(storage.get("userID"))
-    //if(!storage.get("userID")){
-    if(!hasLogin){
+    if(!storage.get("userID")){
+    //if(!hasLogin){测试使用
         router.push('/login')
     }else{
         ElNotification({
