@@ -1,15 +1,10 @@
 <script setup>
-    //import { lastIndexOf } from 'lodash';
     import {ref} from 'vue'
     import axios from 'axios'
     import {useRouter} from 'vue-router'
     import storage from '../utils/LocalStorage';
 
     const router=useRouter()
-
-
-
-    
 
 </script>
 
