@@ -24,7 +24,7 @@ let rem = window.getComputedStyle(document.documentElement)["fontSize"]
 window.onresize = function () {
     rem = window.getComputedStyle(document.documentElement)["fontSize"]
     let windowWidth = window.innerWidth
-    if (windowWidth < 68 * Number(rem.substring(0, rem.length - 2))) {
+    if (windowWidth < 66 * Number(rem.substring(0, rem.length - 2))) {
         collapse.value = true
     } else {
         collapse.value = false
@@ -34,10 +34,10 @@ window.onresize = function () {
 // 筛选相应课程
 function filterCourses(index, indexPath, item) {
     console.log(index)
-    showCourses.value = allCourses.value.filter((x) => ((x.school == index)|(x.studytime==index)))
-        //课程数据库需要添加一个新的字段(例如school)表示课程所属院系以便前端筛选
+    showCourses.value = allCourses.value.filter((x) => ((x.department == index) | (x.studytime == index)))
+    //课程数据库需要添加一个新的字段(例如school)表示课程所属院系以便前端筛选
     if (showCourses.value.length == 0) {
-        
+
     }
 }
 
@@ -56,18 +56,18 @@ function filterCourses(index, indexPath, item) {
                     <span>开课院系</span>
                 </template>
                 <el-scrollbar style="height:200px;">
-                <el-menu-item index="软件学院">
-                    软件学院
-                </el-menu-item>
-                <el-menu-item index="计算机科学与技术系">
-                    计算机科学与技术系
-                </el-menu-item>
-                <el-menu-item index="人工智能学院">
-                    人工智能学院
-                </el-menu-item>
-                <el-menu-item index="其他院系">
-                    其他院系
-                </el-menu-item>
+                    <el-menu-item index="软件学院">
+                        软件学院
+                    </el-menu-item>
+                    <el-menu-item index="计算机科学与技术系">
+                        计算机科学与技术系
+                    </el-menu-item>
+                    <el-menu-item index="人工智能学院">
+                        人工智能学院
+                    </el-menu-item>
+                    <el-menu-item index="其他院系">
+                        其他院系
+                    </el-menu-item>
                 </el-scrollbar>
             </el-sub-menu>
             <el-sub-menu index="2" style="max-height: 250px;">
@@ -78,30 +78,30 @@ function filterCourses(index, indexPath, item) {
                     <span>开课时间</span>
                 </template>
                 <el-scrollbar style="height:200px;">
-                <el-menu-item index="大一上">
-                    大一上
-                </el-menu-item>
-                <el-menu-item index="大一下">
-                    大一下
-                </el-menu-item>
-                <el-menu-item index="大二上">
-                    大二上
-                </el-menu-item>
-                <el-menu-item index="大二下">
-                    大二下
-                </el-menu-item>
-                <el-menu-item index="大三上">
-                    大三上
-                </el-menu-item>
-                <el-menu-item index="大三下">
-                    大三下
-                </el-menu-item>
-                <el-menu-item index="大四上">
-                    大四上
-                </el-menu-item>
-                <el-menu-item index="大四下">
-                    大四下
-                </el-menu-item>
+                    <el-menu-item index="大一上">
+                        大一上
+                    </el-menu-item>
+                    <el-menu-item index="大一下">
+                        大一下
+                    </el-menu-item>
+                    <el-menu-item index="大二上">
+                        大二上
+                    </el-menu-item>
+                    <el-menu-item index="大二下">
+                        大二下
+                    </el-menu-item>
+                    <el-menu-item index="大三上">
+                        大三上
+                    </el-menu-item>
+                    <el-menu-item index="大三下">
+                        大三下
+                    </el-menu-item>
+                    <el-menu-item index="大四上">
+                        大四上
+                    </el-menu-item>
+                    <el-menu-item index="大四下">
+                        大四下
+                    </el-menu-item>
                 </el-scrollbar>
             </el-sub-menu>
         </el-menu>
@@ -117,10 +117,11 @@ function filterCourses(index, indexPath, item) {
 <style scoped>
 .content-container {
     z-index: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: var(--content-align-items);
     padding-left: var(--content-padding-left);
+    width: 64rem;
+    overflow: hidden;
+    margin-left: 0;
+    transition: all 0.5s;
 }
 
 .home-side-bar {
@@ -131,6 +132,7 @@ function filterCourses(index, indexPath, item) {
     left: 0;
     display: var(--side-bar-display);
 }
+
 :deep(.el-scrollbar__bar.is-horizontal) {
     height: 0 !important;
 }

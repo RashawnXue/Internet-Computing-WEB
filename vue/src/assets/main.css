@@ -6,6 +6,8 @@
   --content-align-items: center;
   --userID-display: block;
   --LOGO-display: block;
+  --color-main: teal;/* 主题色 */
+  --color-main-darker: rgb(0, 92, 92);
 }
 
 @media screen and (max-width: 84rem) {
@@ -15,9 +17,9 @@
   }
 }
 
-@media screen and (max-width: 68rem) {
+@media screen and (max-width: 66rem) {
   :root {
-    --content-padding-left: 0;
+    --content-padding-left: 4rem;
     --content-align-items: center;
     --userID-display: none;
     --LOGO-display: none;
@@ -28,13 +30,5 @@
   :root {
     --content-padding-left: 4rem;
     --content-align-items: flex-start;
-  }
-}
-
-@media screen and (max-width: 56rem) {
-  :root {
-    --content-align-items: center;
-    --content-padding-left: 0;
-    --side-bar-display: none;
   }
 }

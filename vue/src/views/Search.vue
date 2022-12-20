@@ -36,10 +36,9 @@ watch(route, () => {
 
 <style scoped>
 .content-container {
+    margin: auto;
     z-index: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    --el-bg-color: var(--el-bg-color-page);
+    overflow: hidden;
+    width: 48rem;
 }
 </style>

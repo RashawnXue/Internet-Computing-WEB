@@ -28,7 +28,7 @@ elementui 的默认配色是蓝色为主，有点土，样式也不好看，可�
 - 登陆成功后，会在本地存储中新建一个`{key:(String)"userID",value:(String)<username>,expireTime:600000ms}`数据
 - 如果需要检查是否已登录，可以先`import storage from '../utils/LocalStorage.js'（相对路径看具体情况）`之后使用`storage.get("userID")==null`的值判断是否登录,未登录直接用router跳转到login界面；
 已登录仍可以用`storage.get("userID")`获取到的用户id进行操作
--其他页面也可以通过`storage.set()``storage.get()``storage.remove()`来向本地存储、查找、删除有时限的数据，具体用法见`LocalStorage.js`中的注释
+- 其他页面也可以通过`storage.set()``storage.get()``storage.remove()`来向本地存储、查找、删除有时限的数据，具体用法见`LocalStorage.js`中的注释
 
 ## 登录的残存工作 by wms
 ### 已完成：
@@ -40,3 +40,6 @@ elementui 的默认配色是蓝色为主，有点土，样式也不好看，可�
 - NavigationBar 第19行 后端需要一个获取贡献值的接口，参数为username
 - NavigationBar 第45行 前端需要一个实现修改密码的方法（弹窗或跳转新页面，可以直接用废弃的Account页面） 需要后端一个更改密码的接口，返回值为“密码错误”“修改成功”
 - NavigationBar 第136 139 148行 按钮有点丑 待优化一下
+
+## 主题色 by ysh
+main.css中的--color-main变量是主题色(目前是teal青绿色)，所有用到主题色的地方都应该用这个变量而非指定的颜色

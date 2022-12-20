@@ -21,5 +21,6 @@ const props = defineProps(['tag', 'color'])
     vertical-align: middle;
     line-height: 1.5;
     background-color: var(--el-bg-color-page);
+    transition: all 0.5s;
 }
 </style>

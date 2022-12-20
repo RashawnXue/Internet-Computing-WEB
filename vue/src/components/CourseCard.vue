@@ -16,7 +16,7 @@ const props = defineProps({
 const router = useRouter()
 
 function goToCourse(item) {
-    router.push({ path: '/detail', query: { courses: item.coursename , itro: item.introduction, teacher: item.teachername, during:item.studytime} })
+    router.push({ path: '/detail', query: { courses: item.coursename, itro: item.introduction, teacher: item.teachername, during: item.studytime } })
     ElNotification({
         title: '跳转到' + item.coursename + "的详情页",
         message: 'nothing',
@@ -29,37 +29,44 @@ function goToCourse(item) {
 </script>
 
 <template>
-    <el-card v-for="item in courses" class="content-item">
+    <el-card v-for="item in courses" class="content-item" style="--el-card-padding: 0" @click="goToCourse(item)">
         <template #header>
+            <img src="..\assets\img\C++高级程序设计.png"/>
             <div class="content-item-header">
-                <CourseTag style="margin: 2px 0.5rem 0 0;" tag="课程" color="rgb(126, 125, 187)"/>
-                <div class="content-item-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
-                <CourseTag style="margin: 2px 0.5rem 0 0.5rem;" tag="软件学院" color="rgb(119, 127, 79)"/>
-                <CourseTag style="margin: 2px 0.5rem 0 0;" tag="最近更新" color="rgb(63, 107, 142)" v-if="new"/>
+                <div class="content-item-header-name">{{ item.coursename }}</div>
+                <div class="content-item-header-tags">
+                    <CourseTag style="margin: 2px 0.5rem 0 0;" tag="课程" color="rgb(126, 125, 187)" />
+                    <CourseTag style="margin: 2px 0.5rem 0 0;" tag="软件学院" color="rgb(119, 127, 79)" />
+                    <CourseTag style="margin: 2px 0.5rem 0 0;" :tag="item.studytime" color="pink" />
+                </div>
             </div>
         </template>
-        {{ "简介：" + item.introduction }}
+        <div style="padding: 1rem;">
+            {{ "简介：" + item.introduction }}
+        </div>
     </el-card>
 </template>
 
 <style scoped>
 .content-item {
-    width: 50rem;
+    position: relative;
+    width: 14rem;
     box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
-    border-radius: 4px;
-    margin-bottom: 1rem;
+    border-radius: 8px;
+    margin: 0 1rem 2rem 1rem;
     box-sizing: border-box;
-    padding: 1rem;
-    --el-card-padding: 1rem;
+    transition: all 0.5s;
+    float: left;
+}
+
+.content-item:hover {
+    box-shadow: var(--el-box-shadow);
 }
 
 .content-item-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     font-size: large;
     font-weight: bolder;
-    padding-top: 0;
+    padding: 0.5rem 1rem;
 }
 
 .content-item-header-name {
@@ -68,6 +75,23 @@ function goToCourse(item) {
 }
 
 .content-item-header-name:hover {
-    color: teal;
+    color: var(--color-main);
+}
+
+.content-item-header-tags {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 6px;
+}
+
+img {
+    transition: all 0.5s;
+    cursor: pointer;
+    width: 100%;
+}
+
+img:hover {
+    transform: scale(1.1);
 }
 </style>

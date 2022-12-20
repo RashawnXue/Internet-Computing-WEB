@@ -30,16 +30,16 @@ window.onresize = function () {
 
 <template>
     <div class="content-container">
-        <CourseCard :courses="courses" new></CourseCard>
+        <CourseCard :courses="courses"></CourseCard>
     </div>
 </template>
 
 <style scoped>
 .content-container {
+    margin: auto;
     z-index: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    overflow: hidden;
+    width: 48rem;
 }
 
 </style>

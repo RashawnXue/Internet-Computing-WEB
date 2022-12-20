@@ -94,9 +94,9 @@ const route = useRoute()
         </el-menu>
         <div style="align-self: center; display: flex; flex-direction: row;">
             <SearchBar style="align-self: center; width: 18rem;" />
-            <el-button :icon="Plus" style="align-self: center;" type="primary" color="teal" size="large" round @click="clickUpload">上传
+            <el-button :icon="Plus" style="align-self: center; --el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker)" type="primary" color="var(--color-main)" size="large" round @click="clickUpload">上传
             </el-button>
-            <el-switch size="large" v-model="isDark" style="align-self:center; --el-switch-on-color: teal; margin: 0 1rem;" inline-prompt
+            <el-switch size="large" v-model="isDark" style="align-self: center; --el-switch-on-color: var(--color-main); margin: 0 1rem;" inline-prompt
                 :active-icon="MostlyCloudy" :inactive-icon="Sunny" />
         </div>
         <div class="user-profile">
@@ -178,8 +178,8 @@ const route = useRoute()
 
 <style>
 :root {
-    --el-menu-active-color: teal;
-    --el-menu-hover-text-color: teal;
+    --el-menu-active-color: var(--color-main);
+    --el-menu-hover-text-color: var(--color-main);
     --el-menu-hover-bg-color: var(--el-bg-color);
     --el-menu-bg-color: var(--el-bg-color);
 }
