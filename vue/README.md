@@ -29,3 +29,14 @@ elementui 的默认配色是蓝色为主，有点土，样式也不好看，可�
 - 如果需要检查是否已登录，可以先`import storage from '../utils/LocalStorage.js'（相对路径看具体情况）`之后使用`storage.get("userID")==null`的值判断是否登录,未登录直接用router跳转到login界面；
 已登录仍可以用`storage.get("userID")`获取到的用户id进行操作
 -其他页面也可以通过`storage.set()``storage.get()``storage.remove()`来向本地存储、查找、删除有时限的数据，具体用法见`LocalStorage.js`中的注释
+
+## 登录的残存工作 by wms
+### 已完成：
+- NavigationBar将鼠标放在头像上会根据是否登录显示不同的悬浮窗
+- NavigationBar的头像会自动显示用户的id首字母
+- 悬浮窗内的退出登录会删除本地存储的登录信息 但没有决定是停留在当前页面还是需要跳转
+
+### 未完成：
+- NavigationBar 第19行 后端需要一个获取贡献值的接口，参数为username
+- NavigationBar 第45行 前端需要一个实现修改密码的方法（弹窗或跳转新页面，可以直接用废弃的Account页面） 需要后端一个更改密码的接口，返回值为“密码错误”“修改成功”
+- NavigationBar 第136 139 148行 按钮有点丑 待优化一下

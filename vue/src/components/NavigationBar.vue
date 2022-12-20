@@ -5,6 +5,7 @@ import { useRouter, useRoute } from 'vue-router';
 import SearchBar from './SearchBar.vue';
 import { useDark } from '@vueuse/core'
 import storage from '../utils/LocalStorage';
+import axios from "axios"
 
 const isDark = useDark()
 
@@ -12,23 +13,44 @@ const router = useRouter()
 
 const activeIndex = ref('/')
 
-let avatarIcon = UserFilled
+const hasLogin=ref(storage.get("userID")!==null)
 
-let userID = storage.get("userID")
-if (userID === null) {
-    userID = '未登录'
-}
+const userID = ref(hasLogin?'未登录':storage.get("userID"))
+const userContrib = !hasLogin?0:axios.get("/user/getContrib",userID)
+
+/*测试使用：
+const userID="Mas"
+const hasLogin=true
+const userContrib=0*/
 
 function clickAvatar() {
     console.log(storage.get("userID"))
     if(!storage.get("userID")){
+    //if(!hasLogin){测试使用
         router.push('/login')
-    } else {
-        userID = storage.get("userID")
-        router.push('/account')
+    }else{
+        ElNotification({
+        title: 'while\(true\)',
+        message: '\{ drink\(coffee\); \}',
+        showClose: false,
+    })
     }
+    /*ElNotification({
+        title: '未登录时点击头像得提示登录，登陆了之后跳转到个人信息',
+        message: '可是指针移到头像上方时为什么没有变成手型呢',
+        type: 'error',
+        showClose: false,
+    })*/
 }
-
+function clickChangePassword(){
+    //TODO
+}
+function clickLogout(){
+    if(storage.get("userID")!==null){
+        storage.remove("userID")
+    }
+    router.push('/login')
+}
 function clickUpload(){
     router.push({ path: '/upload' }); 
 }
@@ -80,7 +102,49 @@ const route = useRoute()
         <div class="user-profile">
             <div style="align-self: center; margin-right: 1rem; display: var(--userID-display);">{{ userID }}</div>
             <!-- 这里应该放一个头像，然后点击会出现一些选项 -->
-            <el-avatar style="align-self: center; cursor: pointer;" @click="clickAvatar" :icon="avatarIcon"></el-avatar>
+            <el-popover
+                :width="210"
+                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+            >
+                <template #reference>
+                    <el-avatar style="align-self: center; cursor: pointer;" @click="clickAvatar">{{userID===null?'':userID.charAt(0)}}</el-avatar>
+                </template>
+                <template #default>
+                    <div
+                        class="account"
+                        style="display: flex; gap: 16px; flex-direction: column"
+                    >
+                        <div v-if="hasLogin">
+                            <p class="greetings_main" style="font-size: large; margin: 1px; font-weight: 500;">
+                                欢迎您，{{userID}}！
+                            </p>
+                            <p class="greetings_sub" style="font-size:small; margin-top: 5px; font-weight: 300;">
+                                今天要学点什么呢？
+                            </p>
+                            <el-divider style="margin: 7px;"/>
+                            <p class="contribution" style="margin-top: 2px;">
+                                当前贡献值：{{userContrib}}
+                            </p>
+                            <div class="avatarFunctionButtons">
+                                <el-button @click="clickChangePassword">
+                                    修改密码
+                                </el-button>
+                                <el-button @click="clickLogout">
+                                    退出登录
+                                </el-button>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p class="greetings_main" style="font-size: large; margin: 1px; font-weight: 500;">
+                                当前尚未登录
+                            </p>
+                            <el-button @click="clickAvatar">
+                                立即登录
+                            </el-button>
+                        </div>
+                    </div>
+                </template>
+            </el-popover>
         </div>
     </div>
 </template>
