@@ -112,9 +112,6 @@ function filterCourses(index, indexPath, item) {
             </el-sub-menu>
         </el-menu>
     </div>
-    <el-divider content-position="center" style="--el-bg-color: var(--el-bg-color-page); margin-top: 0.5rem;">
-        目前仅收录南京大学院系相关课程
-    </el-divider>
     <div class="content-container">
         <CourseCard :courses="showCourses"></CourseCard>
     </div>
