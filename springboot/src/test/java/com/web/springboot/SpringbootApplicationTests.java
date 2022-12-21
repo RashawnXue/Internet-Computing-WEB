@@ -4,6 +4,7 @@ import com.web.springboot.controller.ResourceHandler;
 import com.web.springboot.controller.UserHandler;
 import com.web.springboot.entity.ResourceData;
 import com.web.springboot.entity.User;
+import com.web.springboot.init_opration.picture_init;
 import com.web.springboot.repository.ResourceRepository;
 import com.web.springboot.repository.UserRepository;
 
@@ -30,6 +31,18 @@ class SpringbootApplicationTests {
     ResourceRepository resourceRepository;
     @Autowired
     ResourceHandler resourceHandler;
+    @Autowired
+    picture_init init;
+
+    @Test
+    void add_pic() {
+        init.add_picture("数据结构与算法", "/home/floveram/WEB/data/course_data/数据结构与算法.png");
+        init.add_picture("互联网计算", "/home/floveram/WEB/data/course_data/互联网计算.png");
+        init.add_picture("计算机组织结构", "/home/floveram/WEB/data/course_data/数据结构与算法.png");
+        init.add_picture("C++高级程序设计", "/home/floveram/WEB/data/course_data/C++高级程序设计.png");
+
+
+    }
 
     @Test
     void Register_test() {
@@ -91,8 +104,8 @@ class SpringbootApplicationTests {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ResourceData data = new ResourceData(cMultiFile, "互联网计算", "李东升", "wenjian","nb");
-        resourceHandler.uploadFile(data);
+        ResourceData data = new ResourceData(cMultiFile, "互联网计算", "李东升", "wenjian", "nb");
+//        resourceHandler.uploadFile(data);
 
     }
 }

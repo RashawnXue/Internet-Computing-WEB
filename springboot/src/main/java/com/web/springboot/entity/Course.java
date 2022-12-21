@@ -2,11 +2,10 @@ package com.web.springboot.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.sql.Blob;
 
 /**
  * 课程实体类
@@ -22,11 +21,13 @@ public class Course {
     private String studytime;
     private Integer viewtimes;
     private String introduction;
+    @Column(name = "picture", columnDefinition = "mediumblob")
+    private byte[] picture;
 
     /**
      * @return 将对象所有信息以String方式返回
      */
-    public String toString(){
+    public String toString() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(this);

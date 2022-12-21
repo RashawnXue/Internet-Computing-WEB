@@ -10,5 +10,4 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     @Nullable
     List<Course> findByCoursenameLike(String coursename);
     Course findByCoursename(String coursename);
-
 }

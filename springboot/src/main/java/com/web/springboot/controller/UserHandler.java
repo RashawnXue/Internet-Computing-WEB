@@ -5,6 +5,7 @@ import com.web.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class UserHandler {
         if (user_data != null) {
             return "exist";
         }
+
+
+
         User receive1 = userRepository.save(user_data1);
         return "success";
     }
