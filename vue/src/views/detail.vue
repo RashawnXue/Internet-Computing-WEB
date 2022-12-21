@@ -1,9 +1,16 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
+import axios from "axios";
 const route = useRoute()
 console.log(route)
 const activeName = ref('first')
+
+// download test: 仅作前后端对接测试用
+function downLoad(){
+    //通过window.location调起下载框
+    window.location = "http://localhost:9090/resource/downloadfile?resourceId=" + 9;// url + 下载的resourceId
+}
 </script>
 
 <template>
@@ -25,10 +32,13 @@ const activeName = ref('first')
 
 
           </div>
-          <div class="courseDetail">
-            <h2>课程详情</h2>
-            <h3>有待补充</h3>
-          </div>
+            <div class="courseDetail">
+                <h2>课程详情</h2>
+                <h3>有待补充</h3>
+                <!-- test -->
+                <!--下载按钮-->
+                <el-button type="warning" icon="el-icon-download" :circle="isCircle" @click="downLoad()"></el-button>
+            </div>
         </el-main>
 
       </el-container>

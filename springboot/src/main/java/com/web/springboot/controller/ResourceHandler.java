@@ -144,8 +144,8 @@ public class ResourceHandler {
      *         fail：文件下载失败
      *         success：下载成功
      */
-    @RequestMapping("/downloadfile/{resourceId}")
-    public String downloadFile(HttpServletResponse response, @PathVariable("resourceId") int resourceId){
+    @GetMapping("/downloadfile")
+    public String downloadFile(@RequestParam int resourceId, HttpServletRequest request ,HttpServletResponse response){
         Resource target = resourceRepository.findById(resourceId);
         String url = target.getDatapath();
         if (url == null) {
@@ -161,7 +161,7 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + resourceId );
+        response.setHeader("Content-Disposition", "attachment;filename=" + target.getName() );
 
         try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];

@@ -62,6 +62,7 @@ public class UserHandler {
 
     /**
      * 用户修改密码
+     * url:"/modify/passwd"
      *
      * @param user_data_receive 包含新密码的用户数据（即 用户名+新密码）
      * @return 字符串String
