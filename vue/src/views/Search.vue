@@ -38,7 +38,9 @@ watch(route, () => {
 .content-container {
     margin: auto;
     z-index: 0;
-    overflow: hidden;
     width: 48rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 </style>

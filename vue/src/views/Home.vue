@@ -39,7 +39,10 @@ window.onresize = function () {
     margin: auto;
     z-index: 0;
     overflow: hidden;
-    width: 48rem;
+    width: var(--home-content-container-width);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 </style>

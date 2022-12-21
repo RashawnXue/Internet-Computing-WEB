@@ -21,6 +21,12 @@ axios.get('http://localhost:9090/course/findAll').then(function (resp) {
 const collapse = ref(false)
 
 let rem = window.getComputedStyle(document.documentElement)["fontSize"]
+let windowWidth = window.innerWidth
+if (windowWidth < 66 * Number(rem.substring(0, rem.length - 2))) {
+    collapse.value = true
+} else {
+    collapse.value = false
+}
 window.onresize = function () {
     rem = window.getComputedStyle(document.documentElement)["fontSize"]
     let windowWidth = window.innerWidth
@@ -117,11 +123,14 @@ function filterCourses(index, indexPath, item) {
 <style scoped>
 .content-container {
     z-index: 0;
-    padding-left: var(--content-padding-left);
-    width: 64rem;
-    overflow: hidden;
+    padding-left: var(--class-content-padding-left);
+    width: var(--class-content-container-width);
     margin-left: 0;
     transition: all 0.5s;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: hidden;
 }
 
 .home-side-bar {

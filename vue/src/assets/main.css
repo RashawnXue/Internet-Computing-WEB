@@ -1,34 +1,44 @@
 @import './base.css';
 
 :root {
+  /* 响应式布局需要的变量 */
   --side-bar-display: block;
-  --content-padding-left: 0;
-  --content-align-items: center;
+  --class-content-padding-left: 14rem;
   --userID-display: block;
   --LOGO-display: block;
-  --color-main: teal;/* 主题色 */
+  --home-content-container-width: 64rem;
+  --class-content-container-width: 78rem;
+
+  /* 主题色，可自行添加 */
+  --color-main: #01847f;
   --color-main-darker: rgb(0, 92, 92);
+  --color-main-lighter: rgb(3, 182, 182);
 }
 
-@media screen and (max-width: 84rem) {
+@media screen and (max-width: 80rem) {
   :root {
-    --content-padding-left: 14rem;
-    --content-align-items: flex-start;
+    --class-content-container-width: 62rem;
   }
 }
 
-@media screen and (max-width: 66rem) {
+@media screen and (max-width: 70rem) {
   :root {
-    --content-padding-left: 4rem;
-    --content-align-items: center;
+    --home-content-container-width: 48rem;
+  }
+}
+
+@media screen and (max-width: 65rem) {
+  :root {
+    --class-content-padding-left: 3rem;
+    --class-content-container-width: 51rem;
     --userID-display: none;
     --LOGO-display: none;
   }
 }
 
-@media screen and (max-width: 62rem) {
+@media screen and (max-width: 51rem) {
   :root {
-    --content-padding-left: 4rem;
-    --content-align-items: flex-start;
+    --class-content-container-width: auto;
+    --home-content-container-width: 32rem;
   }
 }

@@ -70,7 +70,7 @@ function cellStyle(obj){
 <style scoped>
 .table-container {
   width: 50rem;
-  border-radius: 4px;
+  border-radius: 8px;
   margin-bottom: 1rem;
   background-color: var(--el-bg-color);
   box-sizing: border-box;
