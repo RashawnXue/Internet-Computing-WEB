@@ -6,7 +6,6 @@ import com.web.springboot.entity.ResourceData;
 import com.web.springboot.repository.CourseRepository;
 import com.web.springboot.repository.ResourceRepository;
 import com.web.springboot.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -33,7 +31,6 @@ public class ResourceHandler {
     private UserRepository userRepository;
     @Autowired
     private ResourceRepository resourceRepository;
-
 
     /**
      * //TODO 在本地跑后端，这里要改成自己文件夹
@@ -66,7 +63,7 @@ public class ResourceHandler {
 
     /**
      *
-     * @param request 传入参数：json对象 (包含
+     * @param resourceData 传入参数：json对象 (包含
      *                     file:文件
      *                     coursename: 对应的课程名
      *                     username: 上传者的用户名
@@ -79,18 +76,18 @@ public class ResourceHandler {
      *                 "success": 上传成功
      */
     @PostMapping("/uploadfile")
-    public String uploadFile(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file) {
-
+    public String uploadFile(@RequestBody ResourceData resourceData) {
         logger.info("进入上传方法");
         logger.warn("请 先到 springboot/controller/ResourceHandler.java  中 TODO位置更换到自己要存文件的路径（绝对路径）");
-        logger.info("传入数据："+request.toString());
+        logger.info("传入数据："+resourceData.toString());
 
+        MultipartFile file = resourceData.getFile();
         if (file.isEmpty()) {
             logger.warn("\n !!! : 文件为空\n");
             return "empty_file";
         }
-        if (resourceRepository.findByName(request.getParameter("name")) != null){
-            logger.warn("重复添加了文件  " + request.getParameter("name"));
+        if (resourceRepository.findByName(resourceData.getName()) != null){
+            logger.warn("重复添加了文件  " + resourceData.getName());
             return "exists";
         }
         String fileName = file.getOriginalFilename();
@@ -105,16 +102,16 @@ public class ResourceHandler {
             return "fail";
         }
         Resource resource2save = new Resource();
-        int courseID = courseRepository.findByCoursename(request.getParameter("coursename")).getId();
-        int uploaderID = userRepository.findByUsername(request.getParameter("username")).getId();
+        int courseID = courseRepository.findByCoursename(resourceData.getCoursename()).getId();
+        int uploaderID = userRepository.findByUsername(resourceData.getUsername()).getId();
         {
             resource2save.setCourseid(courseID);
             resource2save.setType(typeName);
             resource2save.setSize((int) file.getSize());
             resource2save.setDatapath(filePath + fileName);
             resource2save.setUploaderid(uploaderID);
-            resource2save.setName(request.getParameter("name"));
-            resource2save.setIntro(request.getParameter("intro"));
+            resource2save.setName(resourceData.getName());
+            resource2save.setIntro(resourceData.getIntro());
             logger.info("上传文件 " + resource2save.getName() + " 到 " + resource2save.getDatapath());
         }
 
@@ -123,7 +120,6 @@ public class ResourceHandler {
             logger.warn("数据库添加文件信息失败（可能）");
             return "fail";
         }
-
         try {
             file.transferTo(dest);
         } catch (IOException e) {
@@ -144,8 +140,8 @@ public class ResourceHandler {
      *         fail：文件下载失败
      *         success：下载成功
      */
-    @GetMapping("/downloadfile")
-    public String downloadFile(@RequestParam int resourceId, HttpServletRequest request ,HttpServletResponse response){
+    @RequestMapping("/downloadfile/{resourceId}")
+    public String downloadFile(HttpServletResponse response, @PathVariable("resourceId") int resourceId){
         Resource target = resourceRepository.findById(resourceId);
         String url = target.getDatapath();
         if (url == null) {
@@ -161,7 +157,7 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + target.getName() );
+        response.setHeader("Content-Disposition", "attachment;filename=" + resourceId );
 
         try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];
