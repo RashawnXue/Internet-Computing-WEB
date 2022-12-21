@@ -1,5 +1,6 @@
 package com.web.springboot.controller;
 
+import org.apache.catalina.filters.AddDefaultCharsetFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,4 +17,8 @@ class ResourceHandlerTest {
         System.out.println(resourceHandler.findByCourseId(1));
     }
 
+    @Test
+    void downloadFile() {
+
+    }
 }

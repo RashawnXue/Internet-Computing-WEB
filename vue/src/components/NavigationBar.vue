@@ -16,7 +16,7 @@ const activeIndex = ref('/')
 const hasLogin=ref(storage.get("userID")!==null)
 
 const userID = ref(hasLogin?'未登录':storage.get("userID"))
-const userContrib = !hasLogin?0:axios.get("/user/getContrib",userID)
+const userContrib = !hasLogin?0:axios.get("http://localhost:9090/user/getContrib",userID)
 
 /*测试使用：
 const userID="Mas"
