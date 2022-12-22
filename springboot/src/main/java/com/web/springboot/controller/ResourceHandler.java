@@ -39,7 +39,7 @@ public class ResourceHandler {
      * //TODO 在本地跑后端，这里要改成自己文件夹
      */
     private String path_file = "/home/floveram/WEB/data/resource_data/";
-    private final Logger logger =  LoggerFactory.getLogger(ResourceHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(ResourceHandler.class);
 
     /**
      * 根据课程id搜索该课程的资源
@@ -52,6 +52,7 @@ public class ResourceHandler {
     public List<Resource> findByCourseId(@PathVariable("courseId") Integer courseId) {
         return resourceRepository.findByCourseid(courseId);
     }
+
     /**
      * 根据课程名字搜索该课程的资源
      * url:"/resource/{coursename}"
@@ -65,31 +66,38 @@ public class ResourceHandler {
     }
 
     /**
-     *
      * @param request 传入参数：json对象 (包含
-     *                     file:文件
-     *                     coursename: 对应的课程名
-     *                     username: 上传者的用户名
-     *                     name: 资源的名称
-     *                     intro: 资源的简介
-     *                     )
+     *                file:文件
+     *                coursename: 对应的课程名
+     *                username: 上传者的用户名
+     *                name: 资源的名称
+     *                intro: 资源的简介
+     *                )
      * @return 返回状态："empty_file":文件为空文件（可能传文件出了问题）
-     *                 "exists":文件已存在（根据文件 的上传名字判断）*注意区分文件名和文件上传的名字*
-     *                 "fail": 后端问题，上传失败（可以看看后端log，联系lds）
-     *                 "success": 上传成功
+     * "exists":文件已存在（根据文件 的上传名字判断）*注意区分文件名和文件上传的名字*
+     * "fail": 后端问题，上传失败（可以看看后端log，联系lds）
+     * "success": 上传成功
+     * "lost_*": * 为字段，即缺少指定字段
      */
     @PostMapping("/uploadfile")
     public String uploadFile(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file) {
-
+        String[] params = {"name", "coursename", "username", "intro"};
+        for (String param :
+                params) {
+            if (request.getParameter(param) == null) {
+                logger.warn("前端传来文件缺少字段:" + param);
+                return "lost_" + param;
+            }
+        }
         logger.info("进入上传方法");
         logger.warn("请 先到 springboot/controller/ResourceHandler.java  中 TODO位置更换到自己要存文件的路径（绝对路径）");
-        logger.info("传入数据："+request.toString());
+        logger.info("传入数据：" + request.toString());
 
         if (file.isEmpty()) {
             logger.warn("\n !!! : 文件为空\n");
             return "empty_file";
         }
-        if (resourceRepository.findByName(request.getParameter("name")) != null){
+        if (resourceRepository.findByName(request.getParameter("name")) != null) {
             logger.warn("重复添加了文件  " + request.getParameter("name"));
             return "exists";
         }
@@ -140,12 +148,12 @@ public class ResourceHandler {
      * @param response
      * @param resourceId 资源对应的id
      * @return path error: 数据库中datapath为null
-     *         not exist：文件不存在
-     *         fail：文件下载失败
-     *         success：下载成功
+     * not exist：文件不存在
+     * fail：文件下载失败
+     * success：下载成功
      */
     @GetMapping("/downloadfile")
-    public String downloadFile(@RequestParam int resourceId, HttpServletRequest request ,HttpServletResponse response){
+    public String downloadFile(@RequestParam int resourceId, HttpServletRequest request, HttpServletResponse response) {
         Resource target = resourceRepository.findById(resourceId);
         String url = target.getDatapath();
         if (url == null) {
@@ -153,7 +161,7 @@ public class ResourceHandler {
             return "path error";
         }
         File file = new File(url);
-        if (!file.exists()){
+        if (!file.exists()) {
             logger.warn("文件不存在");
             return "not exist";
         }
@@ -161,11 +169,11 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + target.getName() );
+        response.setHeader("Content-Disposition", "attachment;filename=" + target.getName());
 
-        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];
-            OutputStream os  = response.getOutputStream();
+            OutputStream os = response.getOutputStream();
             int i = 0;
             while ((i = bis.read(buff)) != -1) {
                 os.write(buff, 0, i);
