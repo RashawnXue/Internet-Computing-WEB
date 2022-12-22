@@ -3,6 +3,7 @@ package com.web.springboot.controller;
 import com.web.springboot.entity.Course;
 import com.web.springboot.entity.Resource;
 import com.web.springboot.entity.ResourceData;
+import com.web.springboot.entity.User;
 import com.web.springboot.repository.CourseRepository;
 import com.web.springboot.repository.ResourceRepository;
 import com.web.springboot.repository.UserRepository;
@@ -22,6 +23,7 @@ import java.io.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -125,7 +127,9 @@ public class ResourceHandler {
             resource2save.setIntro(request.getParameter("intro"));
             logger.info("上传文件 " + resource2save.getName() + " 到 " + resource2save.getDatapath());
         }
-
+        User user = userRepository.findById(uploaderID);
+        user.setContribution(user.getContribution() + 1);
+        userRepository.save(user);
         Resource res = resourceRepository.save(resource2save);
         if (res.getDatapath() == null) {
             logger.warn("数据库添加文件信息失败（可能）");
