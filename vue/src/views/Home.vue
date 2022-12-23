@@ -44,5 +44,4 @@ window.onresize = function () {
     flex-direction: row;
     flex-wrap: wrap;
 }
-
 </style>
