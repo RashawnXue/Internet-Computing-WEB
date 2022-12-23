@@ -94,9 +94,9 @@ const submitForm=(formEl: FormInstance | undefined)=>{
 </script>
 
 <template>
-    <div class="loginBox" >
-        <div style="margin-top:5%;margin-bottom:0rem; text-align: center;font-size: larger;">当前账户：{{username}}</div>
-        <div class="customLoginForm">
+    <div class="inputBox" >
+        <div style="padding-top:1rem;margin-bottom:0rem; text-align: center;font-size: larger;">当前账户：{{username}}</div>
+        <div class="customInputForm">
             <el-form ref="formRef" :model="updateForm" status-icon :rules="rules" label-width="5rem">
                 <el-form-item label="原密码" prop="oldpassword">
                     <el-input v-model="updateForm.oldpassword" autocomplete="off" />
@@ -110,7 +110,7 @@ const submitForm=(formEl: FormInstance | undefined)=>{
                 </el-form-item>
                 <el-form-item>
                     <el-button
-                        style="margin-top: 10%;margin-left: 0%;height: 70%;width: 30%;min-width: fit-content"
+                        style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content"
                         type="primary"
                         @click="submitForm(formRef)">修改密码</el-button>
                 </el-form-item>
@@ -120,21 +120,22 @@ const submitForm=(formEl: FormInstance | undefined)=>{
 </template>
 
 <style>
-.loginBox {
+.inputBox {
     box-sizing: border-box;
     width: 25%;
     margin: 70px auto;
+    padding-bottom: 1%;
     border-radius: 18px;
     box-shadow: 0 0 10px 10px rgba(25, 128, 139, 0.82);
     flex-direction: column;
 }
 
-.customLoginForm {
-    margin-top: 5%;
+.customInputForm {
+    margin-top: 10%;
     height: 100%;
     width: auto;
     margin-left: 15%;
     margin-right: 15%;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 }
 </style>

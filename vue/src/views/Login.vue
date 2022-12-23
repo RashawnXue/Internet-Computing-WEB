@@ -1,5 +1,4 @@
 <template>
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <div onload="load();">
         <div class="loginBox">
             <div style="flex:1" padding="20px">
@@ -29,13 +28,12 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button
-                                    style="margin-top: 10%;margin-left: 12%;height: 70%;width: 30%;min-width: fit-content"
+                                    style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content"
                                     type="primary"
                                     @click="submitForm(formRef)">{{ pageRef.typeIsLogin ? "立即登录" : "立即注册" }}</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
-                    <!--<button @click="test()">testbutton</button>-->
                 </div>
             </div>
         </div>
