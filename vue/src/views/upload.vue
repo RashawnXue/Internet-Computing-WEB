@@ -46,7 +46,6 @@
             v-model="loadFileParams.briefIntro">
         </el-input>
       </div>
-      <el-button  size="normal" type="success" @click="submitUpload">将信息上传到服务器</el-button>
       <el-upload
           class="upload-demo"
           drag
@@ -58,11 +57,13 @@
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :file-list="fileList"
-          multiple>
+          multiple
+          v-if="loadFileParams.coursetype == '文件'">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <div class="el-upload__tip" slot="tip">贡献你的资源吧</div>
       </el-upload>
+      <el-button  size="normal" type="success" @click="submitUpload" v-if="loadFileParams.coursetype == '链接'">将信息上传到服务器</el-button>
     </el-card>
 
 
@@ -97,6 +98,7 @@ export default {
         coursetype:'',
         briefIntro:'',
         interlinking : '',
+        file:'',
       },
       headers: {
         Authorization: window.sessionStorage.getItem("myToken")
@@ -147,8 +149,8 @@ export default {
         axios.post(this.uploadFileURL, this.loadFileParams).then(function (res) {
           console.log(res)
         })
-      }
 
+      }
 
     },
     handleRemove(file, fileList) {
@@ -159,6 +161,39 @@ export default {
     },
     uploadBefore(file) { // 这个函数的目的就是在上传文件之前获取到文件的名字然后保存到携带的参数变量里面！
       this.loadFileParams.fileNames = file.name
+      if(this.loadFileParams.name == ''){
+        ElMessageBox.alert('请您检查资源名输入', {
+          confirmButtonText: '确定',
+        })
+        return false
+      }
+      if(this.loadFileParams.coursename == ''){
+        ElMessageBox.alert('请您检查课程名称输入', {
+          confirmButtonText: '确定',
+        })
+        return false
+      }
+      if(this.loadFileParams.coursetype == ''){
+        ElMessageBox.alert('请您检查资源类型输入', {
+          confirmButtonText: '确定',
+        })
+        return false
+      }
+      if(this.loadFileParams.coursetype == '链接'){
+        if(this.loadFileParams.interlinking == ''){
+          ElMessageBox.alert('请您检查链接输入', {
+            confirmButtonText: '确定',
+          })
+          return false
+        }
+      }
+      if(this.loadFileParams.briefIntro == ''){
+        ElMessageBox.alert('请您检查资源介绍输入', {
+          confirmButtonText: '确定',
+        })
+        return false
+      }
+
     },
     successResave(response, file, fileList){
       console.log(response)
