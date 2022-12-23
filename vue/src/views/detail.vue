@@ -29,8 +29,6 @@ function downLoad(){
           <h3>任课教师:{{route.query.teacher}}</h3>
           <h3>课程时间:{{route.query.during}}</h3>
           <h3>课程评价:{{route.query.itro}}</h3>
-
-
           </div>
           <div class="courseDetail">
             <h2>课程详情</h2>
