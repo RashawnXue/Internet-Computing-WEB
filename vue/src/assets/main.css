@@ -8,14 +8,21 @@
   --LOGO-display: block;
   --home-content-container-width: 64rem;
   --class-content-container-width: 78rem;
+  --search-input-width: 12rem;
+  --search-bar-width: 15rem;
+  --rank-table-width: 50rem;
+  --nav-upload-display: inline-flex;
+  --button-opacity: 0.8;
+  --nav-other-display: flex;
 
   /* 主题色，可自行添加 */
-  --color-main: #01847f;
+  --color-main: rgb(1, 132, 127);
   --color-main-darker: rgb(0, 92, 92);
+  --color-main-darkest: rgb(0, 70, 70);
   --color-main-lighter: rgb(3, 182, 182);
 }
 
-@media screen and (max-width: 80rem) {
+@media screen and (max-width: 82rem) {
   :root {
     --class-content-container-width: 62rem;
   }
@@ -27,7 +34,7 @@
   }
 }
 
-@media screen and (max-width: 65rem) {
+@media screen and (max-width: 68rem) {
   :root {
     --class-content-padding-left: 3rem;
     --class-content-container-width: 51rem;
@@ -36,9 +43,23 @@
   }
 }
 
+@media screen and (max-width: 56rem) {
+  :root {
+    --search-input-width: 6rem;
+    --search-bar-width: 9rem;
+  }
+}
+
 @media screen and (max-width: 51rem) {
   :root {
     --class-content-container-width: auto;
     --home-content-container-width: 32rem;
+    --rank-table-width: 36rem;
+  }
+}
+
+@media screen and (max-width: 46rem) {
+  :root {
+    --nav-upload-display: none;
   }
 }

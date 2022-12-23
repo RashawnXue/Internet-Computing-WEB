@@ -12,10 +12,15 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Nullable
     User findByUsername(String userName);
+
     List<User> findByUsernameLikeOrderByContributionDesc(String name);
+
     @Transactional
     @Modifying
     @Query("update User u set u.password = ?1 where u.username = ?2")
     int updatePasswordByUsername(String password, String username);
 
+
+    @Nullable
+    User findById(int id);
 }

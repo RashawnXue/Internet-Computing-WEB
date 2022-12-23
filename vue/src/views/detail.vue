@@ -14,40 +14,35 @@ function downLoad(){
 </script>
 
 <template>
-    
-    <div class="content-container">
-      <el-container>
 
-        <el-main class="content-item">
-          <el-row type="flex" justify="center" align="middle">
-            <div class = "courseTitle">
-              <h1>为您展示{{route.query.courses}}的课程详情</h1>
-            </div>
-          </el-row>
-          <div class="briefIro">
-            <h2>课程简介</h2>
-              <h3>任课教师:{{route.query.teacher}}</h3>
-              <h3>课程时间:{{route.query.during}}</h3>
-              <h3>课程评价:{{route.query.itro}}</h3>
+  <div class="content-container">
+    <el-container>
 
-
+      <el-main class="content-item">
+        <el-row type="flex" justify="center" align="middle">
+          <div class = "courseTitle">
+            <h1>为您展示{{route.query.courses}}的课程详情</h1>
           </div>
-            <div class="courseDetail">
-                <h2>课程详情</h2>
-                <h3>有待补充</h3>
-                <!-- test -->
-                <!--下载按钮-->
-                <el-button type="warning" icon="el-icon-download" :circle="isCircle" @click="downLoad()"></el-button>
-            </div>
+        </el-row>
+        <div class="briefIro">
+          <h2>课程简介</h2>
+          <h3>任课教师:{{route.query.teacher}}</h3>
+          <h3>课程时间:{{route.query.during}}</h3>
+          <h3>课程评价:{{route.query.itro}}</h3>
+          </div>
+          <div class="courseDetail">
+            <h2>课程详情</h2>
+            <h3>有待补充</h3>
+          </div>
         </el-main>
 
-      </el-container>
-    </div>
+    </el-container>
+  </div>
 
-    <el-skeleton :rows="5" />
+  <el-skeleton :rows="5" />
 
-  </template>
-  
+</template>
+
 
 <style scoped>
 .courseTitle{
@@ -58,11 +53,11 @@ function downLoad(){
   vertical-align: center;
 }
 .content-container {
-    z-index: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    --el-bg-color:var(--el-bg-color-page);
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  --el-bg-color:var(--el-bg-color-page);
 }
 .content-item {
   width: 60rem;
