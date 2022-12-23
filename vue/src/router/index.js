@@ -19,7 +19,7 @@ const routes = [
     { path: '/search', component: Search },
     { path: '/detail', component: detail },
     { path: '/login', component: Login },
-    { path: '/account/:name', component: Account },
+    { path: '/account', component: Account },
     { path: '/rank', component: rank },
     { path: '/upload', component: upload },
     { path: '/class', component: Class },

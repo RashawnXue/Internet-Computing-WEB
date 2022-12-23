@@ -13,20 +13,14 @@ const router = useRouter()
 
 const activeIndex = ref('/')
 
-const hasLogin=ref(storage.get("userID")!==null)
+let hasLogin=ref(storage.get("userID")!==null).value
 
-const userID = ref(hasLogin?'未登录':storage.get("userID"))
-const userContrib = !hasLogin?0:axios.get("http://localhost:9090/user/getContrib",userID)
-
-/*测试使用：
-const userID="Mas"
-const hasLogin=true
-const userContrib=0*/
+const userID = ref(!hasLogin?' 未登录':storage.get("userID"))
+const userContrib = !hasLogin?0:axios.get("http://localhost:9090/user/getContrib",userID.value).data
 
 function clickAvatar() {
     console.log(storage.get("userID"))
     if(!storage.get("userID")){
-    //if(!hasLogin){测试使用
         router.push('/login')
     }else{
         ElNotification({
@@ -35,21 +29,15 @@ function clickAvatar() {
         showClose: false,
     })
     }
-    /*ElNotification({
-        title: '未登录时点击头像得提示登录，登陆了之后跳转到个人信息',
-        message: '可是指针移到头像上方时为什么没有变成手型呢',
-        type: 'error',
-        showClose: false,
-    })*/
 }
 function clickChangePassword(){
-    //TODO
+    router.push('/account')
 }
 function clickLogout(){
     if(storage.get("userID")!==null){
         storage.remove("userID")
     }
-    router.push('/login')
+    router.go(0)
 }
 function clickUpload(){
     router.push({ path: '/upload' }); 
@@ -101,7 +89,6 @@ const route = useRoute()
         </div>
         <div class="user-profile">
             <div style="align-self: center; margin-right: 1rem; display: var(--userID-display);">{{ userID }}</div>
-            <!-- 这里应该放一个头像，然后点击会出现一些选项 -->
             <el-popover
                 :width="210"
                 popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
@@ -126,19 +113,26 @@ const route = useRoute()
                                 当前贡献值：{{userContrib}}
                             </p>
                             <div class="avatarFunctionButtons">
-                                <el-button @click="clickChangePassword">
+                                <el-button class="avatarFunctionButton"
+                                
+                                @click="clickChangePassword">
                                     修改密码
                                 </el-button>
-                                <el-button @click="clickLogout">
+                                <br>
+                                <el-button class="avatarFunctionButton"
+                                type="danger"
+                                @click="clickLogout">
                                     退出登录
                                 </el-button>
                             </div>
                         </div>
                         <div v-else>
-                            <p class="greetings_main" style="font-size: large; margin: 1px; font-weight: 500;">
+                            <p style="font-size: large; margin: 1px; font-weight: 500;">
                                 当前尚未登录
                             </p>
-                            <el-button @click="clickAvatar">
+                            <el-button 
+                                style="margin-top: 5%;font-size: medium;"
+                                @click="clickAvatar">
                                 立即登录
                             </el-button>
                         </div>
@@ -166,7 +160,19 @@ const route = useRoute()
     box-shadow: var(--el-box-shadow-light);
     height: 60px;
 }
-
+.avatarFunctionButtons{
+    display: flex;
+    flex-direction: column;
+    margin-top: 0rem;
+    width: max-content;
+    align-items: center;
+    margin-left:0rem;
+}
+.avatarFunctionButton{
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+    width: 8rem;
+}
 .user-profile {
     align-self: center;
     display: flex;
