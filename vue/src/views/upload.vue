@@ -27,13 +27,13 @@
             <div class="sub-title">资源类型</div>
             <el-autocomplete
                 class="inline-input"
-                v-model="loadFileParams.coursetype"
+                v-model="loadFileParams.type"
                 :fetch-suggestions="querySearch1"
                 placeholder="请输入内容"
                 @select="handleSelect"
             ></el-autocomplete>
           </el-col>
-        <el-form-item  prop="child" v-if="loadFileParams.coursetype == '链接'">
+        <el-form-item  prop="child" v-if="loadFileParams.type == '链接'">
           <div class="sub-title">请输入您要上传的链接</div>
           <el-input v-model="loadFileParams.interlinking" clearable></el-input>
         </el-form-item>
@@ -43,7 +43,7 @@
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 4}"
             placeholder="请输入内容"
-            v-model="loadFileParams.briefIntro">
+            v-model="loadFileParams.intro">
         </el-input>
       </div>
       <el-upload
@@ -58,12 +58,12 @@
           :on-remove="handleRemove"
           :file-list="fileList"
           multiple
-          v-if="loadFileParams.coursetype == '文件'">
+          v-if="loadFileParams.type == '文件'">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <div class="el-upload__tip" slot="tip">贡献你的资源吧</div>
       </el-upload>
-      <el-button  size="normal" type="success" @click="submitUpload" v-if="loadFileParams.coursetype == '链接'">将信息上传到服务器</el-button>
+      <el-button  size="normal" type="success" @click="submitUpload" v-if="loadFileParams.type == '链接'">将信息上传到服务器</el-button>
     </el-card>
 
 
@@ -90,13 +90,15 @@ export default {
   data() {
     return {
       uploadFileURL:
-          'http://localhost:9090/resource/uploadfile', // 上传文件的地址!
+          'http://localhost:9090/resource/uploadfile',
+      uploadLinkURL:
+          'http://localhost:9090/resource/uploadlink',// 上传文件的地址!
       loadFileParams: { // 上传文件的参数！
         name : '',
         coursename : '',
         username: userName,
-        coursetype:'',
-        briefIntro:'',
+        type:'',
+        intro:'',
         interlinking : '',
         file:'',
       },
@@ -104,7 +106,7 @@ export default {
         Authorization: window.sessionStorage.getItem("myToken")
       },
       coursesU: [],
-      coursetype:[],
+      type:[],
     }
   },
   methods: {
@@ -121,13 +123,13 @@ export default {
         })
         return
       }
-      if(this.loadFileParams.coursetype == ''){
+      if(this.loadFileParams.type == ''){
         ElMessageBox.alert('请您检查资源类型输入', {
           confirmButtonText: '确定',
         })
         return
       }
-      if(this.loadFileParams.coursetype == '链接'){
+      if(this.loadFileParams.type == '链接'){
         if(this.loadFileParams.interlinking == ''){
           ElMessageBox.alert('请您检查链接输入', {
             confirmButtonText: '确定',
@@ -135,7 +137,7 @@ export default {
           return
         }
       }
-      if(this.loadFileParams.briefIntro == ''){
+      if(this.loadFileParams.intro == ''){
         ElMessageBox.alert('请您检查资源介绍输入', {
           confirmButtonText: '确定',
         })
@@ -146,7 +148,7 @@ export default {
           confirmButtonText: '确定'
         })
       }else{
-        axios.post(this.uploadFileURL, this.loadFileParams).then(function (res) {
+        axios.post(this.uploadLinkURL, this.loadFileParams).then(function (res) {
           console.log(res)
         })
 
@@ -160,7 +162,7 @@ export default {
       console.log(file,this.loadFileParams);
     },
     uploadBefore(file) { // 这个函数的目的就是在上传文件之前获取到文件的名字然后保存到携带的参数变量里面！
-      this.loadFileParams.fileNames = file.name
+      // this.loadFileParams.fileNames = file.name
       if(this.loadFileParams.name == ''){
         ElMessageBox.alert('请您检查资源名输入', {
           confirmButtonText: '确定',
@@ -173,13 +175,13 @@ export default {
         })
         return false
       }
-      if(this.loadFileParams.coursetype == ''){
+      if(this.loadFileParams.type == ''){
         ElMessageBox.alert('请您检查资源类型输入', {
           confirmButtonText: '确定',
         })
         return false
       }
-      if(this.loadFileParams.coursetype == '链接'){
+      if(this.loadFileParams.type == '链接'){
         if(this.loadFileParams.interlinking == ''){
           ElMessageBox.alert('请您检查链接输入', {
             confirmButtonText: '确定',
@@ -187,7 +189,7 @@ export default {
           return false
         }
       }
-      if(this.loadFileParams.briefIntro == ''){
+      if(this.loadFileParams.intro == ''){
         ElMessageBox.alert('请您检查资源介绍输入', {
           confirmButtonText: '确定',
         })
@@ -212,7 +214,7 @@ export default {
       cb(results);
     },
     querySearch1(queryString, cb) {
-      var coursetype = this.coursetype;
+      var coursetype = this.type;
       var results = queryString ? coursetype.filter(this.createFilter(queryString)) : coursetype;
       // 调用 callback 返回建议列表的数据
       cb(results);
@@ -227,7 +229,7 @@ export default {
         { "value": "数据结构与算法"},
         { "value": "互联网计算"},
         { "value": "C++高级程序设计"},
-        { "value": "计算机组织与结构"}
+        { "value": "计算机组织结构"}
       ];
     },
     loadAll1() {
@@ -237,7 +239,7 @@ export default {
       ];
     },
     handleSelect(item) {
-      if(this.loadFileParams.coursetype == "链接")
+      if(this.loadFileParams.type == "链接")
           console.log(item);
     }
   },
