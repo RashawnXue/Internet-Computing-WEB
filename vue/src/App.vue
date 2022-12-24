@@ -1,8 +1,11 @@
 <script setup>
 import NavigationBar from './components/NavigationBar.vue';
+
+// 主页上方背景图，现在这个是随便放的，之后要再找一张，或许还要放在服务器上
 import BgImg from './assets/img/suofang.png';
+
 import { useRoute } from 'vue-router';
-import { ref, watch} from "vue";
+import { ref, watch } from "vue";
 
 const route = useRoute();
 
@@ -10,10 +13,12 @@ watch(route, () => {
   let container = document.getElementById("container")
   let menu = document.getElementById("menu")
   let header = document.getElementById("header")
+  let navContainer = document.getElementById("nav-container")
   if (route.path === '/') {
     container.classList.add("bg-img")
     container.style.setProperty('background-image', 'url(' + BgImg + ')')
-    container.style.setProperty('height', 122 + 'px')
+    container.style.setProperty('height', 120 + 'px')
+    navContainer.style.setProperty('border-bottom', '')
     menu.classList.remove('sticky')
     header.classList.remove('sticky')
     document.documentElement.style.setProperty('--nav-other-display', 'none')
@@ -22,6 +27,7 @@ watch(route, () => {
     container.classList.remove("bg-img")
     container.style.setProperty('background-image', '')
     container.style.setProperty('height', 'auto')
+    navContainer.style.setProperty('border-bottom', 'solid 1px var(--color-border)')
     menu.classList.add('sticky')
     header.classList.add('sticky')
     document.documentElement.style.setProperty('--nav-other-display', 'flex')
@@ -33,14 +39,25 @@ window.onscroll = function () {
     let menu = document.getElementById("menu")
     let header = document.getElementById("header")
     let container = document.getElementById("container")
-    if (window.scrollY >= header.offsetTop) {
+    let navContainer = document.getElementById("nav-container")
+    if (window.scrollY < 60 && header.offsetTop == 0) {
+      menu.classList.remove('sticky')
+      header.classList.remove('sticky')
+      navContainer.style.setProperty('border-bottom', '')
+      container.style.setProperty('background-image', 'url(' + BgImg + ')')
+      document.documentElement.style.setProperty('--nav-other-display', 'none')
+    }
+    else if (window.scrollY >= header.offsetTop) {
       menu.classList.add('sticky')
       header.classList.add('sticky')
+      navContainer.style.setProperty('border-bottom', 'solid 1px var(--color-border)')
       container.style.setProperty('background-image', '')
       document.documentElement.style.setProperty('--nav-other-display', 'flex')
     } else {
       menu.classList.remove('sticky')
       header.classList.remove('sticky')
+      navContainer.style.setProperty('border-bottom', '')
+      container.style.setProperty('background-image', 'url(' + BgImg + ')')
       document.documentElement.style.setProperty('--nav-other-display', 'none')
     }
   }
@@ -50,7 +67,9 @@ window.onscroll = function () {
 <template>
   <el-container>
     <div id="container" style="width: 100%;">
-      <div style="height: 60px; color: white; font-size: 30px; display: flex; flex-direction: row; justify-content: center;">LOGO</div>
+      <div
+        style="height: 60px; color: white; font-size: 30px; display: flex; flex-direction: row; justify-content: center;">
+        LOGO</div>
       <el-header id="header" class="header">
         <!--使用 router-link 组件进行导航 -->
         <!--通过传递 `to` 来指定链接 -->
@@ -64,10 +83,10 @@ window.onscroll = function () {
       <!-- 路由匹配到的组件将渲染在这里 -->
       <router-view></router-view>
     </el-main>
-    <el-footer style="position: sticky; width: 100%; top: 100vh; text-align: center; margin-top: 300px;">
+    <el-footer style="width: 100%; text-align: center; margin-top: 300px;">
       <el-divider content-position="center"
         style="--el-bg-color: var(--el-bg-color-page); padding-bottom: 100px; transition: all 5s;">
-        2022-2023第一学期南京大学软件学院互联网计算课程大作业
+        南京大学软件学院互联网计算课程大作业
       </el-divider>
     </el-footer>
   </el-container>

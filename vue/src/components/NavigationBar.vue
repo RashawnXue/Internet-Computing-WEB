@@ -152,7 +152,7 @@ const route = useRoute()
     flex-direction: row;
     justify-content: space-around;
     transition: all 0.5s;
-    padding: 0 20rem;
+    padding: 0 30%;
 }
 
 .sticky {
@@ -169,9 +169,10 @@ const route = useRoute()
     padding: 0 1rem;
     /* box-shadow: var(--el-box-shadow-light); */
     box-sizing: border-box;
-    border-bottom: solid 1px var(--color-border);
+    /* border-bottom: solid 1px var(--color-border); */
     border-top: solid 1px var(--color-border);
     overflow: hidden;
+    transition: all 0.5s;
 }
 .user-profile {
     align-self: center;
