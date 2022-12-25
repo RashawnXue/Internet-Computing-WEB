@@ -81,7 +81,11 @@ window.onscroll = function () {
     <el-main style="top: 1rem; padding: 1rem;">
       <!-- 路由出口 -->
       <!-- 路由匹配到的组件将渲染在这里 -->
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </el-main>
     <el-footer style="width: 100%; text-align: center; margin-top: 300px;">
       <el-divider content-position="center"

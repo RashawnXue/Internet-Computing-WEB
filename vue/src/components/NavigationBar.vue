@@ -85,11 +85,11 @@ const route = useRoute()
             <div style="align-self: center; display: flex; flex-direction: row; overflow: hidden;">
                 <SearchBar style="align-self: center;" />
                 <el-button :icon="Plus"
-                    style="opacity:var(--button-opacity); align-self: center; --el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker); display: var(--nav-upload-display); margin-left: 1rem;"
+                    style="align-self: center; --el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker); display: var(--nav-upload-display); margin-left: 1rem;"
                     type="primary" color="var(--color-main)" size="large" round @click="clickUpload">上传
                 </el-button>
                 <el-switch size="large" v-model="isDark"
-                    style="opacity: var(--button-opacity); align-self: center; --el-switch-on-color: var(--color-main); margin: 0 1rem;"
+                    style="align-self: center; --el-switch-on-color: var(--color-main); margin: 0 1rem;"
                     inline-prompt :active-icon="MostlyCloudy" :inactive-icon="Sunny" />
             </div>
             <div class="user-profile">
@@ -167,7 +167,7 @@ const route = useRoute()
     flex-direction: row;
     justify-content: space-between;
     padding: 0 1rem;
-    /* box-shadow: var(--el-box-shadow-light); */
+    box-shadow: var(--el-box-shadow-light);
     box-sizing: border-box;
     /* border-bottom: solid 1px var(--color-border); */
     border-top: solid 1px var(--color-border);

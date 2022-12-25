@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, onActivated } from 'vue'
 import CourseCard from '../components/CourseCard.vue';
 import axios from "axios";
 
@@ -25,6 +25,10 @@ window.onresize = function () {
         collapse.value = false
     }
 }
+
+onActivated(() => {
+    document.scrollingElement.scrollTop = 0
+})
 
 </script>
 

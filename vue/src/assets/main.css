@@ -36,7 +36,6 @@
   --search-bar-width: 15rem;
   --rank-table-width: 50rem;
   --nav-upload-display: inline-flex;
-  --button-opacity: 0.8;
   --nav-other-display: flex;
 
   /* 主题色，可自行添加 */
@@ -44,6 +43,7 @@
   --color-main-darker: rgb(0, 92, 92);
   --color-main-darkest: rgb(0, 70, 70);
   --color-main-lighter: rgb(3, 182, 182);
+  --el-color-primary: rgb(1, 132, 127) !important;
 }
 
 @media screen and (max-width: 82rem) {
