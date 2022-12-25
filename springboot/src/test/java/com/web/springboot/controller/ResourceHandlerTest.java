@@ -21,4 +21,9 @@ class ResourceHandlerTest {
     void downloadFile() {
 
     }
+
+    @Test
+    void findByCoursename(){
+        System.out.println(resourceHandler.findByCourseName("互联网计算"));
+    }
 }
