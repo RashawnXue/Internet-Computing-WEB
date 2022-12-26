@@ -13,4 +13,7 @@ public interface ResourceRepository extends JpaRepository<Resource,Integer> {
     Resource findByName(String name);
 
     Resource findById(int id);
+
+    @Nullable
+    List<Resource> findByNameLike(String name);
 }

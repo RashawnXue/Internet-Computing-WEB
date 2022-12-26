@@ -2,6 +2,7 @@ package com.web.springboot;
 
 import com.web.springboot.controller.ResourceHandler;
 import com.web.springboot.controller.UserHandler;
+import com.web.springboot.entity.ResourceData;
 import com.web.springboot.entity.User;
 import com.web.springboot.init_opration.picture_init;
 import com.web.springboot.repository.ResourceRepository;
@@ -89,6 +90,7 @@ class SpringbootApplicationTests {
         }
     }
 
+    @Test
     void upLoadFile() {
         String filePath = "/home/floveram/WEB/data/test_data/default_picture.webp";
 

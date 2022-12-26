@@ -297,4 +297,17 @@ public class ResourceHandler {
         }
         return "success";
     }
+
+    /**
+     * 对资源进行弱模糊搜索
+     * 并返回一个列表
+     * 搜索模式：匹配关键字{name}，关键字必须完整
+     * url:/findByName/{name}
+     *
+     * @return 匹配到的资源列表
+     */
+    @GetMapping("/findByName/{name}")
+    public List<Resource> findByName(@PathVariable("name") String name) {
+        return resourceRepository.findByNameLike("%" + name + "%");
+    }
 }
