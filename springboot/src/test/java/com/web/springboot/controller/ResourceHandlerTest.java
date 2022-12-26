@@ -18,12 +18,14 @@ class ResourceHandlerTest {
     }
 
     @Test
-    void downloadFile() {
-
+    void findByResourceName() {
+        System.out.println(resourceHandler.findByName("计网"));
     }
 
     @Test
     void findByCoursename(){
         System.out.println(resourceHandler.findByCourseName("互联网计算"));
     }
+
+
 }

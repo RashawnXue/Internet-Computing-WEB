@@ -1,6 +1,8 @@
 package com.web.springboot.controller;
 
+import com.web.springboot.entity.Resource;
 import com.web.springboot.entity.User;
+import com.web.springboot.repository.ResourceRepository;
 import com.web.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -34,4 +34,9 @@ class UserHandlerTest {
         System.out.println(userHandler.checkPasswd(user));
     }
 
+    @Test
+    void getContribTest() {
+        System.out.println(userHandler.findContributionByUsername("114"));
+    }
+
 }
