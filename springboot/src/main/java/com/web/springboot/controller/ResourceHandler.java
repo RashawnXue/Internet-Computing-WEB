@@ -1,6 +1,5 @@
 package com.web.springboot.controller;
 
-import com.web.springboot.entity.Course;
 import com.web.springboot.entity.Resource;
 import com.web.springboot.entity.ResourceData;
 import com.web.springboot.entity.User;
@@ -27,7 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/resource")
 public class ResourceHandler {
@@ -42,7 +40,7 @@ public class ResourceHandler {
     /**
      * //TODO 在本地跑后端，这里要改成自己文件夹
      */
-    private String path_file = "E:\\360MoveData\\Users\\dell\\Desktop\\LaoQiWan\\大二秋七丸的Markdown";
+    private String path_file = "/home/web/file/";
     private final Logger logger = LoggerFactory.getLogger(ResourceHandler.class);
 
     /**
@@ -103,7 +101,7 @@ public class ResourceHandler {
             logger.warn("未识别资源类型！");
             return "error_type";
         }
-        if (resourceRepository.findByName(name)!= null){
+        if (resourceRepository.findByName(name) != null) {
             logger.warn("上传重复文件");
             return "link_exist";
         }

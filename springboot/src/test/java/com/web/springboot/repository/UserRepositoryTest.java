@@ -11,7 +11,7 @@ class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
-    @Test
+//    @Test
     void findbyusername() {
 
         User user = userRepository.findByUsername("李东升");
