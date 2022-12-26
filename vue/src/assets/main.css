@@ -1,5 +1,29 @@
 @import './base.css';
 
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+  background: var(--el-bg-color-page);
+  transition: all 0.5s;
+}
+
+/* 滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 5px;
+}
+
+/* 滑块hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #666;
+}  
+
+
 :root {
   /* 响应式布局需要的变量 */
   --side-bar-display: block;
@@ -8,14 +32,18 @@
   --LOGO-display: block;
   --home-content-container-width: 64rem;
   --class-content-container-width: 78rem;
-  --search-input-width: 15rem;
+  --search-input-width: 12rem;
+  --search-bar-width: 15rem;
   --rank-table-width: 50rem;
   --nav-upload-display: inline-flex;
+  --nav-other-display: flex;
 
   /* 主题色，可自行添加 */
-  --color-main: #01847f;
+  --color-main: rgb(1, 132, 127);
   --color-main-darker: rgb(0, 92, 92);
+  --color-main-darkest: rgb(0, 70, 70);
   --color-main-lighter: rgb(3, 182, 182);
+  --el-color-primary: rgb(1, 132, 127) !important;
 }
 
 @media screen and (max-width: 82rem) {
@@ -42,6 +70,7 @@
 @media screen and (max-width: 56rem) {
   :root {
     --search-input-width: 6rem;
+    --search-bar-width: 9rem;
   }
 }
 

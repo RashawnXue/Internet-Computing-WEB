@@ -1,12 +1,9 @@
 <template>
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <div onload="load();">
         <div class="loginBox">
-
             <div style="flex:1" padding="20px">
                 <img class="loginPic" src="../assets/img/login_pic.png" style="width:100%">
             </div>
-
             <div style="flex:1" class="inputSection">
                 <div>
 
@@ -31,13 +28,12 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button
-                                    style="margin-top: 10%;margin-left: 12%;height: 70%;width: 30%;min-width: fit-content"
+                                    style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content"
                                     type="primary"
                                     @click="submitForm(formRef)">{{ pageRef.typeIsLogin ? "立即登录" : "立即注册" }}</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
-                    <!--<button @click="test()">testbutton</button>-->
                 </div>
             </div>
         </div>
@@ -73,23 +69,19 @@ let formSender = ({
     password: ''
 })
 
-function tryRedirectToAccount() {
-
+function checkHasLogin() {
     if (storage.get("userID")) {
-        ElMessage({
-            message: '您已登录过，请勿重复登录！',
-        })
-        router.push('/account/' + storage.get("userID"))
+        router.push('/')
     }
 }
-window.onload = tryRedirectToAccount
+window.onload = checkHasLogin
 
 function resetForm(formEl: FormInstance | undefined) {
     if (!formEl) return
     formEl.resetFields()
 }
 function changeLoginType(value: any) {
-    tryRedirectToAccount()
+    checkHasLogin()
     pageRef.value.typeIsLogin = value;
 };
 
@@ -124,7 +116,7 @@ const validatePassCheck = (rule: any, value: any, callback: any) => {
 }
 
 const submitForm = (formEl: FormInstance | undefined) => {
-    tryRedirectToAccount()
+    checkHasLogin()
     if (!formEl) return
     formEl.validate((valid) => {
         if (valid) {
@@ -150,7 +142,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
                             })
                         } else if (res.data == "success") {
                             storage.set("userID", formSender.username, 600000)//默认过期时间：10分钟
-                            router.push({ path: pageRef.value.homeUrl })
+                            router.go(0)
                             ElMessage({
                                 message: '登录成功！',
                                 type: 'success'
@@ -171,7 +163,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
                         pageRef.value.typeIsLogin = true;
                     } else if (res.data == "success") {
                         storage.set("userID", formSender.username, 600000)//默认过期时间：10分钟
-                        router.push({ path: pageRef.value.homeUrl })
+                        router.go(0)
                         ElMessage({
                             message: '注册成功！已自动登录。',
                             type: 'success'

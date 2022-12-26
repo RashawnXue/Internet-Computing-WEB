@@ -23,19 +23,21 @@ elementui 的默认配色是蓝色为主，有点土，样式也不好看，可�
 - 其他页面也可以通过`storage.set()``storage.get()``storage.remove()`来向本地存储、查找、删除有时限的数据，具体用法见`LocalStorage.js`中的注释
 
 ## 登录的残存工作 by wms
-### 已完成：
-- NavigationBar将鼠标放在头像上会根据是否登录显示不同的悬浮窗
-- NavigationBar的头像会自动显示用户的id首字母
-- 悬浮窗内的退出登录会删除本地存储的登录信息 但没有决定是停留在当前页面还是需要跳转
+前端暂定的请求方法
+#### 获取贡献值:GET
+url：user/getContrib
+`params:`(String) username
+`return:`(Integer) contribution
 
-### 未完成：
-- NavigationBar 第19行 后端需要一个获取贡献值的接口，参数为username
-- NavigationBar 第45行 前端需要一个实现修改密码的方法（弹窗或跳转新页面，可以直接用废弃的Account页面） 需要后端一个更改密码的接口，返回值为“密码错误”“修改成功”
-- NavigationBar 第136 139 148行 按钮有点丑 待优化一下
+#### 修改密码:POST
+url：user/updatePassword
+`params:` (Object) ({ username: string, oldpassword: string, newpassword: string})（保证原密码和新密码不相同）
+`return:`(String)"success":修改成功 "(别的)":修改失败（如原密码不匹配等）
 
 ## 主题色 by ysh
 main.css中的--color-main变量是主题色(目前是青绿色)，所有用到主题色的地方都应该用这个变量而非指定的颜色，此外还有深一点浅一点的颜色，如果要用到其他颜色，也应该声明为变量写到main.css里，方便后期统一配色
 
 ## 关于响应式布局 by ysh
+如果页面上只有一个中间的部分就不用做响应式布局(反正不管宽度多少都是放中间)
 简易方法：参考main.css，先定义变量，再通过媒体查询修改
 貌似宽度最小大概有36rem

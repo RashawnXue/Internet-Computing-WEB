@@ -14,7 +14,7 @@
             ></el-autocomplete>
           </el-col>
           <el-col :span="12">
-            <div class="sub-title">课程名称</div>
+            <div class="sub-title">课程名称<el-icon style="vertical-align: -0.2em;" size="large"><DCaret /></el-icon></div>
             <el-autocomplete
                 class="inline-input"
                 v-model="loadFileParams.coursename"
@@ -24,7 +24,9 @@
             ></el-autocomplete>
           </el-col>
           <el-col :span="12">
-            <div class="sub-title">资源类型</div>
+            <div class="sub-title">
+              资源类型
+              <el-icon style="vertical-align: -0.2em;" size="large"><DCaret /></el-icon></div>
             <el-autocomplete
                 class="inline-input"
                 v-model="loadFileParams.type"
@@ -71,12 +73,13 @@
 
 
 </template>
-
+<script setup>
+import { Service, CircleCheck,DCaret} from "@element-plus/icons-vue";
+</script>
 <script>
 // 后端课程信息数据获取
 import {ref} from "vue";
 import axios from "axios";
-
 const courses = ref([])
 import storage from '../utils/LocalStorage.js'
 import {ElMessageBox} from "element-plus";
@@ -214,8 +217,8 @@ export default {
       cb(results);
     },
     querySearch1(queryString, cb) {
-      var coursetype = this.type;
-      var results = queryString ? coursetype.filter(this.createFilter(queryString)) : coursetype;
+      var type = this.type;
+      var results = queryString ? coursetype.filter(this.createFilter(queryString)) : type;
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
@@ -245,14 +248,15 @@ export default {
   },
   mounted() {
     this.coursesU = this.loadAll();
-    this.coursetype = this.loadAll1();
+    this.type = this.loadAll1();
   }
 
 
 }
 </script>
 
-<style scoped>
+<style>
+
 .table-container {
   width: 50rem;
   border-radius: 4px;

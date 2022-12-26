@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed, getCurrentInstance } from 'vue';
 import { House, Medal, CirclePlus, Sunny, Reading, UserFilled, MostlyCloudy, Plus } from '@element-plus/icons-vue';
 import { useRouter, useRoute } from 'vue-router';
 import SearchBar from './SearchBar.vue';
@@ -13,20 +13,14 @@ const router = useRouter()
 
 const activeIndex = ref('/')
 
-const hasLogin = ref(storage.get("userID") !== null)
+let hasLogin=ref(storage.get("userID")!==null).value
 
-const userID = ref(hasLogin ? '未登录' : storage.get("userID"))
-const userContrib = !hasLogin ? 0 : axios.get("http://localhost:9090/user/getContrib", userID)
-
-/*测试使用：
-const userID="Mas"
-const hasLogin=true
-const userContrib=0*/
+const userID = ref(!hasLogin?' 未登录':storage.get("userID"))
+const userContrib = !hasLogin?0:axios.get("http://localhost:9090/user/getContrib",userID.value).data
 
 function clickAvatar() {
     console.log(storage.get("userID"))
-    if (!storage.get("userID")) {
-        //if(!hasLogin){测试使用
+    if(!storage.get("userID")){
         router.push('/login')
     } else {
         ElNotification({
@@ -35,21 +29,15 @@ function clickAvatar() {
             showClose: false,
         })
     }
-    /*ElNotification({
-        title: '未登录时点击头像得提示登录，登陆了之后跳转到个人信息',
-        message: '可是指针移到头像上方时为什么没有变成手型呢',
-        type: 'error',
-        showClose: false,
-    })*/
 }
-function clickChangePassword() {
-    //TODO
+function clickChangePassword(){
+    router.push('/account')
 }
 function clickLogout() {
     if (storage.get("userID") !== null) {
         storage.remove("userID")
     }
-    router.push('/login')
+    router.go(0)
 }
 function clickUpload() {
     router.push({ path: '/upload' });
@@ -60,8 +48,9 @@ const route = useRoute()
 </script>
 
 <template>
-    <div class="navigation-container">
-        <el-menu mode="horizontal" class="navigation-menu" :default-active="route.path" router :ellipsis="false">
+    <div class="navigation-container" id="nav-container">
+        <el-menu id="menu" mode="horizontal" class="navigation-menu" :default-active="route.path" router
+            :ellipsis="false" style="--el-menu-bg-color: transparent; --el-menu-hover-bg-color: transparent;">
             <el-menu-item style="display: var(--LOGO-display);">
                 LOGO
             </el-menu-item>
@@ -92,58 +81,63 @@ const route = useRoute()
                 </template>
             </el-menu-item>
         </el-menu>
-        <div style="align-self: center; display: flex; flex-direction: row;">
-            <SearchBar style="align-self: center;" />
-            <el-button :icon="Plus"
-                style="align-self: center; --el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker); display: var(--nav-upload-display); margin-left: 1rem;"
-                type="primary" color="var(--color-main)" size="large" round @click="clickUpload">上传
-            </el-button>
-            <el-switch size="large" v-model="isDark"
-                style="align-self: center; --el-switch-on-color: var(--color-main); margin: 0 1rem;" inline-prompt
-                :active-icon="MostlyCloudy" :inactive-icon="Sunny" />
-        </div>
-        <div class="user-profile">
-            <div style="align-self: center; margin-right: 1rem; display: var(--userID-display);">{{ userID }}</div>
-            <el-popover width="15rem"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 1rem; border-radius: 8px;">
-                <template #reference>
-                    <el-avatar style="align-self: center; cursor: pointer;" @click="clickAvatar">{{ userID === null ? ''
-                            : userID.charAt(0)
-                    }}</el-avatar>
-                </template>
-                <template #default>
-                    <div class="account" style="display: flex; gap: 16px; flex-direction: column">
-                        <div v-if="hasLogin">
-                            <p class="greetings_main" style="font-size: large; margin: 1px; font-weight: 500;">
-                                欢迎您，{{ userID }}！
-                            </p>
-                            <p class="greetings_sub" style="font-size:small; margin-top: 5px; font-weight: 300;">
-                                今天要学点什么呢？
-                            </p>
-                            <el-divider/>
-                            <p class="contribution" style="margin-top: 2px;">
-                                当前贡献值：{{ userContrib }}
-                            </p>
-                            <div class="avatar-function-buttons">
-                                <el-button @click="clickChangePassword" class="popover-button" style="margin: 1rem 0 0 0;">
-                                    修改密码
-                                </el-button>
-                                <el-button @click="clickLogout" class="popover-button" style="margin: 1rem 0 0 1rem;">
-                                    退出登录
+        <div style="display: var(--nav-other-display); overflow: hidden;">
+            <div style="align-self: center; display: flex; flex-direction: row; overflow: hidden;">
+                <SearchBar style="align-self: center;" />
+                <el-button :icon="Plus"
+                    style="align-self: center; --el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker); display: var(--nav-upload-display); margin-left: 1rem;"
+                    type="primary" color="var(--color-main)" size="large" round @click="clickUpload">上传
+                </el-button>
+                <el-switch size="large" v-model="isDark"
+                    style="align-self: center; --el-switch-on-color: var(--color-main); margin: 0 1rem;"
+                    inline-prompt :active-icon="MostlyCloudy" :inactive-icon="Sunny" />
+            </div>
+            <div class="user-profile">
+                <div style="align-self: center; margin-right: 1rem; display: var(--userID-display); overflow: hidden; white-space: nowrap;">{{ userID }}</div>
+                <el-popover width="15rem"
+                    popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 1rem; border-radius: 8px;">
+                    <template #reference>
+                        <el-avatar style="align-self: center; cursor: pointer;" @click="clickAvatar">{{ userID === null
+                                ? ''
+                                : userID.charAt(0)
+                        }}</el-avatar>
+                    </template>
+                    <template #default>
+                        <div class="account" style="display: flex; gap: 16px; flex-direction: column">
+                            <div v-if="hasLogin">
+                                <p class="greetings_main" style="font-size: large; margin: 1px; font-weight: 500;">
+                                    欢迎您，{{ userID }}！
+                                </p>
+                                <p class="greetings_sub" style="font-size:small; margin-top: 5px; font-weight: 300;">
+                                    今天要学点什么呢？
+                                </p>
+                                <el-divider />
+                                <p class="contribution" style="margin-top: 2px;">
+                                    当前贡献值：{{ userContrib }}
+                                </p>
+                                <div class="avatar-function-buttons">
+                                    <el-button @click="clickChangePassword" class="popover-button"
+                                        style="margin: 1rem 0 0 0;">
+                                        修改密码
+                                    </el-button>
+                                    <el-button @click="clickLogout" class="popover-button"
+                                        style="margin: 1rem 0 0 1rem;">
+                                        退出登录
+                                    </el-button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <p class="greetings_main" style="font-size: large; margin: 1px; font-weight: 500;">
+                                    当前尚未登录
+                                </p>
+                                <el-button @click="clickAvatar" class="popover-button" style="margin: 1rem 0 0 0;">
+                                    立即登录
                                 </el-button>
                             </div>
                         </div>
-                        <div v-else>
-                            <p class="greetings_main" style="font-size: large; margin: 1px; font-weight: 500;">
-                                当前尚未登录
-                            </p>
-                            <el-button @click="clickAvatar" class="popover-button" style="margin: 1rem 0 0 0;">
-                                立即登录
-                            </el-button>
-                        </div>
-                    </div>
-                </template>
-            </el-popover>
+                    </template>
+                </el-popover>
+            </div>
         </div>
     </div>
 </template>
@@ -152,26 +146,40 @@ const route = useRoute()
 .navigation-menu {
     border-bottom-width: 0;
     align-self: center;
-    width: 40rem;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    transition: all 0.5s;
+    padding: 0 30%;
+}
+
+.sticky {
+    padding: 0;
+    width: auto;
+    justify-content: flex-start;
 }
 
 .navigation-container {
-    z-index: 1;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    width: 100%;
-    padding: 0 1rem;
     justify-content: space-between;
+    padding: 0 1rem;
     box-shadow: var(--el-box-shadow-light);
-    height: 60px;
+    box-sizing: border-box;
+    /* border-bottom: solid 1px var(--color-border); */
+    border-top: solid 1px var(--color-border);
+    overflow: hidden;
+    transition: all 0.5s;
 }
-
 .user-profile {
     align-self: center;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    width: 10rem;
+    overflow: hidden;
 }
 
 .popover-button {
@@ -182,7 +190,7 @@ const route = useRoute()
     border-radius: 4px;
 }
 
-.avatar-function-buttons{
+.avatar-function-buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -193,7 +201,5 @@ const route = useRoute()
 :root {
     --el-menu-active-color: var(--color-main);
     --el-menu-hover-text-color: var(--color-main);
-    --el-menu-hover-bg-color: var(--el-bg-color);
-    --el-menu-bg-color: var(--el-bg-color);
 }
 </style>

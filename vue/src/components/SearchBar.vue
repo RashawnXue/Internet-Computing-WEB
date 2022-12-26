@@ -14,24 +14,32 @@ function goToSearch() {
         router.push({path: '/'})
     }
 }
+
+const inputWidth = ref('6rem')
+function focus() {
+    inputWidth.value='var(--search-input-width)'
+}
+function blur() {
+    inputWidth.value = '6rem'
+}
 </script>
 
 <template>
 
-    <div style="display: flex; flex-direction: row;">
-        <el-input class="search-input" v-model="content" maxlength="15" placeholder="搜索课程" size="large">
+    <div style="display: flex; flex-direction: row; width: var(--search-bar-width); justify-content: flex-end;">
+        <el-input class="search-input" @focus="focus" @blur="blur" :style="{'width': inputWidth}" v-model="content" maxlength="15" placeholder="搜索课程" size="large">
         </el-input>
-        <el-button :icon="Search" style="margin: 0 0 0 1rem; --el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker);" type="primary" color="var(--color-main)" size="large" @click="goToSearch"
+        <el-button :icon="Search" style="margin: 0 0 0 1rem; --el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker); --el-button-active-bg-color: var(--color-main-darkest);" type="primary" color="var(--color-main)" size="large" @click="goToSearch"
             circle></el-button>
     </div>
 
 </template>
 
-<style>
+<style scoped>
 .search-input {
     --el-input-border-radius: 50px;
     --el-input-focus-border-color: var(--color-main);
-    width: var(--search-input-width);
     transition: all 0.5s;
+    --el-input-bg-color: transparent;
 }
 </style>

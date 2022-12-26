@@ -42,7 +42,7 @@ public class ResourceHandler {
     /**
      * //TODO 在本地跑后端，这里要改成自己文件夹
      */
-    private String path_file = "/home/floveram/WEB/data/resource_data/";
+    private String path_file = "E:\\360MoveData\\Users\\dell\\Desktop\\LaoQiWan\\大二秋七丸的Markdown";
     private final Logger logger = LoggerFactory.getLogger(ResourceHandler.class);
 
     /**
@@ -64,7 +64,7 @@ public class ResourceHandler {
      * @param coursename 该资源所属课程id
      * @return 该课程的所有资源列表
      */
-    @GetMapping("/{coursename}")
+    @GetMapping("/findByCoursename/{coursename}")
     public List<Resource> findByCourseName(@PathVariable("coursename") String coursename) {
         return resourceRepository.findByCourseid(courseRepository.findByCoursenameLike(coursename).get(0).getId());
     }
@@ -269,7 +269,7 @@ public class ResourceHandler {
     @GetMapping("/downloadfile")
     public String downloadFile(@RequestParam int resourceId, HttpServletRequest request, HttpServletResponse response) {
         Resource target = resourceRepository.findById(resourceId);
-        String url = target.getDatapath();
+        String url = "E:\\360MoveData\\Users\\dell\\Desktop\\LaoQiWan\\大二秋七丸的Markdown";
         if (url == null) {
             logger.error("无法读取文件路径");
             return "path error";
