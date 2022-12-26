@@ -30,7 +30,7 @@ public class UserHandler {
         if (user_data != null) {
             return "exist";
         }
-
+        user_data1.setContribution(0);
         User receive1 = userRepository.save(user_data1);
         return "success";
     }
@@ -66,12 +66,12 @@ public class UserHandler {
      *
      * @param user_data_receive 包含新密码的用户数据（即 用户名+新密码）
      * @return 字符串String
-     *      用户不存在 返回 “not exist”
-     *      修改成功 返回 “success”
-     *      修改失败 返回 “fail”
+     * 用户不存在 返回 “not exist”
+     * 修改成功 返回 “success”
+     * 修改失败 返回 “fail”
      */
     @PostMapping("/modify/passwd")
-    public String modifyPasswd(@RequestBody User user_data_receive){
+    public String modifyPasswd(@RequestBody User user_data_receive) {
         User user = userRepository.findByUsername(user_data_receive.getUsername());
         if (user == null) {
             return "not exist";
@@ -100,7 +100,7 @@ public class UserHandler {
     }
 
     /**
-     *  将 List<user> 加上排名的方法类
+     * 将 List<user> 加上排名的方法类
      */
     private class RankUsers {
         List<rank_user> rank_userList = new LinkedList<>();

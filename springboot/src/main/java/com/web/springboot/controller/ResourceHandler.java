@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.util.WebUtils;
 
 import java.io.*;
 
@@ -67,6 +69,76 @@ public class ResourceHandler {
         return resourceRepository.findByCourseid(courseRepository.findByCoursenameLike(coursename).get(0).getId());
     }
 
+    @PostMapping("/uploadlink")
+    public String uploadLink(@RequestBody ResourceData request) {
+        logger.info("--------------------------------------------------------------");
+        if (request.getUsername() == null) {
+            logger.warn("前端传来 缺少字段: username");
+            return "lost_username";
+        }
+        String name = request.getName();
+        String coursename = request.getCoursename();
+        String username = request.getUsername();
+        String type = request.getType();
+        String intro = request.getIntro();
+        int uploaderID;
+        int courseID;
+        try {
+            uploaderID = userRepository.findByUsername(username).getId();
+            courseID = courseRepository.findByCoursename(coursename).getId();
+        } catch (NullPointerException e) {
+            logger.warn("用户不存在/课程不存在");
+            return "user_not_exist";
+        }
+        String datapath;
+
+
+        logger.info("进入上传方法");
+        logger.info("传入数据：" + request);
+
+        if (type.equals("链接")) {
+            logger.info("资源类型：链接");
+            datapath = request.getInterlinking();
+        } else {
+            logger.warn("未识别资源类型！");
+            return "error_type";
+        }
+        if (resourceRepository.findByName(name)!= null){
+            logger.warn("上传重复文件");
+            return "link_exist";
+        }
+        {
+            Resource resource2save = new Resource();
+            resource2save.setCourseid(courseID);
+            resource2save.setSize(0);
+            resource2save.setDatapath(datapath);
+            resource2save.setUploaderid(uploaderID);
+            resource2save.setName(name);
+            resource2save.setIntro(intro);
+            resource2save.setType("link");
+            Resource res = resourceRepository.save(resource2save);
+            if (res.getDatapath() == null) {
+                logger.warn("数据库添加文件信息失败（可能）");
+                return "fail";
+            }
+            logger.info("资源:数据库储存成功");
+        }
+        {
+            try {
+                User user = userRepository.findById(uploaderID);
+                user.setContribution(user.getContribution() + 1);
+                userRepository.save(user);
+                logger.info("上传者信息更新成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.warn("用户查找失败");
+
+            }
+        }
+        logger.info("--------------------------------------------------------------");
+        return "success";
+    }
+
     /**
      * @param request 传入参数：json对象 (包含
      *                file:文件
@@ -82,66 +154,104 @@ public class ResourceHandler {
      * "lost_*": * 为字段，即缺少指定字段
      */
     @PostMapping("/uploadfile")
-    public String uploadFile(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file) {
-        String[] params = {"name", "coursename", "username", "intro"};
+    public String uploadFile(HttpServletRequest request) {
+        String[] params = {"name", "coursename", "username", "type", "intro"};
         for (String param :
                 params) {
             if (request.getParameter(param) == null) {
-                logger.warn("前端传来文件缺少字段:" + param);
+                logger.warn("前端传来 缺少字段:" + param);
                 return "lost_" + param;
             }
         }
+
+        String name = request.getParameter("name");
+        String coursename = request.getParameter("coursename");
+        String username = request.getParameter("username");
+        String type = request.getParameter("type");
+        String intro = request.getParameter("intro");
+        int uploaderID;
+        int courseID;
+        try {
+            uploaderID = userRepository.findByUsername(username).getId();
+            courseID = courseRepository.findByCoursename(coursename).getId();
+        } catch (NullPointerException e) {
+            logger.warn("用户不存在");
+            return "user_not_exist";
+        }
+        String datapath;
+
+
         logger.info("进入上传方法");
         logger.warn("请 先到 springboot/controller/ResourceHandler.java  中 TODO位置更换到自己要存文件的路径（绝对路径）");
-        logger.info("传入数据：" + request.toString());
+        logger.info("传入数据：" + request);
+        MultipartHttpServletRequest multipartRequest =
+                WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class);
+        MultipartFile file = multipartRequest.getFile("file");
+        if (type.equals("文件")) {
 
-        if (file.isEmpty()) {
-            logger.warn("\n !!! : 文件为空\n");
-            return "empty_file";
-        }
-        if (resourceRepository.findByName(request.getParameter("name")) != null) {
-            logger.warn("重复添加了文件  " + request.getParameter("name"));
-            return "exists";
-        }
-        String fileName = file.getOriginalFilename();
-        String typeName = fileName.substring(fileName.lastIndexOf("."));
+            logger.info("资源类型：文件");
 
-        String filePath = path_file;
-        File dest = null;
-        try {
-            dest = new File(filePath + fileName);
-        } catch (NullPointerException e) {
-            logger.warn("创建本地文件失败，文件路径错误，请到ResourceHandler中修改到自己的路径");
-            return "fail";
+            if (file.isEmpty()) {
+                logger.warn("\n !!! : 文件为空\n");
+                return "empty_file";
+            }
+            if (resourceRepository.findByName(request.getParameter("name")) != null) {
+                logger.warn("重复添加了文件  " + request.getParameter("name"));
+                return "exists";
+            }
+            String filePath = path_file;
+            String fileName = file.getOriginalFilename();
+            datapath = path_file + fileName;
+
+            File dest = null;
+            try {
+                dest = new File(filePath + fileName);
+            } catch (NullPointerException e) {
+                logger.warn("创建本地文件失败，文件路径错误，请到ResourceHandler中修改到自己的路径");
+                return "fail";
+            }
+
+            try {
+                file.transferTo(dest);
+            } catch (IOException e) {
+                logger.warn("文件写入失败");
+                return "fail";
+            }
+            logger.info("文件处理完成");
+        } else {
+            logger.warn("未识别资源类型！");
+            return "error_type";
         }
-        Resource resource2save = new Resource();
-        int courseID = courseRepository.findByCoursename(request.getParameter("coursename")).getId();
-        int uploaderID = userRepository.findByUsername(request.getParameter("username")).getId();
+
+
         {
+            Resource resource2save = new Resource();
             resource2save.setCourseid(courseID);
-            resource2save.setType(typeName);
             resource2save.setSize((int) file.getSize());
-            resource2save.setDatapath(filePath + fileName);
+            resource2save.setDatapath(datapath);
             resource2save.setUploaderid(uploaderID);
-            resource2save.setName(request.getParameter("name"));
+            resource2save.setName(name);
             resource2save.setIntro(request.getParameter("intro"));
             logger.info("上传文件 " + resource2save.getName() + " 到 " + resource2save.getDatapath());
+            Resource res = resourceRepository.save(resource2save);
+            if (res.getDatapath() == null) {
+                logger.warn("数据库添加文件信息失败（可能）");
+                return "fail";
+            }
+            logger.info("资源:数据库储存成功");
         }
-        User user = userRepository.findById(uploaderID);
-        user.setContribution(user.getContribution() + 1);
-        userRepository.save(user);
-        Resource res = resourceRepository.save(resource2save);
-        if (res.getDatapath() == null) {
-            logger.warn("数据库添加文件信息失败（可能）");
-            return "fail";
+        {
+            try {
+                User user = userRepository.findById(uploaderID);
+                user.setContribution(user.getContribution() + 1);
+                userRepository.save(user);
+                logger.info("上传者信息更新成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.warn("用户查找失败");
+            }
         }
 
-        try {
-            file.transferTo(dest);
-        } catch (IOException e) {
-            logger.warn("文件写入失败");
-            return "fail";
-        }
         return "success";
     }
 
