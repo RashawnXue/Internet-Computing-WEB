@@ -27,7 +27,7 @@ window.onresize = function () {
 }
 
 onActivated(() => {
-    document.scrollingElement.scrollTop = 0
+    document.scrollingElement.scrollTop = 0 
 })
 
 </script>
@@ -45,6 +45,7 @@ onActivated(() => {
     overflow: hidden;
     width: var(--home-content-container-width);
     display: flex;
+    justify-content: space-evenly;
     flex-direction: row;
     flex-wrap: wrap;
 }

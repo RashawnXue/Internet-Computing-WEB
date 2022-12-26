@@ -31,6 +31,7 @@
   --userID-display: block;
   --LOGO-display: block;
   --home-content-container-width: 64rem;
+  --search-content-container-width: 48rem;
   --class-content-container-width: 78rem;
   --search-input-width: 12rem;
   --search-bar-width: 15rem;
@@ -78,6 +79,7 @@
   :root {
     --class-content-container-width: auto;
     --home-content-container-width: 32rem;
+    --search-content-container-width: 32rem;
     --rank-table-width: 36rem;
   }
 }

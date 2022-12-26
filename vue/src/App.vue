@@ -3,6 +3,7 @@ import NavigationBar from './components/NavigationBar.vue';
 
 // 主页上方背景图，现在这个是随便放的，之后要再找一张，或许还要放在服务器上
 import BgImg from './assets/img/suofang.png';
+import WeShare from './assets/WESHARE.svg';
 
 import { useRoute } from 'vue-router';
 import { ref, watch } from "vue";
@@ -67,9 +68,9 @@ window.onscroll = function () {
 <template>
   <el-container>
     <div id="container" style="width: 100%;">
-      <div
-        style="height: 60px; color: white; font-size: 30px; display: flex; flex-direction: row; justify-content: center;">
-        LOGO</div>
+      <div style="height: 60px; display: flex; align-items: center;">
+        <img :src="WeShare" style="height: 60px; margin: 0 auto;"/>
+      </div>
       <el-header id="header" class="header">
         <!--使用 router-link 组件进行导航 -->
         <!--通过传递 `to` 来指定链接 -->
@@ -82,7 +83,8 @@ window.onscroll = function () {
       <!-- 路由出口 -->
       <!-- 路由匹配到的组件将渲染在这里 -->
       <router-view v-slot="{ Component }">
-        <keep-alive>
+        <!-- 不缓存detail页 -->
+        <keep-alive exclude="detail">
           <component :is="Component" />
         </keep-alive>
       </router-view>

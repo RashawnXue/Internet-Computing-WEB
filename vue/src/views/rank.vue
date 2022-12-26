@@ -68,6 +68,16 @@ function cellStyle(obj){
   
 
 <style scoped>
+@keyframes PopUp {
+  from {
+    scale: 0.9;
+  }
+
+  to {
+    scale: 1;
+  }
+}
+
 .table-container {
   width: var(--rank-table-width);
   border-radius: 8px;
@@ -76,6 +86,8 @@ function cellStyle(obj){
   box-sizing: border-box;
   box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
   padding: 1rem;
+  animation-name: PopUp;
+  animation-duration: 0.5s;
 }
 </style>
   

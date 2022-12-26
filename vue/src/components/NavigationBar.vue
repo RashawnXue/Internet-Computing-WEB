@@ -52,7 +52,7 @@ const route = useRoute()
         <el-menu id="menu" mode="horizontal" class="navigation-menu" :default-active="route.path" router
             :ellipsis="false" style="--el-menu-bg-color: transparent; --el-menu-hover-bg-color: transparent;">
             <el-menu-item style="display: var(--LOGO-display);">
-                LOGO
+                WE SHARE
             </el-menu-item>
             <!-- index属性放路径-ysh -->
             <el-menu-item index="/">
