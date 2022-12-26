@@ -85,5 +85,19 @@ public class CourseHandler {
         return "success";
     }
 
-
+    /**
+     * 根据课程id查找课程名
+     *
+     * @param id 课程id
+     * @return 课程名；若课程id不存在，则返回error
+     */
+    @GetMapping("/findCourseNameById/{id}")
+    public String findCourseNameById(@PathVariable("id") int id){
+        Course course = courseRepository.findById(id);
+        if (course == null) {
+            return "error";
+        } else {
+            return course.getCoursename();
+        }
+    }
 }
