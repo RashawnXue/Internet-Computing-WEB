@@ -61,6 +61,27 @@ public class UserHandler {
     }
 
     /**
+     * 检查修改密码时，用户输入密码是否正确
+     *
+     * @param user_data_receive 包含用户名，用户输入的待检查密码
+     * @return 字符串String
+     *         若该用户不存在，返回error
+     *         若密码正确，返回true
+     *         若密码错误，返回false
+     */
+    @PostMapping("/modify/check")
+    public String checkPasswd(@RequestBody User user_data_receive) {
+        User user = userRepository.findByUsername(user_data_receive.getUsername());
+        if (user == null) {
+            return "error";
+        }
+        if (user.getPassword().equals(user_data_receive.getPassword())){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+    /**
      * 用户修改密码
      * url:"/modify/passwd"
      *
@@ -139,13 +160,13 @@ public class UserHandler {
 
     /**
      * 根据用户名获取贡献值
-     * url:"/user/getContrib"
+     * url:"/getContrib/{username}"
      *
      * @param username 用户名
      * @return 其贡献值
      */
-    @GetMapping("/user/getContrib")
-    public int findContributionByUsername(@RequestBody String username) {
+    @GetMapping("/getContrib/{username}")
+    public int findContributionByUsername(@PathVariable("username") String username) {
         User user = userRepository.findByUsername(username);
         if (user != null) {
             return user.getContribution();
