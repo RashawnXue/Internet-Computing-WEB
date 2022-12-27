@@ -18,8 +18,7 @@ const updateForm = reactive({
 });
 let formSender = ({
     username: '',
-    oldpassword: '',
-    newpassword: ''
+    password: ''
 })
 const validateOldpassword = (rule: any, value: any, callback: any) => {
     if (value === '') {
@@ -68,25 +67,44 @@ const submitForm=(formEl: FormInstance | undefined)=>{
         if(valid){
             formSender=({
                 username:username,
-                oldpassword:updateForm.oldpassword,
-                newpassword:updateForm.newpassword
+                password:updateForm.oldpassword,
             })
-            axios.post(dbUrl+'/user/updatePassword',formSender).then(function (res){
-                if(res.data=="success"){
-                    ElMessage({
-                        message: '修改密码成功！请重新登录账号.',
-                        type: 'success'
+            axios.post(dbUrl+'/user/modify/check',formSender).then(function (res){
+                if(res.data==true){
+                    formSender.password=updateForm.newpassword
+                    axios.post(dbUrl+'/user/modify/passwd',formSender).then(function (resp){
+                        if(resp.data=="success"){
+                            ElMessage({
+                                message: '修改密码成功！请重新登录账号.',
+                                type: 'success'
+                            })
+                            storage.remove("userID")
+                            router.go(0)
+                        }else if(resp.data=="fail"){
+                            ElMessageBox.alert('修改密码失败', '请重试.', {
+                                confirmButtonText: '确定'
+                            })
+                        }else if(resp.data=="not exist"){
+                            ElMessageBox.alert('用户不存在！', '请重新登录.', {
+                                confirmButtonText: '确定'
+                            })
+                            storage.remove("userID")
+                            router.go(0)
+                        }
                     })
-                    storage.remove("userID")
-                    router.go(0)
-                }else{
+                }else if(res.data==false){
                     ElMessageBox.alert('原密码输入不正确！', '请重新输入原密码.', {
                         confirmButtonText: '确定'
                     })
+                }else{
+                    ElMessageBox.alert('用户不存在！', '请重新登录.', {
+                        confirmButtonText: '确定'
+                    })
+                    storage.remove("userID")
+                    router.go(0)
                 }
             })
         }else{
-            console.log('error submit!')
             return false
         }
     })
@@ -99,14 +117,13 @@ const submitForm=(formEl: FormInstance | undefined)=>{
         <div class="customInputForm">
             <el-form ref="formRef" :model="updateForm" status-icon :rules="rules" label-width="5rem">
                 <el-form-item label="原密码" prop="oldpassword">
-                    <el-input v-model="updateForm.oldpassword" autocomplete="off" />
+                    <el-input v-model="updateForm.oldpassword" type="password" clearable autocomplete="off" />
                 </el-form-item>
                 <el-form-item label="新密码" prop="newpassword">
                     <el-input v-model="updateForm.newpassword" type="password" clearable autocomplete="off" />
                 </el-form-item>
                 <el-form-item label="确认密码" prop="passwordCheck">
-                    <el-input v-model="updateForm.passwordCheck" type="password" clearable
-                        autocomplete="off" />
+                    <el-input v-model="updateForm.passwordCheck" type="password" clearable autocomplete="off" />
                 </el-form-item>
                 <el-form-item>
                     <el-button

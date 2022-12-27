@@ -28,7 +28,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button
-                                    style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content"
+                                    style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content;--el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker);"
                                     type="primary"
                                     @click="submitForm(formRef)">{{ pageRef.typeIsLogin ? "立即登录" : "立即注册" }}</el-button>
                             </el-form-item>
@@ -125,7 +125,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
                 username: loginForm.username,
                 password: loginForm.password
             })
-
             if (pageRef.value.typeIsLogin) {//登录代码
                 axios.post(dbUrl + loginUrl, formSender).then(function (res) {
                     console.log(res)
@@ -141,7 +140,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
                                 confirmButtonText: '确定'
                             })
                         } else if (res.data == "success") {
-                            storage.set("userID", formSender.username, 600000)//默认过期时间：10分钟
+                            storage.set("userID", formSender.username, 6000000)//默认过期时间：100分钟
                             router.go(0)
                             ElMessage({
                                 message: '登录成功！',
@@ -162,7 +161,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
                         })
                         pageRef.value.typeIsLogin = true;
                     } else if (res.data == "success") {
-                        storage.set("userID", formSender.username, 600000)//默认过期时间：10分钟
+                        storage.set("userID", formSender.username, 6000000)//默认过期时间：100分钟
                         router.go(0)
                         ElMessage({
                             message: '注册成功！已自动登录。',
@@ -225,8 +224,9 @@ body {
     margin-right: auto;
     font-size: auto;
     max-width: 10rem;
-    background-color: rgb(227, 231, 234);
-
+    --el-color-primary: var(--color-main);
+    --el-button-hover-bg-color: var(--el-bg-color-page);
+    --el-button-hover-border-color: var(--el-border-color-darker);
 }
 
 .customLoginForm {
