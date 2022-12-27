@@ -1,7 +1,6 @@
 <script setup>
 
-import { ref, onMounted, reactive } from 'vue'
-import { useRouter } from 'vue-router';
+import { ref } from 'vue'
 import CourseCard from '../components/CourseCard.vue';
 import axios from "axios";
 import { CollectionTag, Filter } from '@element-plus/icons-vue';
@@ -11,16 +10,14 @@ import URL from '../global/url';
 // 后端课程信息数据获取
 const allCourses = ref([])
 const showCourses = ref([])
-
-// url为对应接口的映射
 axios.get(URL.findAll).then(function (resp) {
     allCourses.value = resp.data
     console.log(allCourses.value)
     showCourses.value = allCourses.value
 })
 
+// 控制左侧边栏折叠
 const collapse = ref(false)
-
 let rem = window.getComputedStyle(document.documentElement)["fontSize"]
 let windowWidth = window.innerWidth
 if (windowWidth < 66 * Number(rem.substring(0, rem.length - 2))) {
@@ -38,20 +35,22 @@ window.onresize = function () {
     }
 }
 
-// 筛选相应课程
+// 筛选课程
 function filterCourses(index, indexPath, item) {
     console.log(index)
     showCourses.value = allCourses.value.filter((x) => ((x.department == index) | (x.studytime == index)))
-    //课程数据库需要添加一个新的字段(例如school)表示课程所属院系以便前端筛选
     if (showCourses.value.length == 0) {
-
+        ElMessage({
+            message: '抱歉，暂未收录此类课程',
+            type: 'warning'
+        })
     }
 }
 
 </script>
 
 <template>
-    <div class="home-side-bar">
+    <div class="class-side-bar">
         <el-menu
             style="border-right-width: 0; background-color: transparent; --el-menu-hover-bg-color: transparent; --el-menu-bg-color: transparent;"
             :collapse="collapse" @select="filterCourses" unique-opened>
@@ -131,7 +130,7 @@ function filterCourses(index, indexPath, item) {
     overflow: hidden;
 }
 
-.home-side-bar {
+.class-side-bar {
     z-index: 1;
     position: fixed;
     margin-top: 1rem;

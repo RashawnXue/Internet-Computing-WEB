@@ -20,15 +20,16 @@ function downLoad(id) {
         <template #header>
             <div class="card-header">
                 <div style="font-weight: bolder; display: flex; align-items: center; flex-direction: row;">
-                    <CourseTag v-if="item.type==null" style="margin: 2px 0.5rem 0 0; display: inline;" tag="链接" color="rgb(0, 0, 180)" />
-                    <CourseTag v-if="item.type=='file'" style="margin: 2px 0.5rem 0 0; display: inline;" tag="文件" color="rgb(242, 134, 6)" />
+                    <CourseTag v-if="item.type=='链接'" style="margin: 0 0.5rem 0 0; display: inline;" tag="链接" color="rgb(0, 0, 180)" />
+                    <CourseTag v-if="item.type=='文件'" style="margin: 0 0.5rem 0 0; display: inline;" tag="文件" color="rgb(242, 134, 6)" />
                     {{ item.name}}
+                    <span style="font-size: smaller; margin-left: 0.5rem; margin-top: 2px;">{{ item.coursename }}</span>
                 </div>
                 <el-button :disabled="item.type == null" class="button" text size="large" @click="downLoad(item.id)" style="--el-button-text-color: var(--color-main)">下载</el-button>
             </div>
         </template>
         <div class="card-intro">
-            <a v-if="item.type == null" :href="item.datapath">{{ item.datapath }}</a>
+            <a v-if="item.type == '链接'" :href="item.datapath">{{ item.datapath }}</a>
             <div>描述：{{ item.intro }}</div>
         </div>
     </el-card>

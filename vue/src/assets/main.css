@@ -23,7 +23,6 @@
   background-color: #666;
 }  
 
-
 :root {
   /* 响应式布局需要的变量 */
   --side-bar-display: block;
@@ -31,7 +30,7 @@
   --userID-display: block;
   --LOGO-display: block;
   --home-content-container-width: 64rem;
-  --search-content-container-width: 48rem;
+  --search-resource-cards-content-container-width: 46rem;
   --class-content-container-width: 78rem;
   --search-input-width: 12rem;
   --search-bar-width: 15rem;
@@ -44,6 +43,8 @@
   --color-main-darker: rgb(0, 92, 92);
   --color-main-darkest: rgb(0, 70, 70);
   --color-main-lighter: rgb(3, 182, 182);
+  
+  /* 强制修改element主题色 */
   --el-color-primary: rgb(1, 132, 127) !important;
 }
 
@@ -79,6 +80,7 @@
   :root {
     --class-content-container-width: auto;
     --home-content-container-width: 32rem;
+    --search-resource-cards-content-container-width: 30rem;
     --search-content-container-width: 32rem;
     --rank-table-width: 36rem;
   }

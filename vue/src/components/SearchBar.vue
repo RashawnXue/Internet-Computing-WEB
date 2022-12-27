@@ -27,7 +27,7 @@ function blur() {
 <template>
 
     <div style="display: flex; flex-direction: row; width: var(--search-bar-width); justify-content: flex-end;">
-        <el-input class="search-input" @focus="focus" @blur="blur" :style="{'width': inputWidth}" v-model="content" maxlength="15" placeholder="搜索课程" size="large">
+        <el-input class="search-input" @focus="focus" @blur="blur" :style="{'width': inputWidth}" v-model="content" maxlength="15" placeholder="搜索课程" size="large" clearable>
         </el-input>
         <el-button :icon="Search" style="margin: 0 0 0 1rem; --el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker); --el-button-active-bg-color: var(--color-main-darkest);" type="primary" color="var(--color-main)" size="large" @click="goToSearch"
             circle></el-button>
