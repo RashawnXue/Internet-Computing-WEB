@@ -9,7 +9,7 @@ import URL from '../global/url';
 const courses = ref([])
 
 // url为对应接口的映射
-axios.get(URL.course + '/findAll').then(function (resp) {
+axios.get(URL.findAll).then(function (resp) {
     courses.value = resp.data
     console.log(courses.value)
 })

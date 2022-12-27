@@ -6,11 +6,11 @@ const USER_URL = BASE_URL + 'user'
 
 const URL = {
     findAll: COURSE_URL + '/findAll',
-    findByName: COURSE_URL + '/findByName/',
+    findCourseByName: COURSE_URL + '/findByName/',
     getPicture: COURSE_URL + '/getpicture/',
 
     findByCourseId: RESOURCE_URL + '/',
-    findByCourseName: RESOURCE_URL + '/findByCourseName/',
+    findResourceByName: RESOURCE_URL + '/findByName/',
     uploadFile: RESOURCE_URL + '/uploadfile',
     downloadFile: RESOURCE_URL + '/downloadfile',
 

@@ -4,6 +4,7 @@ import CourseCard from '../components/CourseCard.vue';
 import ResourceCard from '../components/ResourceCard.vue';
 import { ref, watch } from "vue";
 import axios from "axios";
+import URL from '../global/url';
 
 const route = useRoute()
 
@@ -14,21 +15,21 @@ const courses = ref([])
 const resources = ref([])
 
 // url为对应接口的映射
-axios.get('http://localhost:9090/course/findByName/' + route.query.content).then(function (resp) {
+axios.get(URL.findCourseByName + route.query.content).then(function (resp) {
     courses.value = resp.data
     console.log(courses.value)
 })
-axios.get('http://localhost:9090/resource/findByName/' + route.query.content).then(function (resp) {
+axios.get(URL.findResourceByName + route.query.content).then(function (resp) {
     resources.value = resp.data
     console.log(resources.value)
 })
 
 watch(route, () => {
-    axios.get('http://localhost:9090/course/findByName/' + route.query.content).then(function (resp) {
+    axios.get(URL.findCourseByName + route.query.content).then(function (resp) {
         courses.value = resp.data
         console.log(courses.value)
     })
-    axios.get('http://localhost:9090/resource/findByName/' + route.query.content).then(function (resp) {
+    axios.get(URL.findResourceByName + route.query.content).then(function (resp) {
         resources.value = resp.data
         console.log(resources.value)
     })
