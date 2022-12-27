@@ -4,31 +4,28 @@ import CourseCard from '../components/CourseCard.vue';
 import ResourceCard from '../components/ResourceCard.vue';
 import { ref, watch } from "vue";
 import axios from "axios";
+import URL from '../global/url';
 
 const route = useRoute()
 
 // 后端课程信息数据获取
 const courses = ref([])
-
-// 后端资源信息数据获取
 const resources = ref([])
-
-// url为对应接口的映射
-axios.get('http://localhost:9090/course/findByName/' + route.query.content).then(function (resp) {
+axios.get(URL.findCourseByName + route.query.content).then(function (resp) {
     courses.value = resp.data
     console.log(courses.value)
 })
-axios.get('http://localhost:9090/resource/findByName/' + route.query.content).then(function (resp) {
+axios.get(URL.findResourceByName + route.query.content).then(function (resp) {
     resources.value = resp.data
     console.log(resources.value)
 })
 
 watch(route, () => {
-    axios.get('http://localhost:9090/course/findByName/' + route.query.content).then(function (resp) {
+    axios.get(URL.findCourseByName + route.query.content).then(function (resp) {
         courses.value = resp.data
         console.log(courses.value)
     })
-    axios.get('http://localhost:9090/resource/findByName/' + route.query.content).then(function (resp) {
+    axios.get(URL.findResourceByName + route.query.content).then(function (resp) {
         resources.value = resp.data
         console.log(resources.value)
     })
@@ -67,14 +64,16 @@ watch(route, () => {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    transition: all 0.5s;
 }
 
 .resource-cards-content-container {
     margin: auto;
-    width: 30rem;
+    width: var(--search-resource-cards-content-container-width);
     z-index: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: all 0.5s;
 }
 </style>

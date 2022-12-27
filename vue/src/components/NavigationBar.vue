@@ -6,6 +6,7 @@ import SearchBar from './SearchBar.vue';
 import { useDark } from '@vueuse/core'
 import storage from '../utils/LocalStorage';
 import axios from "axios"
+import URL from '../global/url'
 
 const isDark = useDark()
 
@@ -13,10 +14,22 @@ const router = useRouter()
 
 const activeIndex = ref('/')
 
-let hasLogin=ref(storage.get("userID")!==null).value
+var hasLogin=ref(storage.get("userID")!==null).value
 
 const userID = ref(!hasLogin?' 未登录':storage.get("userID"))
-const userContrib = !hasLogin?0:axios.get("http://localhost:9090/user/getContrib",userID.value).data
+
+var userContribution=-1
+
+const userContrib = ()=>{
+    if(!hasLogin){
+        return userContribution
+    }else{
+        axios.get(URL.getContrib+userID.value).then(res=>{
+            userContribution=res.data
+        })
+        return userContribution
+    }
+}
 
 function clickAvatar() {
     console.log(storage.get("userID"))
@@ -113,7 +126,7 @@ const route = useRoute()
                                 </p>
                                 <el-divider />
                                 <p class="contribution" style="margin-top: 2px;">
-                                    当前贡献值：{{ userContrib }}
+                                    当前贡献值：{{ userContrib() }}
                                 </p>
                                 <div class="avatar-function-buttons">
                                     <el-button @click="clickChangePassword" class="popover-button"

@@ -18,19 +18,19 @@ function goToCourse(item) {
 </script>
 
 <template>
-    <el-card v-for="item in courses" class="content-item" style="--el-card-padding: 0">
+    <el-card v-for="item in courses" class="course-card" style="--el-card-padding: 0">
         <template #header>
             <img :src="'data:image/png;base64,' + item.picture" @click="goToCourse(item)" />
-            <div class="content-item-header">
-                <div class="content-item-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
-                <div class="content-item-header-tags">
-                    <CourseTag style="margin: 2px 0.5rem 0 0;" tag="课程" color="rgb(126, 125, 187)" />
-                    <CourseTag style="margin: 2px 0.5rem 0 0;" tag="软件学院" color="rgb(119, 127, 79)" />
-                    <CourseTag style="margin: 2px 0.5rem 0 0;" :tag="item.studytime" color="rgb(79, 49, 45)" />
+            <div class="card-header">
+                <div class="card-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
+                <div class="card-header-tags">
+                    <CourseTag style="margin: 0 0.5rem 0 0;" tag="课程" color="rgb(126, 125, 187)" />
+                    <CourseTag style="margin: 0 0.5rem 0 0;" tag="软件学院" color="rgb(119, 127, 79)" />
+                    <CourseTag style="margin: 0 0.5rem 0 0;" :tag="item.studytime" color="rgb(79, 49, 45)" />
                 </div>
             </div>
         </template>
-        <p class="content-item-intro">
+        <p class="card-intro">
             {{ item.introduction}}
         </p>
     </el-card>
@@ -47,7 +47,7 @@ function goToCourse(item) {
     }
 }
 
-.content-item {
+.course-card {
     width: 14rem;
     box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
     border-radius: 8px;
@@ -58,34 +58,34 @@ function goToCourse(item) {
         animation-duration: 0.5s;
 }
 
-.content-item:hover {
+.course-card:hover {
     box-shadow: var(--el-box-shadow);
 }
 
-.content-item-header {
+.card-header {
     font-size: large;
     font-weight: bolder;
     padding: 0.5rem 1rem;
 }
 
-.content-item-header-name {
+.card-header-name {
     font-weight: bolder;
     cursor: pointer;
     transition: all 0.5s;
 }
 
-.content-item-header-name:hover {
+.card-header-name:hover {
     color: var(--color-main);
 }
 
-.content-item-header-tags {
+.card-header-tags {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-top: 6px;
 }
 
-.content-item-intro {
+.card-intro {
     padding: 0.5rem 1rem 1rem 1rem;
     white-space: nowrap;
     overflow: hidden;
@@ -101,4 +101,5 @@ img {
 img:hover {
     transform: scale(1.1);
 }
+
 </style>
