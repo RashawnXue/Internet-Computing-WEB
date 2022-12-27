@@ -222,6 +222,7 @@ public class ResourceHandler {
 
         {
             Resource resource2save = new Resource();
+            resource2save.setCoursename(courseRepository.findById(courseID).getCoursename());
             resource2save.setCourseid(courseID);
             resource2save.setType(type);
             resource2save.setSize((int) file.getSize());
@@ -266,7 +267,7 @@ public class ResourceHandler {
     @GetMapping("/downloadfile")
     public String downloadFile(@RequestParam int resourceId, HttpServletRequest request, HttpServletResponse response) {
         Resource target = resourceRepository.findById(resourceId);
-        String url = "E:\\360MoveData\\Users\\dell\\Desktop\\LaoQiWan\\大二秋七丸的Markdown";
+        String url = target.getDatapath();
         if (url == null) {
             logger.error("无法读取文件路径");
             return "path error";
