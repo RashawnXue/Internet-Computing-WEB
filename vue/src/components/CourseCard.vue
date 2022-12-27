@@ -12,7 +12,7 @@ const props = defineProps({
 const router = useRouter()
 
 function goToCourse(item) {
-    router.push({ path: '/detail', query: { courses: item.coursename, itro: item.introduction, teacher: item.teachername, during: item.studytime, picture: item.picture, id: item.id } })
+    router.push({ path: '/detail', query: { courses: item.coursename, itro: item.introduction, teacher: item.teachername, during: item.studytime, picture: item.picture, id: item.id , viewtime: item.viewtimes} })
 }
 
 </script>

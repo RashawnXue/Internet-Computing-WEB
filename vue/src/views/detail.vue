@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import axios from "axios";
 const route = useRoute()
-import { DataBoard, Clock, Avatar, Download, School} from "@element-plus/icons-vue";
+import { DataBoard, Clock, Avatar,View, Download, School} from "@element-plus/icons-vue";
 import URL from '../global/url';
 console.log(route)
 const activeName = ref('first')
@@ -38,9 +38,13 @@ function downLoad(i){
             <el-icon style="vertical-align: -0.2em;" size="large"><Avatar /></el-icon>
             教师:{{route.query.teacher}}
           </div>
-          <div style="font-size: larger; margin-bottom: 20px">
+          <div style="font-size: larger; margin-bottom: 8px">
             <el-icon style="vertical-align: -0.2em;" size="large"><Clock /></el-icon>
             课程时间:{{route.query.during}}
+          </div>
+          <div style="font-size: larger; margin-bottom: 20px">
+            <el-icon style="vertical-align: -0.2em;" size="large"><View /></el-icon>
+            此课程已经预览了 {{route.query.viewtime}} 次
           </div>
         </div>
       </el-col>
