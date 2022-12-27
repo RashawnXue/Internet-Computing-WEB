@@ -26,7 +26,7 @@ var formSender = ({
 })
 window.onload = checkHasLogin
 /**
- * 已登录则跳转至首页
+ * 检查是否已登录:已登录则跳转至首页
  */
 function checkHasLogin() {
     if (storage.get("userID")) {
@@ -34,16 +34,25 @@ function checkHasLogin() {
     }
 }
 
-
+/**
+ * 清空表单数据
+ * @param formEl 
+ */
 function resetForm(formEl: FormInstance | undefined) {
     if (!formEl) return
     formEl.resetFields()
 }
+/**
+ * 更改登录模式/注册模式
+ * @param value true:登录模式 false:注册模式
+ */
 function changeLoginType(value: any) {
     checkHasLogin()
     pageRef.value.typeIsLogin = value;
 };
-
+/**
+ * 检查用户名表单项是否合法
+ */
 const validateUsrname = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入用户名.'))
@@ -51,7 +60,9 @@ const validateUsrname = (rule: any, value: any, callback: any) => {
         callback()
     }
 }
-
+/**
+ * 检查密码表单项是否合法
+ */
 const validatePass = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入密码.'))
@@ -65,7 +76,9 @@ const validatePass = (rule: any, value: any, callback: any) => {
         callback()
     }
 }
-
+/**
+ * 检查密码检验表单项是否合法
+ */
 const validatePassCheck = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请再次输入密码.'))
@@ -75,7 +88,9 @@ const validatePassCheck = (rule: any, value: any, callback: any) => {
         callback()
     }
 }
-
+/**
+ * 提交表单至后端
+ */
 const submitForm = (formEl: FormInstance | undefined) => {
     //防止二次登录
     checkHasLogin()
