@@ -55,7 +55,9 @@ const validateUsrname = (rule: any, value: any, callback: any) => {
 const validatePass = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入密码.'))
-    } else {
+    } else if(value.length<6){
+        callback(new Error('请至少输入6位密码'))
+    }else {
         if (loginForm.passwordCheck !== '') {
             if (!formRef.value) return
             formRef.value.validateField('passwordCheck', () => null)
@@ -87,13 +89,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
             if (pageRef.value.typeIsLogin) {
                 //登录代码
                 axios.post(URL.login, formSender).then(function (res) {
-                    console.log(res)
                     if (res.data == "not exist") {
-
                         ElMessageBox.alert('请尝试检查用户名是否输入正确，或选择账户注册。', '该用户名不存在！', {
                             confirmButtonText: '确定'
                         })
-
                     } else {
                         if (res.data == "fail") {
                             ElMessageBox.alert('请输入正确的密码。', '密码输入错误！', {
