@@ -21,6 +21,7 @@ public class Course {
     private String studytime;
     private Integer viewtimes;
     private String introduction;
+    private String department;
     @Column(name = "picture", columnDefinition = "mediumblob")
     private byte[] picture;
 

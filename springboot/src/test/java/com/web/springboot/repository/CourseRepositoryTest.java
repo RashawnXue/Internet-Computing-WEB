@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class CourseRepositoryTest {
     @Autowired
     private CourseRepository courseRepository;
-
-    @Test
-    void findAll() {
-        System.out.println(courseRepository.findAll());
-    }
-
-    @Test
-    void findByName(){
-        System.out.println(courseRepository.findByCoursenameLike("%计算%"));
-    }
+//
+//    @Test
+//    void findAll() {
+//        System.out.println(courseRepository.findAll());
+//    }
+//
+//    @Test
+//    void findByName(){
+//        System.out.println(courseRepository.findByCoursenameLike("%计算%"));
+//    }
 }

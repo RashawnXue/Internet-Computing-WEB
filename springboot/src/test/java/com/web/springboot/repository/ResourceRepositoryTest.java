@@ -11,8 +11,8 @@ class ResourceRepositoryTest {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    @Test
-    void findByCourseId(){
-        System.out.println(resourceRepository.findByCourseid(1));
-    }
+//    @Test
+//    void findByCourseId(){
+//        System.out.println(resourceRepository.findByCourseid(1));
+//    }
 }
