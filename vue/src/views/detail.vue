@@ -73,19 +73,23 @@ function downLoad(i){
               <el-space :fill="fill" wrap>
                 <el-card v-for="item in detailList" :key="item" class="box-card">
                   <template #header>
-                    <div class="card-header">
-                      <span>资源</span>
-                      <el-button class="button" text type="success" size="large" @click="downLoad(item.id)">下载资源</el-button>
+                    <div class="card-header" v-if = "item.type == '文件'">
+                      <span >{{item.name}}</span>
+                      <el-button style="margin-left: 50px" round   type="warning" size="normal" @click="downLoad(item.id)">下载资源</el-button>
+                    </div>
+                    <div class="card-header" v-if = "item.type == 'link'">
+                      <span >链接资源</span>
                     </div>
                   </template>
+
+
+
                   <div  class="text item">
-                    <div v-if = "item.type == '链接'">
-                      <div>链接名： {{item.name}}</div>
-                      <div>链接： {{item.datapath}}</div>
+                    <div v-if = "item.type == 'link'">
+                      <span>链接:   <a :href="item.datapath">{{item.name}}</a></span>
                       <div>资源描述： {{item.intro}}</div>
                     </div>
                     <div v-if = "item.type == '文件'">
-                      <div>文件名： {{item.name}}</div>
                       <div>文件描述： {{item.intro}}</div>
                     </div>
 
