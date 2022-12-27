@@ -16,7 +16,7 @@ const activeIndex = ref('/')
 let hasLogin=ref(storage.get("userID")!==null).value
 
 const userID = ref(!hasLogin?' 未登录':storage.get("userID"))
-const userContrib = !hasLogin?0:axios.get("http://localhost:9090/user/getContrib",userID.value).data
+const userContrib = !hasLogin ? 0 : axios.get("http://124.221.152.134:9090/user/getContrib",userID.value).data
 
 function clickAvatar() {
     console.log(storage.get("userID"))
