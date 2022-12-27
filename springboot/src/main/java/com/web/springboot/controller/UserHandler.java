@@ -5,6 +5,7 @@ import com.web.springboot.entity.User;
 import com.web.springboot.repository.ResourceRepository;
 import com.web.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -94,12 +95,14 @@ public class UserHandler {
      * 修改失败 返回 “fail”
      */
     @PostMapping("/modify/passwd")
+    @Modifying
     public String modifyPasswd(@RequestBody User user_data_receive) {
         User user = userRepository.findByUsername(user_data_receive.getUsername());
         if (user == null) {
             return "not exist";
         } else {
-            userRepository.updatePasswordByUsername(user_data_receive.getPassword(), user_data_receive.getUsername());
+            user.setPassword(user_data_receive.getPassword());
+            userRepository.save(user);
             user = userRepository.findByUsername(user_data_receive.getUsername());
             if (user.getPassword().equals(user_data_receive.getPassword())) {
                 return "success";

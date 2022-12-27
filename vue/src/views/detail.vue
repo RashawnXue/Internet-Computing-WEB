@@ -11,7 +11,7 @@ const picture = route.query.picture
 const courseName = route.query.courses
 const detailList = ref([])
 const fill = ref(true)
-axios.get(URL.findResourceByName + courseName ).then(function (resp) {
+axios.get(URL.findResourceByCourseName + courseName ).then(function (resp) {
   detailList.value = resp.data
   console.log("hahha")
   console.log(detailList.value)
