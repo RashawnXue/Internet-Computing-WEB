@@ -20,17 +20,20 @@ const loginForm = reactive({
     password: '',
     passwordCheck: ''
 });
-let formSender = ({
+var formSender = ({
     username: '',
     password: ''
 })
-
+window.onload = checkHasLogin
+/**
+ * 已登录则跳转至首页
+ */
 function checkHasLogin() {
     if (storage.get("userID")) {
         router.push('/')
     }
 }
-window.onload = checkHasLogin
+
 
 function resetForm(formEl: FormInstance | undefined) {
     if (!formEl) return
@@ -72,16 +75,17 @@ const validatePassCheck = (rule: any, value: any, callback: any) => {
 }
 
 const submitForm = (formEl: FormInstance | undefined) => {
+    //防止二次登录
     checkHasLogin()
     if (!formEl) return
     formEl.validate((valid) => {
         if (valid) {
-            console.log(loginForm)
             formSender = ({
                 username: loginForm.username,
                 password: loginForm.password
             })
-            if (pageRef.value.typeIsLogin) {//登录代码
+            if (pageRef.value.typeIsLogin) {
+                //登录代码
                 axios.post(URL.login, formSender).then(function (res) {
                     console.log(res)
                     if (res.data == "not exist") {
@@ -107,7 +111,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
                     }
 
                 })
-            } else {//注册代码
+            } else {
+                //注册代码
                 axios.post(URL.register, formSender).then(function (res) {
                     console.log(res)
                     if (res.data == "exist") {
@@ -149,14 +154,14 @@ const rules = reactive({
             </div>
             <div style="flex:1" class="inputSection">
                 <div>
-
+                    <!--登录/注册切换按钮-->
                     <div class="loginButtons" style="display:flex;flex-direction: row;">
                         <el-button class="loginButton"
                             @click="(changeLoginType(true), resetForm(formRef))">用户登录</el-button>
                         <el-button class="loginButton"
                             @click="(changeLoginType(false), resetForm(formRef))">账号注册</el-button>
                     </div>
-
+                    <!--登录表单框-->
                     <div class="customLoginForm">
                         <el-form ref="formRef" :model="loginForm" status-icon :rules="rules" label-width="5rem">
                             <el-form-item label="用户名" prop="username">

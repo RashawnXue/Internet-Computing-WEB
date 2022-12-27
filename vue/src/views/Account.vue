@@ -16,7 +16,7 @@ const updateForm = reactive({
     newpassword: '',
     passwordCheck: ''
 });
-let formSender = ({
+var formSender = ({
     username: '',
     password: ''
 })
@@ -112,9 +112,10 @@ const submitForm=(formEl: FormInstance | undefined)=>{
 </script>
 
 <template>
-    <div class="inputBox" >
-        <div style="padding-top:1rem;margin-bottom:0rem; text-align: center;font-size: larger;">当前账户：{{username}}</div>
+    <div class="inputBox">
+        <div style="padding-top:1rem;padding-bottom: 0rem;margin-top:1rem;margin-bottom:0rem; text-align: center;font-size: larger;">当前账户：{{username}}</div>
         <div class="customInputForm">
+            <el-divider style="margin-bottom:1rem;"/>
             <el-form ref="formRef" :model="updateForm" status-icon :rules="rules" label-width="5rem">
                 <el-form-item label="原密码" prop="oldpassword">
                     <el-input v-model="updateForm.oldpassword" type="password" clearable autocomplete="off" />
@@ -127,7 +128,7 @@ const submitForm=(formEl: FormInstance | undefined)=>{
                 </el-form-item>
                 <el-form-item>
                     <el-button
-                        style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content"
+                        style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content;--el-color-primary:var(--color-main)"
                         type="primary"
                         @click="submitForm(formRef)">修改密码</el-button>
                 </el-form-item>
@@ -143,12 +144,11 @@ const submitForm=(formEl: FormInstance | undefined)=>{
     margin: 70px auto;
     padding-bottom: 1%;
     border-radius: 18px;
-    box-shadow: 0 0 10px 10px rgba(25, 128, 139, 0.82);
+    box-shadow: 0 0 10px 10px var(--color-main);
     flex-direction: column;
 }
-
 .customInputForm {
-    margin-top: 10%;
+    margin-top: 1rem;
     height: 100%;
     width: auto;
     margin-left: 15%;
