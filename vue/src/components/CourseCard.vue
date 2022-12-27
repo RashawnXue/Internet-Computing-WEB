@@ -55,7 +55,7 @@ function goToCourse(item) {
     box-sizing: border-box;
     transition: all 0.3s;
     animation-name: PopUp;
-        animation-duration: 0.5s;
+    animation-duration: 0.5s;
 }
 
 .course-card:hover {

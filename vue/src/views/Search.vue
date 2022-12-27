@@ -51,7 +51,7 @@ watch(route, () => {
         未搜索到“{{ route.query.content }}”的相关资源
     </el-divider>
     <div class="resource-cards-content-container">
-        <ResourceCard :resources="resources" />
+        <ResourceCard :resources="resources" showCourseName/>
     </div>
 </template>
 

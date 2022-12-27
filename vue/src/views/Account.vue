@@ -131,9 +131,9 @@ const submitForm=(formEl: FormInstance | undefined)=>{
                 </el-form-item>
                 <el-form-item>
                     <el-button
-                        style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content;--el-color-primary:var(--color-main)"
+                        style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content;"
                         type="primary"
-                        @click="submitForm(formRef)">修改密码</el-button>
+                        @click="submitForm(formRef)" color="rgb(1, 132, 127)">修改密码</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -146,9 +146,13 @@ const submitForm=(formEl: FormInstance | undefined)=>{
     width: 25%;
     margin: 70px auto;
     padding-bottom: 1%;
-    border-radius: 18px;
-    box-shadow: 0 0 10px 10px var(--color-main);
+    border-radius: 16px;
+    box-shadow: var(--el-box-shadow-light);
     flex-direction: column;
+    background-color: var(--el-bg-color);
+    transition: all 0.5s;
+    animation-name: PopUp;
+    animation-duration: 0.5s;
 }
 .customInputForm {
     margin-top: 1rem;
@@ -157,5 +161,6 @@ const submitForm=(formEl: FormInstance | undefined)=>{
     margin-left: 15%;
     margin-right: 15%;
     margin-bottom: 5%;
+    transition: all 0.5s;
 }
 </style>

@@ -2,24 +2,26 @@
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import axios from "axios";
-const route = useRoute()
-import { DataBoard, Clock, Avatar,View, Download, School} from "@element-plus/icons-vue";
+import { DataBoard, Clock, Avatar, View, Download, School, User } from "@element-plus/icons-vue";
 import URL from '../global/url';
+import ResourceCard from '../components/ResourceCard.vue';
+
+const route = useRoute()
 console.log(route)
 const activeName = ref('first')
 const picture = route.query.picture
 const courseName = route.query.courses
 const detailList = ref([])
 const fill = ref(true)
-axios.get(URL.findResourceByCourseName + courseName ).then(function (resp) {
+axios.get(URL.findResourceByCourseName + courseName).then(function (resp) {
   detailList.value = resp.data
   console.log("hahha")
   console.log(detailList.value)
 })
 // download test: 仅作前后端对接测试用
-function downLoad(i){
-    //通过window.location调起下载框
-    window.location = URL.downloadFile + "?resourceId=" + i;// url + 下载的resourceId
+function downLoad(i) {
+  //通过window.location调起下载框
+  window.location = URL.downloadFile + "?resourceId=" + i;// url + 下载的resourceId
 }
 
 </script>
@@ -27,97 +29,70 @@ function downLoad(i){
 <template>
   <div style="z-index: 0; display: flex; flex-direction: column; align-items: center;">
     <el-card class="table-container">
-    <el-row >
-      <el-col :span = "12">
-        <img :src="'data:image/png;base64,'+ picture" style="width: 80%"/>
-      </el-col>
-      <el-col :span="12">
-        <div class="briefIro">
-          <h1 style="margin-bottom: 10px">{{route.query.courses}}</h1>
-          <div style="font-size: larger; margin-bottom: 5px">
-            <el-icon style="vertical-align: -0.2em;" size="large"><Avatar /></el-icon>
-            教师:{{route.query.teacher}}
-          </div>
-          <div style="font-size: larger; margin-bottom: 8px">
-            <el-icon style="vertical-align: -0.2em;" size="large"><Clock /></el-icon>
-            课程时间:{{route.query.during}}
-          </div>
-          <div style="font-size: larger; margin-bottom: 20px">
-            <el-icon style="vertical-align: -0.2em;" size="large"><View /></el-icon>
-            此课程已经预览了 {{route.query.viewtime}} 次
-          </div>
-        </div>
-      </el-col>
-    </el-row>
       <el-row>
         <el-col :span="12">
+          <img :src="'data:image/png;base64,' + picture" style="width: 80%" />
+        </el-col>
+        <el-col :span="12">
+          <div class="briefIro">
+            <h1 style="margin-bottom: 10px; font-weight: bolder;">{{ route.query.courses }}</h1>
+            <div style="font-size: larger; margin-bottom: 8px">
+              <el-icon style="vertical-align: -0.2em;" size="large">
+                <User />
+              </el-icon>
+              授课教师: {{ route.query.teacher }}
+            </div>
+            <div style="font-size: larger; margin-bottom: 8px">
+              <el-icon style="vertical-align: -0.2em;" size="large">
+                <Clock />
+              </el-icon>
+              课程时间: {{ route.query.during }}
+            </div>
+            <div style="font-size: larger; margin-bottom: 20px">
+              <el-icon style="vertical-align: -0.2em;" size="large">
+                <View />
+              </el-icon>
+              预览次数: {{ route.query.viewtime }}
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
           <div style="font-size: larger">
-            <el-icon style="vertical-align: -0.2em;" size="large">
+            <el-icon style="vertical-align: -0.2em; margin-right: 5px;" size="large">
               <DataBoard />
             </el-icon>课程介绍:
           </div>
-          <div style="margin-right: 10px; font-size: larger; margin-bottom: 20px" >
-            {{route.query.itro}}
-          </div>
+          <p style="margin-right: 10px; margin-bottom: 20px; text-indent: 2em;">
+            {{ route.query.itro }}
+          </p>
         </el-col>
       </el-row>
-
-      <el-row>
-        <el-col>
-          <div style="font-size: larger; margin-bottom: 20px" >
-            <el-icon style="vertical-align: -0.2em;" size="large">
-              <School />
-            </el-icon>课程资源:
-          </div>
-            <div>
-              <el-space :fill="fill" wrap>
-                <el-card v-for="item in detailList" :key="item" class="box-card">
-                  <template #header>
-                    <div class="card-header" v-if = "item.type == '文件'">
-                      <span >{{item.name}}</span>
-                      <el-button style="margin-left: 50px" round   type="warning" size="normal" @click="downLoad(item.id)">下载资源</el-button>
-                    </div>
-                    <div class="card-header" v-if = "item.type == 'link'">
-                      <span >链接资源</span>
-                    </div>
-                  </template>
-
-
-
-                  <div  class="text item">
-                    <div v-if = "item.type == 'link'">
-                      <span>链接:   <a :href="item.datapath">{{item.name}}</a></span>
-                      <div>资源描述： {{item.intro}}</div>
-                    </div>
-                    <div v-if = "item.type == '文件'">
-                      <div>文件描述： {{item.intro}}</div>
-                    </div>
-
-                  </div>
-                </el-card>
-              </el-space>
-            </div>
-        </el-col>
-        <div style="margin-right: 10px; font-size: larger; margin-bottom: 20px" >
-
+      <div style="font-size: larger; margin-bottom: 20px">
+        <el-icon style="vertical-align: -0.2em; margin-right: 5px;" size="large">
+          <School />
+        </el-icon>课程资源:
+      </div>
+      <div>
+        <div style="display: flex; flex-direction: column; align-items: center; transition: all 0.5s;">
+          <ResourceCard :resources="detailList"></ResourceCard>
         </div>
-      </el-row>
-
+      </div>
     </el-card>
   </div>
 </template>
 
-
-
-
-<style>
+<style scoped>
 .el-row {
   margin-bottom: 20px;
 
 }
+
 .el-col {
   border-radius: 4px;
 }
+
 .table-container {
   width: var(--rank-table-width);
   border-radius: 8px;
@@ -126,5 +101,6 @@ function downLoad(i){
   box-sizing: border-box;
   box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
   padding: 1rem;
+  transition: all 0.5s;
 }
 </style>
