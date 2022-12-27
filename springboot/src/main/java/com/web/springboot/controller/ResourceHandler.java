@@ -186,9 +186,7 @@ public class ResourceHandler {
                 WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class);
         MultipartFile file = multipartRequest.getFile("file");
         if (type.equals("文件")) {
-
             logger.info("资源类型：文件");
-
             if (file.isEmpty()) {
                 logger.warn("\n !!! : 文件为空\n");
                 return "empty_file";
@@ -225,6 +223,7 @@ public class ResourceHandler {
         {
             Resource resource2save = new Resource();
             resource2save.setCourseid(courseID);
+            resource2save.setType(type);
             resource2save.setSize((int) file.getSize());
             resource2save.setDatapath(datapath);
             resource2save.setUploaderid(uploaderID);
