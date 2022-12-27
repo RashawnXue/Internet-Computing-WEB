@@ -186,9 +186,7 @@ public class ResourceHandler {
                 WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class);
         MultipartFile file = multipartRequest.getFile("file");
         if (type.equals("文件")) {
-
             logger.info("资源类型：文件");
-
             if (file.isEmpty()) {
                 logger.warn("\n !!! : 文件为空\n");
                 return "empty_file";
@@ -224,7 +222,9 @@ public class ResourceHandler {
 
         {
             Resource resource2save = new Resource();
+            resource2save.setCoursename(courseRepository.findById(courseID).getCoursename());
             resource2save.setCourseid(courseID);
+            resource2save.setType(type);
             resource2save.setSize((int) file.getSize());
             resource2save.setDatapath(datapath);
             resource2save.setUploaderid(uploaderID);
@@ -267,7 +267,14 @@ public class ResourceHandler {
     @GetMapping("/downloadfile")
     public String downloadFile(@RequestParam int resourceId, HttpServletRequest request, HttpServletResponse response) {
         Resource target = resourceRepository.findById(resourceId);
-        String url = "E:\\360MoveData\\Users\\dell\\Desktop\\LaoQiWan\\大二秋七丸的Markdown";
+        String url = target.getDatapath();
+        int index = 0;
+        for (int i = url.length()-1 ; i >= 0 ; --i) {
+            if (url.charAt(i) == '/') {
+                index = i;
+                break;
+            }
+        }
         if (url == null) {
             logger.error("无法读取文件路径");
             return "path error";
@@ -281,7 +288,7 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + target.getName());
+        response.setHeader("Content-Disposition", "attachment;filename=" + url.substring(index+1));
 
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];
