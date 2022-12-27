@@ -9,7 +9,7 @@ import URL from '../global/url';
 const courses = ref([])
 axios.get(URL.findAll).then(function (resp) {
     courses.value = resp.data
-    console.log(courses.value)``
+    console.log(courses.value)
 })
 
 onActivated(() => {

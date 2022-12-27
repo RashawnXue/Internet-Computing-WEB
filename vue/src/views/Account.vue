@@ -38,6 +38,8 @@ const validatePass = (rule: any, value: any, callback: any) => {
         callback(new Error('请输入新密码.'))
     } else if(value===updateForm.oldpassword){
         callback(new Error('与原密码相同！'))
+    }else if(value.length<6){
+        callback(new Error('请至少输入6位密码'))
     }else{
         if (updateForm.passwordCheck !== '') {
             if (!formRef.value) return
@@ -74,18 +76,19 @@ const submitForm=(formEl: FormInstance | undefined)=>{
                     formSender.password=updateForm.newpassword
                     axios.post(URL.modifyPasswd,formSender).then(function (resp){
                         if(resp.data=="success"){
-                            ElMessage({
-                                message: '修改密码成功！请重新登录账号.',
-                                type: 'success'
+                            ElMessageBox.confirm('请重新登陆账号.','修改密码成功！',{
+                                confirmButtonText:'确定',
+                                showCancelButton:false,
+                            }).then(()=>{
+                                storage.remove("userID")
+                                router.go(0)
                             })
-                            storage.remove("userID")
-                            router.go(0)
                         }else if(resp.data=="fail"){
-                            ElMessageBox.alert('修改密码失败', '请重试.', {
+                            ElMessageBox.alert('请重试.','修改密码失败', {
                                 confirmButtonText: '确定'
                             })
                         }else if(resp.data=="not exist"){
-                            ElMessageBox.alert('用户不存在！', '请重新登录.', {
+                            ElMessageBox.alert('请重新登录.','用户不存在！' , {
                                 confirmButtonText: '确定'
                             })
                             storage.remove("userID")
@@ -93,11 +96,11 @@ const submitForm=(formEl: FormInstance | undefined)=>{
                         }
                     })
                 }else if(res.data==false){
-                    ElMessageBox.alert('原密码输入不正确！', '请重新输入原密码.', {
+                    ElMessageBox.alert('请重新输入原密码.','原密码输入不正确！' , {
                         confirmButtonText: '确定'
                     })
                 }else{
-                    ElMessageBox.alert('用户不存在！', '请重新登录.', {
+                    ElMessageBox.alert('请重新登录.', '用户不存在！', {
                         confirmButtonText: '确定'
                     })
                     storage.remove("userID")

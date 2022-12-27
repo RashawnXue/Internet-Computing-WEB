@@ -22,6 +22,7 @@ import org.springframework.web.util.WebUtils;
 
 import java.io.*;
 
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -276,7 +277,7 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + url.substring(index+1));
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(url.substring(index+1)));
 
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];
