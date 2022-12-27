@@ -115,7 +115,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
                 axios.post(URL.register, formSender).then(function (res) {
                     console.log(res)
                     if (res.data == "exist") {
-
                         ElMessageBox.alert('请尝试使用该用户名登录。', '该用户名已存在！', {
                             confirmButtonText: '确定'
                         })
@@ -175,8 +174,8 @@ const rules = reactive({
                             </el-form-item>
                             <el-form-item>
                                 <el-button
-                                    style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content;--el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker);"
-                                    type="primary"
+                                    style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content;"
+                                    type="primary" color="rgb(1, 132, 127)"
                                     @click="submitForm(formRef)">{{ pageRef.typeIsLogin ? "立即登录" : "立即注册" }}</el-button>
                             </el-form-item>
                         </el-form>
@@ -190,6 +189,16 @@ const rules = reactive({
 
 
 <style>
+@keyframes PopUp {
+    from {
+        scale: 0.9;
+    }
+
+    to {
+        scale: 1;
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -198,11 +207,16 @@ body {
 .loginBox {
     box-sizing: border-box;
     width: 50%;
-    margin: 70px auto;
-    border-radius: 18px;
-    box-shadow: 0 0 10px 10px rgba(25, 128, 139, 0.82);
+    margin: 3rem auto;
+    border-radius: 16px;
+    border: 1px solid var(--el-border-color);
+    box-shadow: var(--el-box-shadow-light);
     display: flex;
     flex-direction: row;
+    background-color: var(--el-bg-color);
+    transition: all 0.5s;
+    animation-name: PopUp;
+    animation-duration: 0.5s;
 }
 
 .inputSection {
@@ -212,6 +226,7 @@ body {
     margin: 20px;
     display: flex;
     flex-direction: column;
+    transition: all 0.5s;
 }
 
 .loginButtons {
@@ -238,5 +253,6 @@ body {
     width: "auto";
     margin-left: 0px;
     margin-right: 10%;
+    transition: all 0.5s;
 }
 </style>

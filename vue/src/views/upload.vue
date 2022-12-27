@@ -1,13 +1,13 @@
 <script setup>
-import {HelpFilled, Link, Reading, Notebook, ChatDotSquare,Tools, Service, CircleCheck,DCaret} from "@element-plus/icons-vue";
+import { Collection, Tickets, EditPen, Help, Link, Reading, Notebook, ChatDotSquare, Tools, Service, CircleCheck, DCaret } from "@element-plus/icons-vue";
 </script>
 <script>
 // 后端课程信息数据获取
-import {ref} from "vue";
+import { ref } from "vue";
 import axios from "axios";
 const courses = ref([])
 import storage from '../utils/LocalStorage.js'
-import {ElMessageBox} from "element-plus";
+import { ElMessageBox } from "element-plus";
 const userName = storage.get("userID")
 import URL from '../global/url';
 // url为对应接口的映射
@@ -32,64 +32,64 @@ export default {
   data() {
     return {
       uploadFileURL:
-      URL.uploadFile,
+        URL.uploadFile,
       uploadLinkURL:
-      URL.uploadLink,// 上传文件的地址!
+        URL.uploadLink,// 上传文件的地址!
       loadFileParams: { // 上传文件的参数！
-        name : '',
-        coursename : '',
+        name: '',
+        coursename: '',
         username: userName,
-        type:'',
-        intro:'',
-        interlinking : '',
-        file:'',
+        type: '',
+        intro: '',
+        interlinking: '',
+        file: '',
       },
       headers: {
         Authorization: window.sessionStorage.getItem("myToken")
       },
       coursesU: [],
-      type:[],
+      type: [],
     }
   },
   methods: {
     submitUpload() {
-      if(this.loadFileParams.name == ''){
+      if (this.loadFileParams.name == '') {
         ElMessageBox.alert('请您检查资源名输入', {
           confirmButtonText: '确定',
         })
         return
       }
-      if(this.loadFileParams.coursename == ''){
+      if (this.loadFileParams.coursename == '') {
         ElMessageBox.alert('请您检查课程名称输入', {
           confirmButtonText: '确定',
         })
         return
       }
-      if(this.loadFileParams.type == ''){
+      if (this.loadFileParams.type == '') {
         ElMessageBox.alert('请您检查资源类型输入', {
           confirmButtonText: '确定',
         })
         return
       }
-      if(this.loadFileParams.type == '链接'){
-        if(this.loadFileParams.interlinking == ''){
+      if (this.loadFileParams.type == '链接') {
+        if (this.loadFileParams.interlinking == '') {
           ElMessageBox.alert('请您检查链接输入', {
             confirmButtonText: '确定',
           })
           return
         }
       }
-      if(this.loadFileParams.intro == ''){
+      if (this.loadFileParams.intro == '') {
         ElMessageBox.alert('请您检查资源介绍输入', {
           confirmButtonText: '确定',
         })
         return
       }
-      if(storage.get("userID")==null){
+      if (storage.get("userID") == null) {
         ElMessageBox.alert('请您先登录', {
           confirmButtonText: '确定'
         })
-      }else{
+      } else {
         axios.post(this.uploadLinkURL, this.loadFileParams).then(function (res) {
           console.log(res)
         })
@@ -101,37 +101,37 @@ export default {
       console.log(file, fileList);
     },
     handlePreview(file) {
-      console.log(file,this.loadFileParams);
+      console.log(file, this.loadFileParams);
     },
     uploadBefore(file) { // 这个函数的目的就是在上传文件之前获取到文件的名字然后保存到携带的参数变量里面！
       // this.loadFileParams.fileNames = file.name
-      if(this.loadFileParams.name == ''){
+      if (this.loadFileParams.name == '') {
         ElMessageBox.alert('请您检查资源名输入', {
           confirmButtonText: '确定',
         })
         return false
       }
-      if(this.loadFileParams.coursename == ''){
+      if (this.loadFileParams.coursename == '') {
         ElMessageBox.alert('请您检查课程名称输入', {
           confirmButtonText: '确定',
         })
         return false
       }
-      if(this.loadFileParams.type == ''){
+      if (this.loadFileParams.type == '') {
         ElMessageBox.alert('请您检查资源类型输入', {
           confirmButtonText: '确定',
         })
         return false
       }
-      if(this.loadFileParams.type == '链接'){
-        if(this.loadFileParams.interlinking == ''){
+      if (this.loadFileParams.type == '链接') {
+        if (this.loadFileParams.interlinking == '') {
           ElMessageBox.alert('请您检查链接输入', {
             confirmButtonText: '确定',
           })
           return false
         }
       }
-      if(this.loadFileParams.intro == ''){
+      if (this.loadFileParams.intro == '') {
         ElMessageBox.alert('请您检查资源介绍输入', {
           confirmButtonText: '确定',
         })
@@ -139,16 +139,16 @@ export default {
       }
 
     },
-    successResave(response, file, fileList){
+    successResave(response, file, fileList) {
       console.log(response)
       ElMessageBox.alert("您已成功上传" + file.name, {
         confirmButtonText: '确定',
       })
-      if(response.code==10001){
+      if (response.code == 10001) {
         alert("保存成功")
-        this.proType="";
-        this.mobanname="";
-        this.value5="";
+        this.proType = "";
+        this.mobanname = "";
+        this.value5 = "";
         this.$router.push("/moban")
       }
     },
@@ -159,7 +159,7 @@ export default {
       };
     },
     handleSelect(item) {
-      if(this.loadFileParams.type == "链接")
+      if (this.loadFileParams.type == "链接")
         console.log(item);
     }
   },
@@ -170,69 +170,59 @@ export default {
   <div style="z-index: 0; display: flex; flex-direction: column; align-items: center;">
     <el-card class="table-container">
       <div>
-          <el-col :span="12" style="margin-bottom: 20px">
-            <div class="sub-title" ><el-icon style="vertical-align: -0.2em;" size="large"><Reading /></el-icon>资源名</div>
-            <el-input style="width: 250px" v-model="loadFileParams.name" clearable placeholder="请输入资源名" size="large"></el-input>
-          </el-col>
+        <el-col :span="12" style="margin-bottom: 20px">
+          <div class="sub-title"><el-icon style="vertical-align: -0.2em; margin-right: 5px" size="large">
+              <EditPen />
+            </el-icon>资源名</div>
+          <el-input style="width: 14rem" v-model="loadFileParams.name" clearable placeholder="请输入资源名"
+            size="large"></el-input>
+        </el-col>
 
         <el-row>
           <el-col :span="12">
-            <div class="sub-title"><el-icon style="vertical-align: -0.2em;" size="large"><Notebook /></el-icon>课程名称</div>
-            <el-select style="width: 250px" v-model="loadFileParams.coursename" class="m-2" placeholder="Select" size="large">
-              <el-option
-                  v-for="item in this.courses"
-                  :key="item.id"
-                  :label="item.coursename"
-                  :value="item.coursename"
-              />
+            <div class="sub-title"><el-icon style="vertical-align: -0.2em; margin-right: 5px" size="large">
+                <Collection />
+              </el-icon>课程名称</div>
+            <el-select style="width: 14rem" v-model="loadFileParams.coursename" class="m-2" placeholder="Select"
+              size="large">
+              <el-option v-for="item in this.courses" :key="item.id" :label="item.coursename"
+                :value="item.coursename" />
             </el-select>
           </el-col>
           <el-col :span="12">
-            <div class="sub-title"><el-icon style="vertical-align: -0.2em;" size="large"><HelpFilled /></el-icon>资源类型</div>
-            <el-select style="width: 250px" v-model="loadFileParams.type" class="m-2" placeholder="Select" size="large">
-              <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-              />
+            <div class="sub-title"><el-icon style="vertical-align: -0.2em; margin-right: 5px" size="large">
+                <Help />
+              </el-icon>资源类型</div>
+            <el-select style="width: 14rem" v-model="loadFileParams.type" class="m-2" placeholder="Select" size="large">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-col>
         </el-row>
-        <el-form-item  prop="child" v-if="loadFileParams.type == '链接'" style="margin-bottom: 10px">
-          <div class="sub-title"><el-icon style="vertical-align: -0.2em;" size="large"><Link /></el-icon>链接</div>
+        <el-form-item prop="child" v-if="loadFileParams.type == '链接'" style="margin-bottom: 30px">
+          <div class="sub-title"><el-icon style="vertical-align: -0.2em; margin-right: 5px" size="large">
+              <Link />
+            </el-icon>链接</div>
           <el-input v-model="loadFileParams.interlinking" clearable placeholder="请输入链接" size="large"></el-input>
         </el-form-item>
         <el-row style="margin-bottom: 30px">
-          <div class="sub-title" ><el-icon style="vertical-align: -0.2em;" size="large"><ChatDotSquare /></el-icon>资源介绍</div>
-          <el-input
-              type="textarea"
-              :autosize="{ minRows: 2, maxRows: 4}"
-              placeholder="请输入资源介绍"
-              clearable
-              v-model="loadFileParams.intro">
+          <div class="sub-title"><el-icon style="vertical-align: -0.2em; margin-right: 5px" size="large">
+              <Tickets />
+            </el-icon>资源介绍</div>
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" placeholder="请输入资源介绍" clearable
+            v-model="loadFileParams.intro">
           </el-input>
         </el-row>
 
       </div>
-      <el-upload
-          class="upload-demo"
-          drag
-          :action="uploadFileURL"
-          :data="loadFileParams"
-          :before-upload="uploadBefore"
-          :on-success="successResave"
-          :headers="headers"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :file-list="fileList"
-          multiple
-          v-if="loadFileParams.type == '文件'">
+      <el-upload class="upload-demo" drag :action="uploadFileURL" :data="loadFileParams" :before-upload="uploadBefore"
+        :on-success="successResave" :headers="headers" :on-preview="handlePreview" :on-remove="handleRemove"
+        :file-list="fileList" multiple v-if="loadFileParams.type == '文件'">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <div class="el-upload__tip" slot="tip">贡献你的资源吧</div>
       </el-upload>
-      <el-button  size="normal" type="success" @click="submitUpload" v-if="loadFileParams.type == '链接'">将信息上传到服务器</el-button>
+      <el-button size="large" @click="submitUpload"
+        v-if="loadFileParams.type == '链接'" plain color="rgb(1, 132, 127)">将信息上传到服务器</el-button>
     </el-card>
 
 
@@ -241,16 +231,30 @@ export default {
 
 </template>
 
-<style>
+<style scoped>
+@keyframes PopUp {
+  from {
+    scale: 0.9;
+  }
+
+  to {
+    scale: 1;
+  }
+}
 
 .table-container {
-  width: 50rem;
-  border-radius: 4px;
+  width: var(--rank-table-width);
+  border-radius: 8px;
   margin-bottom: 1rem;
   background-color: var(--el-bg-color);
   box-sizing: border-box;
   box-shadow: 0 1px 3px hsl(0deg 0% 7% / 10%);
   padding: 1rem;
+  animation-name: PopUp;
+  animation-duration: 0.5s;
 }
 
+.sub-title{
+  margin-bottom: 0.5rem;
+}
 </style>
