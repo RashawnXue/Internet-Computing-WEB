@@ -3,10 +3,12 @@
 import { ref } from "vue";
 import axios from "axios";
 import { User, Coin, Trophy, GoldMedal } from "@element-plus/icons-vue";
+import URL from '../global/url';
+
 const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900']) // same as { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }
 const tableData = ref([])
 // url为对应接口的映射
-axios.get('http://localhost:9090/user/rank').then(function (resp) {
+axios.get(URL.rank).then(function (resp) {
     tableData.value = resp.data
     console.log(tableData.value)
 })
