@@ -10,8 +10,9 @@ const URL = {
     getPicture: COURSE_URL + '/getpicture/',
 
     findByCourseId: RESOURCE_URL + '/',
-    findResourceByName: RESOURCE_URL + '/findByName/',
+    findResourceByName: RESOURCE_URL + '/findByCoursename/',
     uploadFile: RESOURCE_URL + '/uploadfile',
+    uploadLink: RESOURCE_URL + '/uploadlink',
     downloadFile: RESOURCE_URL + '/downloadfile',
 
     register: USER_URL + '/register',

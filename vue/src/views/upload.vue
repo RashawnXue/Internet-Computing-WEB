@@ -2,51 +2,50 @@
   <div style="z-index: 0; display: flex; flex-direction: column; align-items: center;">
     <el-card class="table-container">
       <div>
+          <el-col :span="12" style="margin-bottom: 20px">
+            <div class="sub-title" >资源名</div>
+            <el-input style="width: 250px" v-model="loadFileParams.name" clearable placeholder="请输入资源名" size="large"></el-input>
+          </el-col>
+
+        <el-row>
           <el-col :span="12">
-            <div class="sub-title">资源名</div>
-            <el-autocomplete
-                class="inline-input"
-                v-model="loadFileParams.name"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入内容"
-                :trigger-on-focus="false"
-                @select="handleSelect"
-            ></el-autocomplete>
+            <div class="sub-title">课程名称</div>
+            <el-select style="width: 250px" v-model="loadFileParams.coursename" class="m-2" placeholder="Select" size="large">
+              <el-option
+                  v-for="item in courses"
+                  :key="item.id"
+                  :label="item.coursename"
+                  :value="item.coursename"
+              />
+            </el-select>
           </el-col>
           <el-col :span="12">
-            <div class="sub-title">课程名称<el-icon style="vertical-align: -0.2em;" size="large"><DCaret /></el-icon></div>
-            <el-autocomplete
-                class="inline-input"
-                v-model="loadFileParams.coursename"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入内容"
-                @select="handleSelect"
-            ></el-autocomplete>
+            <div class="sub-title">资源类型</div>
+            <el-select style="width: 250px" v-model="loadFileParams.type" class="m-2" placeholder="Select" size="large">
+              <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+              />
+            </el-select>
           </el-col>
-          <el-col :span="12">
-            <div class="sub-title">
-              资源类型
-              <el-icon style="vertical-align: -0.2em;" size="large"><DCaret /></el-icon></div>
-            <el-autocomplete
-                class="inline-input"
-                v-model="loadFileParams.type"
-                :fetch-suggestions="querySearch1"
-                placeholder="请输入内容"
-                @select="handleSelect"
-            ></el-autocomplete>
-          </el-col>
+        </el-row>
         <el-form-item  prop="child" v-if="loadFileParams.type == '链接'">
           <div class="sub-title">请输入您要上传的链接</div>
-          <el-input v-model="loadFileParams.interlinking" clearable></el-input>
+          <el-input v-model="loadFileParams.interlinking" clearable placeholder="请输入链接" size="large"></el-input>
         </el-form-item>
+        <el-row style="margin-bottom: 30px">
+          <div class="sub-title" >资源介绍</div>
+          <el-input
+              type="textarea"
+              :autosize="{ minRows: 2, maxRows: 4}"
+              placeholder="请输入资源介绍"
+              clearable
+              v-model="loadFileParams.intro">
+          </el-input>
+        </el-row>
 
-        <div class="sub-title">资源介绍</div>
-        <el-input
-            type="textarea"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            placeholder="请输入内容"
-            v-model="loadFileParams.intro">
-        </el-input>
       </div>
       <el-upload
           class="upload-demo"
@@ -84,18 +83,32 @@ const courses = ref([])
 import storage from '../utils/LocalStorage.js'
 import {ElMessageBox} from "element-plus";
 const userName = storage.get("userID")
+import URL from '../global/url';
 // url为对应接口的映射
-axios.get('http://localhost:9090/course/findAll').then(function (resp) {
+axios.get(URL.findAll).then(function (resp) {
   courses.value = resp.data
   console.log(courses.value)
 })
+
+
+const options = [
+  {
+    value: '文件',
+    label: '文件',
+  },
+  {
+    value: '链接',
+    label: '链接',
+  },
+]
+
 export default {
   data() {
     return {
       uploadFileURL:
-          'http://localhost:9090/resource/uploadfile',
+          URL.uploadFile,
       uploadLinkURL:
-          'http://localhost:9090/resource/uploadlink',// 上传文件的地址!
+          URL.uploadLink,// 上传文件的地址!
       loadFileParams: { // 上传文件的参数！
         name : '',
         coursename : '',
@@ -202,6 +215,9 @@ export default {
     },
     successResave(response, file, fileList){
       console.log(response)
+      ElMessageBox.alert("您已成功上传" + file.name, {
+        confirmButtonText: '确定',
+      })
       if(response.code==10001){
         alert("保存成功")
         this.proType="";
@@ -210,46 +226,18 @@ export default {
         this.$router.push("/moban")
       }
     },
-    querySearch(queryString, cb) {
-      var coursesU = this.coursesU;
-      var results = queryString ? coursesU.filter(this.createFilter(queryString)) : coursesU;
-      // 调用 callback 返回建议列表的数据
-      cb(results);
-    },
-    querySearch1(queryString, cb) {
-      var type = this.type;
-      var results = queryString ? coursetype.filter(this.createFilter(queryString)) : type;
-      // 调用 callback 返回建议列表的数据
-      cb(results);
-    },
+
     createFilter(queryString) {
       return (coursesU) => {
-        return (coursesU.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        return (coursesU.coursename.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
-    },
-    loadAll() {
-      return [
-        { "value": "数据结构与算法"},
-        { "value": "互联网计算"},
-        { "value": "C++高级程序设计"},
-        { "value": "计算机组织结构"}
-      ];
-    },
-    loadAll1() {
-      return [
-        { "value": "文件"},
-        { "value": "链接"},
-      ];
     },
     handleSelect(item) {
       if(this.loadFileParams.type == "链接")
           console.log(item);
     }
   },
-  mounted() {
-    this.coursesU = this.loadAll();
-    this.type = this.loadAll1();
-  }
+
 
 
 }
