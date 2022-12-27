@@ -32,14 +32,15 @@ const userContrib = ()=>{
 }
 
 function clickAvatar() {
-    console.log(storage.get("userID"))
     if(!storage.get("userID")){
         router.push('/login')
     } else {
         ElNotification({
             title: 'while\(true\)',
-            message: '\{ drink\(coffee\); \}',
+            message: '\{ learn\(coding\); \}',
             showClose: false,
+            position:'bottom-right',
+            duration:'1000'
         })
     }
 }
@@ -121,7 +122,7 @@ const route = useRoute()
                                 <p class="greetings_main" style="font-size: large; margin: 1px; font-weight: 500;">
                                     欢迎您，{{ userID }}！
                                 </p>
-                                <p class="greetings_sub" style="font-size:small; margin-top: 5px; font-weight: 300;">
+                                <p class="greetings_sub" style="font-size:small; margin-top: 7px; font-weight: 300;">
                                     今天要学点什么呢？
                                 </p>
                                 <el-divider />

@@ -17,22 +17,11 @@ elementui 的默认配色是蓝色为主，有点土，样式也不好看，可�
 ## 关于进行登录验证 by wms
 参考：https://blog.csdn.net/weixin_47230082/article/details/114581904
 - 创建了一个新目录：`vue/src/utils`,文件 `LocalStorage.js`记录了进行本地存储的set,get,remove方法
-- 登陆成功后，会在本地存储中新建一个`{key:(String)"userID",value:(String)<username>,expireTime:600000ms}`数据
+- 登录成功后，会在本地存储中新建一个`{key:(String)"userID",value:(String)<username>,expireTime:6000000ms}`数据
 - 如果需要检查是否已登录，可以先`import storage from '../utils/LocalStorage.js'（相对路径看具体情况）`之后使用`storage.get("userID")==null`的值判断是否登录,未登录直接用router跳转到login界面；
 已登录仍可以用`storage.get("userID")`获取到的用户id进行操作
 - 其他页面也可以通过`storage.set()``storage.get()``storage.remove()`来向本地存储、查找、删除有时限的数据，具体用法见`LocalStorage.js`中的注释
 
-## 登录的残存工作 by wms
-前端暂定的请求方法
-#### 获取贡献值:GET
-url：user/getContrib
-`params:`(String) username
-`return:`(Integer) contribution
-
-#### 修改密码:POST
-url：user/updatePassword
-`params:` (Object) ({ username: string, oldpassword: string, newpassword: string})（保证原密码和新密码不相同）
-`return:`(String)"success":修改成功 "(别的)":修改失败（如原密码不匹配等）
 
 ## 主题色 by ysh
 main.css中的--color-main变量是主题色(目前是青绿色)，所有用到主题色的地方都应该用这个变量而非指定的颜色，此外还有深一点浅一点的颜色，如果要用到其他颜色，也应该声明为变量写到main.css里，方便后期统一配色
