@@ -12,12 +12,12 @@ class ResourceHandlerTest {
     @Autowired
     private ResourceHandler resourceHandler = new ResourceHandler();
 
-    @Test
+//    @Test
     void findByResourceName() {
         System.out.println(resourceHandler.findByName("计网"));
     }
 
-    @Test
+//    @Test
     void findByCoursename(){
         System.out.println(resourceHandler.findByCourseName("互联网计算"));
     }
