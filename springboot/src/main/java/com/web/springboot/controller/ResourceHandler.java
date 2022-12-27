@@ -268,6 +268,13 @@ public class ResourceHandler {
     public String downloadFile(@RequestParam int resourceId, HttpServletRequest request, HttpServletResponse response) {
         Resource target = resourceRepository.findById(resourceId);
         String url = target.getDatapath();
+        int index = 0;
+        for (int i = url.length()-1 ; i >= 0 ; --i) {
+            if (url.charAt(i) == '/') {
+                index = i;
+                break;
+            }
+        }
         if (url == null) {
             logger.error("无法读取文件路径");
             return "path error";
@@ -281,7 +288,7 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + target.getName());
+        response.setHeader("Content-Disposition", "attachment;filename=" + url.substring(index+1));
 
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];
