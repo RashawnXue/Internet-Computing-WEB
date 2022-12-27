@@ -90,7 +90,7 @@ class SpringbootApplicationTests {
         }
     }
 
-    @Test
+    /*@Test
     void upLoadFile() {
         String filePath = "/home/floveram/WEB/data/test_data/default_picture.webp";
 
@@ -104,8 +104,8 @@ class SpringbootApplicationTests {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        ResourceData data = new ResourceData(cMultiFile, "互联网计算", "李东升", "wenjian", "nb");
-//        resourceHandler.uploadFile(data);
+ //       ResourceData data = new ResourceData(cMultiFile, "互联网计算", "李东升", "wenjian", "nb");
+ //       resourceHandler.uploadFile(data);
 
-    }
+    }*/
 }
