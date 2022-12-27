@@ -10,7 +10,7 @@ const props = defineProps({
 
 function downLoad(id) {
     //通过window.location调起下载框
-    window.location = "http://localhost:9090/resource/downloadfile?resourceId=" + id;// url + 下载的resourceId
+    window.location = "http://124.221.152.134:9090/resource/downloadfile?resourceId=" + id;// url + 下载的resourceId
 }
 
 </script>

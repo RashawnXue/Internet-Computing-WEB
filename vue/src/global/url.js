@@ -16,9 +16,10 @@ const URL = {
 
     register: USER_URL + '/register',
     login: USER_URL + '/login',
+    checkModify:USER_URL+'/modify/check',
     modifyPasswd: USER_URL + '/modify/passwd',
     rank: USER_URL + '/rank',
-    getContrib: USER_URL + '/user/getContrib',
+    getContrib: USER_URL + '/getContrib/',
 }
 
 export default URL

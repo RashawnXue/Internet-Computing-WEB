@@ -44,20 +44,8 @@ public class ResourceHandler {
     private final Logger logger = LoggerFactory.getLogger(ResourceHandler.class);
 
     /**
-     * 根据课程id搜索该课程的资源
-     * url:"/resource/{courseId}"
-     *
-     * @param courseId 该资源所属课程id
-     * @return 该课程的所有资源列表
-     */
-    @GetMapping("/{courseId}")
-    public List<Resource> findByCourseId(@PathVariable("courseId") Integer courseId) {
-        return resourceRepository.findByCourseid(courseId);
-    }
-
-    /**
      * 根据课程名字搜索该课程的资源
-     * url:"/resource/{coursename}"
+     * url:"/findByCoursename/{coursename}"
      *
      * @param coursename 该资源所属课程id
      * @return 该课程的所有资源列表
