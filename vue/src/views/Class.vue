@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import CourseCard from '../components/CourseCard.vue';
 import axios from "axios";
 import { CollectionTag, Filter } from '@element-plus/icons-vue';
+import URL from '../global/url';
 
 
 // 后端课程信息数据获取
@@ -12,7 +13,7 @@ const allCourses = ref([])
 const showCourses = ref([])
 
 // url为对应接口的映射
-axios.get('http://localhost:9090/course/findAll').then(function (resp) {
+axios.get(URL.findAll).then(function (resp) {
     allCourses.value = resp.data
     console.log(allCourses.value)
     showCourses.value = allCourses.value

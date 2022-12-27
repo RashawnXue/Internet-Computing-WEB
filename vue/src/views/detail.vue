@@ -11,14 +11,14 @@ const picture = route.query.picture
 const courseName = route.query.courses
 const detailList = ref([])
 const fill = ref(true)
-axios.get('http://localhost:9090/resource/findByCoursename/' + courseName).then(function (resp) {
+axios.get('http://124.221.152.134:9090/resource/findByCoursename/' + courseName).then(function (resp) {
   detailList.value = resp.data
   console.log(detailList.value)
 })
 // download test: 仅作前后端对接测试用
 function downLoad(i) {
   //通过window.location调起下载框
-  window.location = "http://localhost:9090/resource/downloadfile?resourceId=" + i;// url + 下载的resourceId
+  window.location = "http://124.221.152.134:9090/resource/downloadfile?resourceId=" + i;// url + 下载的resourceId
 }
 
 </script>

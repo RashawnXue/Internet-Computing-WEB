@@ -4,8 +4,8 @@ import { ElMessage, ElMessageBox, FormInstance } from 'element-plus';
 import axios from 'axios'
 import {useRouter} from 'vue-router'
 import storage from '../utils/LocalStorage';
+import URL from '../global/url'
 
-const dbUrl='http://localhost:9090'
 const router=useRouter()
 const formRef = ref<FormInstance>()
 const hasLogin=ref(storage.get("userID")!==null).value
@@ -69,10 +69,10 @@ const submitForm=(formEl: FormInstance | undefined)=>{
                 username:username,
                 password:updateForm.oldpassword,
             })
-            axios.post(dbUrl+'/user/modify/check',formSender).then(function (res){
+            axios.post(URL.checkModify,formSender).then(function (res){
                 if(res.data==true){
                     formSender.password=updateForm.newpassword
-                    axios.post(dbUrl+'/user/modify/passwd',formSender).then(function (resp){
+                    axios.post(URL.modifyPasswd,formSender).then(function (resp){
                         if(resp.data=="success"){
                             ElMessage({
                                 message: '修改密码成功！请重新登录账号.',

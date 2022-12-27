@@ -3,12 +3,13 @@
 import { ref, onMounted, reactive, onActivated } from 'vue'
 import CourseCard from '../components/CourseCard.vue';
 import axios from "axios";
+import URL from '../global/url';
 
 // 后端课程信息数据获取
 const courses = ref([])
 
 // url为对应接口的映射
-axios.get('http://localhost:9090/course/findAll').then(function (resp) {
+axios.get(URL.findAll).then(function (resp) {
     courses.value = resp.data
     console.log(courses.value)
 })

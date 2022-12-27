@@ -13,11 +13,6 @@ class ResourceHandlerTest {
     private ResourceHandler resourceHandler = new ResourceHandler();
 
     @Test
-    void findByCourseId(){
-        System.out.println(resourceHandler.findByCourseId(1));
-    }
-
-    @Test
     void findByResourceName() {
         System.out.println(resourceHandler.findByName("计网"));
     }

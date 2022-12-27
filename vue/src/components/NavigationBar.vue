@@ -6,6 +6,7 @@ import SearchBar from './SearchBar.vue';
 import { useDark } from '@vueuse/core'
 import storage from '../utils/LocalStorage';
 import axios from "axios"
+import URL from '../global/url'
 
 const isDark = useDark()
 
@@ -23,7 +24,7 @@ const userContrib = ()=>{
     if(!hasLogin){
         return userContribution
     }else{
-        axios.get("http://localhost:9090/user/getContrib/"+userID.value).then(res=>{
+        axios.get(URL.getContrib+userID.value).then(res=>{
             userContribution=res.data
         })
         return userContribution

@@ -24,6 +24,7 @@ public class Resource {
     private Integer uploaderid;
     private Integer courseid;
     private String intro;
+    private String coursename;
 
     /**
      * @return 将对象所有信息以String方式返回

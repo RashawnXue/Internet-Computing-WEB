@@ -44,20 +44,8 @@ public class ResourceHandler {
     private final Logger logger = LoggerFactory.getLogger(ResourceHandler.class);
 
     /**
-     * 根据课程id搜索该课程的资源
-     * url:"/resource/{courseId}"
-     *
-     * @param courseId 该资源所属课程id
-     * @return 该课程的所有资源列表
-     */
-    @GetMapping("/{courseId}")
-    public List<Resource> findByCourseId(@PathVariable("courseId") Integer courseId) {
-        return resourceRepository.findByCourseid(courseId);
-    }
-
-    /**
      * 根据课程名字搜索该课程的资源
-     * url:"/resource/{coursename}"
+     * url:"/findByCoursename/{coursename}"
      *
      * @param coursename 该资源所属课程id
      * @return 该课程的所有资源列表
@@ -222,6 +210,7 @@ public class ResourceHandler {
 
         {
             Resource resource2save = new Resource();
+            resource2save.setCoursename(courseRepository.findById(courseID).getCoursename());
             resource2save.setCourseid(courseID);
             resource2save.setType(type);
             resource2save.setSize((int) file.getSize());
@@ -266,7 +255,14 @@ public class ResourceHandler {
     @GetMapping("/downloadfile")
     public String downloadFile(@RequestParam int resourceId, HttpServletRequest request, HttpServletResponse response) {
         Resource target = resourceRepository.findById(resourceId);
-        String url = "E:\\360MoveData\\Users\\dell\\Desktop\\LaoQiWan\\大二秋七丸的Markdown";
+        String url = target.getDatapath();
+        int index = 0;
+        for (int i = url.length()-1 ; i >= 0 ; --i) {
+            if (url.charAt(i) == '/') {
+                index = i;
+                break;
+            }
+        }
         if (url == null) {
             logger.error("无法读取文件路径");
             return "path error";
@@ -280,7 +276,7 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + target.getName());
+        response.setHeader("Content-Disposition", "attachment;filename=" + url.substring(index+1));
 
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];

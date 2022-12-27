@@ -1,55 +1,11 @@
-<template>
-    <div onload="load();">
-        <div class="loginBox">
-            <div style="flex:1" padding="20px">
-                <img class="loginPic" src="../assets/img/login_pic.png" style="width:100%">
-            </div>
-            <div style="flex:1" class="inputSection">
-                <div>
-
-                    <div class="loginButtons" style="display:flex;flex-direction: row;">
-                        <el-button class="loginButton"
-                            @click="(changeLoginType(true), resetForm(formRef))">用户登录</el-button>
-                        <el-button class="loginButton"
-                            @click="(changeLoginType(false), resetForm(formRef))">账号注册</el-button>
-                    </div>
-
-                    <div class="customLoginForm">
-                        <el-form ref="formRef" :model="loginForm" status-icon :rules="rules" label-width="5rem">
-                            <el-form-item label="用户名" prop="username">
-                                <el-input v-model="loginForm.username" autocomplete="off" />
-                            </el-form-item>
-                            <el-form-item label="密码" prop="password">
-                                <el-input v-model="loginForm.password" type="password" clearable autocomplete="off" />
-                            </el-form-item>
-                            <el-form-item v-if="!pageRef.typeIsLogin" label="确认密码" prop="passwordCheck">
-                                <el-input v-model="loginForm.passwordCheck" type="password" clearable
-                                    autocomplete="off" />
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button
-                                    style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content;--el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker);"
-                                    type="primary"
-                                    @click="submitForm(formRef)">{{ pageRef.typeIsLogin ? "立即登录" : "立即注册" }}</el-button>
-                            </el-form-item>
-                        </el-form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
 <script lang="ts" setup>
 import axios from "axios";
 import { reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox, FormInstance } from 'element-plus';
 import { useRouter } from 'vue-router';
 import storage from "../utils/LocalStorage";
+import URL from '../global/url.js'
 
-const dbUrl = "http://localhost:9090"
-const loginUrl = "/user/login"
-const registerUrl = "/user/register"
 const router = useRouter()
 
 const pageRef = ref({
@@ -126,7 +82,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
                 password: loginForm.password
             })
             if (pageRef.value.typeIsLogin) {//登录代码
-                axios.post(dbUrl + loginUrl, formSender).then(function (res) {
+                axios.post(URL.login, formSender).then(function (res) {
                     console.log(res)
                     if (res.data == "not exist") {
 
@@ -152,7 +108,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
                 })
             } else {//注册代码
-                axios.post(dbUrl + registerUrl, formSender).then(function (res) {
+                axios.post(URL.register, formSender).then(function (res) {
                     console.log(res)
                     if (res.data == "exist") {
 
@@ -182,9 +138,52 @@ const rules = reactive({
     password: [{ validator: validatePass, trigger: 'blur' }],
     passwordCheck: [{ validator: validatePassCheck, trigger: 'blur' }]
 })
-
-
 </script>
+
+
+<template>
+    <div onload="load();">
+        <div class="loginBox">
+            <div style="flex:1" padding="20px">
+                <img class="loginPic" src="../assets/img/login_pic.png" style="width:100%">
+            </div>
+            <div style="flex:1" class="inputSection">
+                <div>
+
+                    <div class="loginButtons" style="display:flex;flex-direction: row;">
+                        <el-button class="loginButton"
+                            @click="(changeLoginType(true), resetForm(formRef))">用户登录</el-button>
+                        <el-button class="loginButton"
+                            @click="(changeLoginType(false), resetForm(formRef))">账号注册</el-button>
+                    </div>
+
+                    <div class="customLoginForm">
+                        <el-form ref="formRef" :model="loginForm" status-icon :rules="rules" label-width="5rem">
+                            <el-form-item label="用户名" prop="username">
+                                <el-input v-model="loginForm.username" autocomplete="off" />
+                            </el-form-item>
+                            <el-form-item label="密码" prop="password">
+                                <el-input v-model="loginForm.password" type="password" clearable autocomplete="off" />
+                            </el-form-item>
+                            <el-form-item v-if="!pageRef.typeIsLogin" label="确认密码" prop="passwordCheck">
+                                <el-input v-model="loginForm.passwordCheck" type="password" clearable
+                                    autocomplete="off" />
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button
+                                    style="margin-top: 10%;margin-left: auto;height: 70%;width: 30%;min-width: fit-content;--el-button-hover-bg-color: var(--color-main-darker); --el-button-hover-border-color: var(--color-main-darker);"
+                                    type="primary"
+                                    @click="submitForm(formRef)">{{ pageRef.typeIsLogin ? "立即登录" : "立即注册" }}</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
 
 <style>
 body {
