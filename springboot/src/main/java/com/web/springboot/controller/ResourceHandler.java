@@ -56,6 +56,8 @@ public class ResourceHandler {
     public List<Resource> findByCourseName(@PathVariable("coursename") String coursename) {
         Course course = courseRepository.findByCoursenameLike(coursename).get(0);
         course.setViewtimes(course.getViewtimes() + 1);
+        courseRepository.save(course);
+        logger.info(coursename + ":浏览次数加一");
         return resourceRepository.findByCourseid(course.getId());
     }
 
@@ -261,7 +263,7 @@ public class ResourceHandler {
         Resource target = resourceRepository.findById(resourceId);
         String url = target.getDatapath();
         int index = 0;
-        for (int i = url.length()-1 ; i >= 0 ; --i) {
+        for (int i = url.length() - 1; i >= 0; --i) {
             if (url.charAt(i) == '/') {
                 index = i;
                 break;
@@ -280,7 +282,7 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(url.substring(index+1)));
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(url.substring(index + 1)));
 
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];
