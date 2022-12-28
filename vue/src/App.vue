@@ -5,14 +5,8 @@ import BgImg from './assets/img/home_pic.jpg';
 import WeShare from './assets/WESHARE.svg';
 import { useRoute } from 'vue-router';
 import { watch } from "vue";
-import storage from './utils/LocalStorage';
-import axios from 'axios';
 
 const route = useRoute();
-
-axios.get(URL.findAll).then(function (resp) {
-  storage.set("courses", resp.data, 6000000)
-})
 
 watch(route, () => {
   let container = document.getElementById("container")

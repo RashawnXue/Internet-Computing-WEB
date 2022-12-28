@@ -4,6 +4,7 @@ import { ref, onActivated } from 'vue'
 import CourseCard from '../components/CourseCard.vue';
 import storage from '../utils/LocalStorage';
 import axios from 'axios';
+import URL from '../global/url';
 
 // 课程信息数据获取
 const courses = ref([])
