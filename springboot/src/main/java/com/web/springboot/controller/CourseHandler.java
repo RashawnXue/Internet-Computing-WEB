@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,6 +33,19 @@ public class CourseHandler {
         return courseRepository.findAll();
     }
 
+    @GetMapping("/findAllName")
+    public List<Course> findAllName() {
+        List<Course> get = courseRepository.findAll();
+
+        for (Course c :
+                get) {
+            c.setPicture(new byte[1]);
+        }
+
+        return get;
+    }
+
+
     /**
      * 对课程进行弱模糊搜索
      * 并返回一个列表
@@ -52,8 +66,8 @@ public class CourseHandler {
      * @param response：内存有图片的二进制流
      * @param coursename          课程名称
      * @return "coures_not_exist":课程不存在
-     *         "fail":后端获取文件失败
-     *         "success":获取成功
+     * "fail":后端获取文件失败
+     * "success":获取成功
      */
     @GetMapping("/getpicture/{coursename}")
     public String getPicture(HttpServletResponse response, @PathVariable("coursename") String coursename) {
@@ -92,7 +106,7 @@ public class CourseHandler {
      * @return 课程名；若课程id不存在，则返回error
      */
     @GetMapping("/findCourseNameById/{id}")
-    public String findCourseNameById(@PathVariable("id") int id){
+    public String findCourseNameById(@PathVariable("id") int id) {
         Course course = courseRepository.findById(id);
         if (course == null) {
             return "error";
