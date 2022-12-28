@@ -8,6 +8,7 @@ const URL = {
     findAll: COURSE_URL + '/findAll',
     findCourseByName: COURSE_URL + '/findByName/',
     getPicture: COURSE_URL + '/getpicture/',
+    findAllName: COURSE_URL + '/findAllName',
 
     findByCourseId: RESOURCE_URL + '/',
     findResourceByCourseName: RESOURCE_URL + '/findByCoursename/',

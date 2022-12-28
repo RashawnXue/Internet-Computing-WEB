@@ -11,7 +11,7 @@ import { ElMessageBox } from "element-plus";
 const userName = storage.get("userID")
 import URL from '../global/url';
 // url为对应接口的映射
-axios.get(URL.findAll).then(function (resp) {
+axios.get(URL.findAllName).then(function (resp) {
   courses.value = resp.data
   console.log(courses.value)
 })
