@@ -69,6 +69,12 @@ function clickUpload() {
 
 const route = useRoute()
 
+const courses = ref([])
+axios.get(URL.findAll).then(function (resp) {
+    courses.value = resp.data
+    console.log(courses.value)
+})
+
 </script>
 
 <template>

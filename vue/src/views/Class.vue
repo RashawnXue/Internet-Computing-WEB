@@ -2,19 +2,11 @@
 
 import { ref } from 'vue'
 import CourseCard from '../components/CourseCard.vue';
-import axios from "axios";
 import { CollectionTag, Filter } from '@element-plus/icons-vue';
-import URL from '../global/url';
+import storage from '../utils/LocalStorage';
 
-
-// 后端课程信息数据获取
-const allCourses = ref([])
-const showCourses = ref([])
-axios.get(URL.findAll).then(function (resp) {
-    allCourses.value = resp.data
-    console.log(allCourses.value)
-    showCourses.value = allCourses.value
-})
+// 课程信息数据获取
+const showCourses = ref(storage.get("courses"))
 
 // 控制左侧边栏折叠
 const collapse = ref(false)
@@ -25,6 +17,7 @@ if (windowWidth < 66 * Number(rem.substring(0, rem.length - 2))) {
 } else {
     collapse.value = false
 }
+
 window.onresize = function () {
     rem = window.getComputedStyle(document.documentElement)["fontSize"]
     let windowWidth = window.innerWidth
@@ -38,7 +31,8 @@ window.onresize = function () {
 // 筛选课程
 function filterCourses(index, indexPath, item) {
     console.log(index)
-    showCourses.value = allCourses.value.filter((x) => ((x.department == index) | (x.studytime == index)))
+    let allCourses = storage.get("courses")
+    showCourses.value = allCourses.filter((x) => ((x.department == index) | (x.studytime == index)))
     if (showCourses.value.length == 0) {
         ElMessage({
             message: '抱歉，暂未收录此类课程',

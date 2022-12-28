@@ -20,7 +20,7 @@ function goToCourse(item) {
 </script>
 
 <template>
-    <el-card v-for="item in courses" class="course-card" style="--el-card-padding: 0">
+    <el-card v-for="item in courses" :key="item.courseid" class="course-card" style="--el-card-padding: 0">
         <template #header>
             <img :src="'data:image/png;base64,' + item.picture" @click="goToCourse(item)" />
             <div class="card-header">

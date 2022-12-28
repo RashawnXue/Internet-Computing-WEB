@@ -188,7 +188,7 @@ export default {
               </el-icon>课程名称</div>
             <el-select style="width: 14rem" v-model="loadFileParams.coursename" class="m-2" placeholder="Select"
               size="large">
-              <el-option v-for="item in this.courses" :key="item.id" :label="item.coursename"
+              <el-option v-for="item in courses" :key="item.id" :label="item.coursename"
                 :value="item.coursename" />
             </el-select>
           </el-col>
