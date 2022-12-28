@@ -20,7 +20,7 @@ const userID = ref(!hasLogin?' 未登录':storage.get("userID"))
 
 var userContribution=-1
 
-const userContrib = ()=>{
+const userContrib=()=>{
     if(!hasLogin){
         return userContribution
     }else{
@@ -30,7 +30,11 @@ const userContrib = ()=>{
         return userContribution
     }
 }
-
+/**
+ * 点击头像事件
+ * 未登录：跳转至登录页面
+ * 已登录：彩蛋
+ */
 function clickAvatar() {
     if(!storage.get("userID")){
         router.push('/login')
@@ -44,9 +48,15 @@ function clickAvatar() {
         })
     }
 }
+/**
+ * 点击修改密码事件：跳转至/account页面
+ */
 function clickChangePassword(){
     router.push('/account')
 }
+/**
+ * 点击登出事件:移除登录状态并刷新页面
+ */
 function clickLogout() {
     if (storage.get("userID") !== null) {
         storage.remove("userID")

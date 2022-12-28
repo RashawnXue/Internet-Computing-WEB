@@ -16,7 +16,7 @@ class UserHandlerTest {
     @Autowired
     UserRepository userRepository;
 
-    @Test
+//    @Test
     void modifyPasswdTest(){
         User user = new User();
         user.setUsername("114");
@@ -24,7 +24,7 @@ class UserHandlerTest {
         System.out.println(userHandler.modifyPasswd(user));
     }
 
-    @Test
+//    @Test
     void checkPasswdTest() {
         User user = new User();
         user.setUsername("114");
@@ -34,7 +34,7 @@ class UserHandlerTest {
         System.out.println(userHandler.checkPasswd(user));
     }
 
-    @Test
+//    @Test
     void getContribTest() {
         System.out.println(userHandler.findContributionByUsername("114"));
     }

@@ -20,6 +20,16 @@ var formSender = ({
     username: '',
     password: ''
 })
+
+window.onload = checkNotLogin
+function checkNotLogin() {
+    if (!storage.get("userID")) {
+        router.push('/login')
+    }
+}
+/**
+ * 检查原密码表单项是否合法
+ */
 const validateOldpassword = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入原密码.'))
@@ -27,12 +37,9 @@ const validateOldpassword = (rule: any, value: any, callback: any) => {
         callback()
     }
 }
-window.onload = checkNotLogin
-function checkNotLogin() {
-    if (!storage.get("userID")) {
-        router.push('/login')
-    }
-}
+/**
+ * 检查新密码表单项是否合法
+ */
 const validatePass = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请输入新密码.'))
@@ -48,6 +55,9 @@ const validatePass = (rule: any, value: any, callback: any) => {
         callback()
     }
 }
+/**
+ * 检查新密码检验表单项是否合法
+ */
 const validatePassCheck = (rule: any, value: any, callback: any) => {
     if (value === '') {
         callback(new Error('请再次输入新密码.'))
@@ -62,6 +72,9 @@ const rules = reactive({
     newpassword: [{ validator: validatePass, trigger: 'blur' }],
     passwordCheck: [{ validator: validatePassCheck, trigger: 'blur' }]
 })
+/**
+ * 提交表单项到后端
+ */
 const submitForm=(formEl: FormInstance | undefined)=>{
     checkNotLogin()
     if(!formEl)return

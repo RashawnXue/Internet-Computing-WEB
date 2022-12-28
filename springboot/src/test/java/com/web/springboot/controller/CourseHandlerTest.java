@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CourseHandlerTest {
     @Autowired
     CourseHandler courseHandler;
-    @Test
+//    @Test
     void findCourseNameById() {
         System.out.println(courseHandler.findCourseNameById(2));
     }

@@ -34,61 +34,61 @@ class SpringbootApplicationTests {
     @Autowired
     picture_init init;
 
-    @Test
-    void add_pic() {
-        init.add_picture("数据结构与算法", "/home/floveram/WEB/data/course_data/数据结构与算法.png");
-        init.add_picture("互联网计算", "/home/floveram/WEB/data/course_data/互联网计算.png");
-        init.add_picture("计算机组织结构", "/home/floveram/WEB/data/course_data/数据结构与算法.png");
-        init.add_picture("C++高级程序设计", "/home/floveram/WEB/data/course_data/C++高级程序设计.png");
-
-
-    }
-
-    @Test
-    void Register_test() {
-        User user = new User();
-        user.setUsername("xhh");
-        user.setPassword("12345");
-        user.setContribution(1);
-        String res = userHandler.Register(user);
-        System.out.println(res);
-    }
-
-    @Test
-    void Login_test_success() {
-        User user = new User();
-        user.setUsername("李东升");
-        user.setPassword("lds555");
-        String res = userHandler.Login(user);
-        System.out.println(res);
-    }
-
-    @Test
-    void Login_test_fail() {
-        User user = new User();
-        user.setUsername("李东升");
-        user.setPassword("lds5555");
-        String res = userHandler.Login(user);
-        System.out.println(res);
-    }
-
-    @Test
-    void Login_test_notexist() {
-        User user = new User();
-        user.setUsername("xxjj");
-        user.setPassword("lds5555");
-        String res = userHandler.Login(user);
-        System.out.println(res);
-    }
-
-    @Test
-    void Sort() {
-        List<UserHandler.rank_user> users = userHandler.Rank();
-        for (UserHandler.rank_user u :
-                users) {
-            System.out.println(u.getRank() + "  " + u.getUsername() + "  " + u.getContribution());
-        }
-    }
+//    @Test
+//    void add_pic() {
+//        init.add_picture("数据结构与算法", "/home/floveram/WEB/data/course_data/数据结构与算法.png");
+//        init.add_picture("互联网计算", "/home/floveram/WEB/data/course_data/互联网计算.png");
+//        init.add_picture("计算机组织结构", "/home/floveram/WEB/data/course_data/计算机组织结构.png");
+//        init.add_picture("C++高级程序设计", "/home/floveram/WEB/data/course_data/C++高级程序设计.png");
+//
+//
+//    }
+//
+//    @Test
+//    void Register_test() {
+//        User user = new User();
+//        user.setUsername("xhh");
+//        user.setPassword("12345");
+//        user.setContribution(1);
+//        String res = userHandler.Register(user);
+//        System.out.println(res);
+//    }
+//
+//    @Test
+//    void Login_test_success() {
+//        User user = new User();
+//        user.setUsername("李东升");
+//        user.setPassword("lds555");
+//        String res = userHandler.Login(user);
+//        System.out.println(res);
+//    }
+//
+//    @Test
+//    void Login_test_fail() {
+//        User user = new User();
+//        user.setUsername("李东升");
+//        user.setPassword("lds5555");
+//        String res = userHandler.Login(user);
+//        System.out.println(res);
+//    }
+//
+//    @Test
+//    void Login_test_notexist() {
+//        User user = new User();
+//        user.setUsername("xxjj");
+//        user.setPassword("lds5555");
+//        String res = userHandler.Login(user);
+//        System.out.println(res);
+//    }
+//
+//    @Test
+//    void Sort() {
+//        List<UserHandler.rank_user> users = userHandler.Rank();
+//        for (UserHandler.rank_user u :
+//                users) {
+//            System.out.println(u.getRank() + "  " + u.getUsername() + "  " + u.getContribution());
+//        }
+//    }
 
     /*@Test
     void upLoadFile() {

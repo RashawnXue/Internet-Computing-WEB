@@ -4,7 +4,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class SpringboottestApplicationTest {
-    @Test
+//    @Test
     void register() {
         return;
     }
