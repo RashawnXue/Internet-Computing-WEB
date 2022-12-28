@@ -26,8 +26,8 @@ function goToCourse(item) {
             <div class="card-header">
                 <div class="card-header-name" @click="goToCourse(item)">{{ item.coursename }}</div>
                 <div class="card-header-tags">
-                    <CourseTag style="margin: 0 0.5rem 0 0;" tag="课程" color="rgb(126, 125, 187)" />
-                    <CourseTag style="margin: 0 0.5rem 0 0;" tag="软件学院" color="rgb(119, 127, 79)" />
+                    <!-- <CourseTag style="margin: 0 0.5rem 0 0;" tag="课程" color="rgb(126, 125, 187)" /> -->
+                    <CourseTag style="margin: 0 0.5rem 0 0;" :tag="item.department" color="rgb(119, 127, 79)" />
                     <CourseTag style="margin: 0 0.5rem 0 0;" :tag="item.studytime" color="rgb(79, 49, 45)" />
                 </div>
             </div>
