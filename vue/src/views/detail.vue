@@ -48,6 +48,12 @@ function downLoad(i) {
               </el-icon>
               课程时间: {{ route.query.during }}
             </div>
+            <div style="font-size: larger; margin-bottom: 8px">
+              <el-icon style="vertical-align: -0.2em;" size="large">
+                <View />
+              </el-icon>
+              浏览次数: {{ route.query.viewtimes }}
+            </div>
           </div>
         </el-col>
       </el-row>
