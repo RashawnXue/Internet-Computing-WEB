@@ -52,7 +52,7 @@ function downLoad(i) {
               <el-icon style="vertical-align: -0.2em;" size="large">
                 <View />
               </el-icon>
-              浏览次数: {{ route.query.viewtimes }}
+              浏览次数: {{ route.query.viewtime }}
             </div>
           </div>
         </el-col>
