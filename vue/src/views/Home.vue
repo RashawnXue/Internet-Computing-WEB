@@ -3,9 +3,15 @@
 import { ref, onActivated } from 'vue'
 import CourseCard from '../components/CourseCard.vue';
 import storage from '../utils/LocalStorage';
+import axios from 'axios';
 
 // 课程信息数据获取
-const courses = ref(storage.get("courses"))
+const courses = ref([])
+axios.get(URL.findAll).then(function (resp) {
+    courses.value = resp.data
+    storage.set("courses", resp.data, 6000000)
+})
+
 
 onActivated(() => {
     document.scrollingElement.scrollTop = 0 

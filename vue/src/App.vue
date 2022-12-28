@@ -1,7 +1,6 @@
 <script setup>
 import NavigationBar from './components/NavigationBar.vue';
 
-// 主页上方背景图，现在这个是随便放的，之后要再找一张，或许还要放在服务器上
 import BgImg from './assets/img/home_pic.jpg';
 import WeShare from './assets/WESHARE.svg';
 import { useRoute } from 'vue-router';
