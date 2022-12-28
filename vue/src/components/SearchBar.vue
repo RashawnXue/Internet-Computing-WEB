@@ -4,7 +4,9 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
 
+// 搜索内容
 const content = ref('')
+
 const router = useRouter()
 
 function goToSearch() {

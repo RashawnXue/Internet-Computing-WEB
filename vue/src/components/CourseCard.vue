@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router';
 import CourseTag from './CourseTag.vue';
 
 const props = defineProps({
+    // 展示课程信息列表
     courses: {
         type: Array,
         default: [],
@@ -11,6 +12,7 @@ const props = defineProps({
 
 const router = useRouter()
 
+// 跳转课程详情页
 function goToCourse(item) {
     router.push({ path: '/detail', query: { courses: item.coursename, itro: item.introduction, teacher: item.teachername, during: item.studytime, picture: item.picture, id: item.id , viewtime: item.viewtimes} })
 }

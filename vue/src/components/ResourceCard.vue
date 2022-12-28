@@ -2,16 +2,19 @@
 import CourseTag from './CourseTag.vue';
 
 const props = defineProps({
+    // 展示资源信息列表
     resources: {
         type: Array,
         default: [],
     },
+    // 是否显示课程名
     showCourseName: {
         type: Boolean,
         default: false,
     }
 })
 
+// 下载功能
 function downLoad(id) {
     //通过window.location调起下载框
     window.location = "http://124.221.152.134:9090/resource/downloadfile?resourceId=" + id;// url + 下载的resourceId
