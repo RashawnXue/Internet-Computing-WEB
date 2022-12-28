@@ -1,5 +1,6 @@
 package com.web.springboot.controller;
 
+import com.web.springboot.entity.Course;
 import com.web.springboot.entity.Resource;
 import com.web.springboot.entity.ResourceData;
 import com.web.springboot.entity.User;
@@ -53,7 +54,9 @@ public class ResourceHandler {
      */
     @GetMapping("/findByCoursename/{coursename}")
     public List<Resource> findByCourseName(@PathVariable("coursename") String coursename) {
-        return resourceRepository.findByCourseid(courseRepository.findByCoursenameLike(coursename).get(0).getId());
+        Course course = courseRepository.findByCoursenameLike(coursename).get(0);
+        course.setViewtimes(course.getViewtimes() + 1);
+        return resourceRepository.findByCourseid(course.getId());
     }
 
     @PostMapping("/uploadlink")
