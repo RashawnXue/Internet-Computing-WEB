@@ -7,7 +7,7 @@ import axios from 'axios';
 import URL from '../global/url';
 
 // 课程信息数据获取
-const courses = ref([])
+const courses = ref(storage.get("courses"))
 axios.get(URL.findAll).then(function (resp) {
     courses.value = resp.data
     storage.set("courses", resp.data, 6000000)
