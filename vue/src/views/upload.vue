@@ -93,8 +93,11 @@ export default {
         axios.post(this.uploadLinkURL, this.loadFileParams).then(function (res) {
           console.log(res)
         })
-
+        ElMessageBox.alert('您已成功上传链接', {
+          confirmButtonText: '确定'
+        })
       }
+
 
     },
     handleRemove(file, fileList) {
