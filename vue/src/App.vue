@@ -82,7 +82,7 @@ window.onscroll = function () {
       <!-- 路由匹配到的组件将渲染在这里 -->
       <router-view v-slot="{ Component }">
         <!-- 不缓存detail页 -->
-        <keep-alive exclude="detail">
+        <keep-alive exclude="Detail">
           <component :is="Component" />
         </keep-alive>
       </router-view>
