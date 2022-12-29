@@ -22,7 +22,7 @@ const routes = [
     { path: '/account', component: Account },
     { path: '/rank', component: rank },
     { path: '/upload', component: upload },
-    { path: '/class', name: 'Class', component: Class, props: true },
+    { path: '/class', component: Class },
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置
