@@ -3,11 +3,11 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // 也可以从其他文件导入
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
-import detail from '../views/detail.vue'
+import detail from '../views/Detail.vue'
 import Login from '../views/Login.vue'
 import Account from '../views/Account.vue'
-import rank from '../views/rank.vue'
-import upload from '../views/upload.vue'
+import rank from '../views/Rank.vue'
+import upload from '../views/Upload.vue'
 import Class from '../views/Class.vue'
 
 
