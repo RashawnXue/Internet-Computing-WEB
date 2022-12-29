@@ -34,16 +34,16 @@ class SpringbootApplicationTests {
     @Autowired
     picture_init init;
 
-//    @Test
-//    void add_pic() {
-//        init.add_picture("数据结构与算法", "/home/floveram/WEB/data/course_data/数据结构与算法.png");
-//        init.add_picture("互联网计算", "/home/floveram/WEB/data/course_data/互联网计算.png");
-//        init.add_picture("计算机组织结构", "/home/floveram/WEB/data/course_data/计算机组织结构.png");
-//        init.add_picture("C++高级程序设计", "/home/floveram/WEB/data/course_data/C++高级程序设计.png");
-//
-//
-//    }
-//
+    @Test
+    void add_pic() {
+//        init.add_picture("数据科学基础", "/home/floveram/WEB/data/course_data/数据科学基础.jpg");
+//        init.add_picture("线性代数", "/home/floveram/WEB/data/course_data/线性代数.webp");
+//        init.add_picture("操作系统：设计与实现", "/home/floveram/WEB/data/course_data/操作系统概述.webp");
+        init.add_picture("C语言程序设计", "/home/floveram/WEB/data/course_data/C语言程序设计.png");
+
+
+    }
+
 //    @Test
 //    void Register_test() {
 //        User user = new User();
