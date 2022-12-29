@@ -89,6 +89,7 @@ export default {
         ElMessageBox.alert('请您先登录', {
           confirmButtonText: '确定'
         })
+        return
       } else {
         axios.post(this.uploadLinkURL, this.loadFileParams).then(function (res) {
           console.log(res)
@@ -137,6 +138,12 @@ export default {
       if (this.loadFileParams.intro == '') {
         ElMessageBox.alert('请您检查资源介绍输入', {
           confirmButtonText: '确定',
+        })
+        return false
+      }
+      if (storage.get("userID") == null) {
+        ElMessageBox.alert('请您先登录', {
+          confirmButtonText: '确定'
         })
         return false
       }
